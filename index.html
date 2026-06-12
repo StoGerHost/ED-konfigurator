@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ED Konfigurator">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1A2D44">
+  <meta name="description" content="dormakaba ED 100/250 Drehtürantrieb Konfiguration">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231A2D44'/%3E%3Crect x='60' y='60' width='32' height='392' rx='10' fill='%23D95E1F'/%3E%3Ctext x='115' y='310' font-family='Arial' font-weight='900' font-size='200' fill='white'%3EED%3C/text%3E%3C/svg%3E">
+  <title>dormakaba ED 100/250</title>
+<style>
+  :root {
+    --bg:#F2F4F7; --panel:#fff; --primary:#1A2D44; --accent:#D95E1F;
+    --accent-l:#FDF0EA; --border:#D2DAE3; --muted:#6B7A8D;
+    --ok:#2A7A4B; --ok-l:#EAF7EF; --warn:#B45309; --warn-l:#FEF3C7;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bot: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html { height:-webkit-fill-available; }
+  body { font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--primary);
+         min-height:100vh; padding-bottom:calc(var(--safe-bot) + 24px); -webkit-font-smoothing:antialiased; }
+  button { -webkit-appearance:none; font-family:inherit; cursor:pointer; }
+  input[type=number] { font-size:16px; -moz-appearance:textfield; font-family:inherit; }
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; }
+
+  /* Header */
+  #hdr { background:var(--primary); padding-top:calc(var(--safe-top) + 14px); padding-bottom:14px;
+         padding-left:18px; padding-right:18px; display:flex; align-items:center; justify-content:space-between; }
+  #hdr-bar { width:5px; height:34px; background:var(--accent); border-radius:2px; flex-shrink:0; }
+  #hdr-title { color:#fff; font-weight:800; font-size:17px; letter-spacing:-.02em; margin-left:10px; }
+  #hdr-sub { color:#8BA3BA; font-size:12px; margin-top:1px; margin-left:10px; }
+  #prog-ring { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  #prog-inner { width:34px; height:34px; border-radius:50%; background:var(--primary);
+                display:flex; align-items:center; justify-content:center; }
+  #prog-pct { color:#fff; font-size:11px; font-weight:700; }
+  #prog-bar { height:3px; background:var(--border); }
+  #prog-fill { height:100%; background:var(--accent); transition:width .3s ease; }
+
+  /* Install banner */
+  #install-banner { background:#0A84FF; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+  #install-banner.hidden { display:none; }
+  .ib-icon { font-size:20px; flex-shrink:0; }
+  .ib-text { flex:1; }
+  .ib-title { color:#fff; font-weight:700; font-size:13px; }
+  .ib-sub { color:rgba(255,255,255,.85); font-size:12px; }
+  #install-close { background:rgba(255,255,255,.2); border:none; border-radius:99px;
+                   padding:4px 10px; color:#fff; font-size:13px; font-weight:600; min-height:32px; }
+
+  /* Content */
+  #content { padding:14px 14px 0; }
+
+  /* Alert boxes */
+  .alert { border-radius:10px; padding:12px 14px; margin-bottom:14px; display:flex; align-items:flex-start; gap:10px; }
+  .alert-ok  { background:var(--ok-l);   border:1px solid rgba(42,122,75,.25); }
+  .alert-warn{ background:var(--warn-l); border:1px solid rgba(180,83,9,.25); }
+  .alert-info{ background:#EBF3FF;       border:1px solid rgba(10,132,255,.25); }
+  .alert-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+  .alert-head { font-weight:700; font-size:14px; }
+  .alert-head.ok   { color:var(--ok); }
+  .alert-head.warn { color:var(--warn); }
+  .alert-head.info { color:#0A84FF; }
+  .alert-body { color:var(--muted); font-size:12px; margin-top:2px; }
+
+  /* Section */
+  .section { background:var(--panel); border-radius:12px; margin-bottom:14px;
+             overflow:hidden; box-shadow:0 1px 4px rgba(26,45,68,.08); }
+  .sec-hdr  { background:var(--primary); padding:13px 18px; display:flex; align-items:center; gap:10px; }
+  .sec-icon { font-size:18px; }
+  .sec-title{ color:#fff; font-weight:700; font-size:13px; letter-spacing:.05em; text-transform:uppercase; }
+  .sec-body { padding:16px; }
+
+  /* Fields */
+  .field { margin-bottom:18px; }
+  .field:last-child { margin-bottom:0; }
+  .field-label { font-weight:600; font-size:14px; color:var(--primary); margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+  .field-req { color:var(--accent); font-size:12px; }
+  .field-hint { font-size:12px; color:var(--muted); margin-bottom:8px; line-height:1.4; }
+
+  /* Number inputs */
+  .num-row { display:flex; align-items:center; gap:8px; }
+  .num-input { padding:12px 14px; border-radius:8px; border:2px solid var(--border);
+               font-size:16px; width:130px; color:var(--primary); background:var(--panel); outline:none; }
+  .num-input:focus { border-color:var(--accent); }
+  .num-unit { color:var(--muted); font-size:14px; font-weight:500; }
+
+  /* 2-col grid */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+
+  /* Option buttons */
+  .btn-group { display:flex; flex-wrap:wrap; gap:8px; }
+  .opt-btn { padding:10px 14px; border-radius:8px; border:2px solid var(--border);
+             background:var(--panel); color:var(--muted); font-weight:500; font-size:13px;
+             display:flex; align-items:center; gap:5px; min-height:44px; transition:border-color .12s, background .12s; }
+  .opt-btn.sel { border-color:var(--accent); background:var(--accent-l); color:var(--accent); font-weight:700; }
+  .opt-sub { font-size:11px; opacity:.75; font-weight:400; }
+
+  /* Checkbox buttons */
+  .chk-box { width:16px; height:16px; border-radius:4px; border:2px solid var(--border);
+             background:transparent; display:inline-flex; align-items:center; justify-content:center;
+             flex-shrink:0; font-size:10px; font-weight:900; color:transparent; transition:.12s; }
+  .opt-btn.sel .chk-box { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  /* Sensor cards */
+  .sensor-list { display:flex; flex-direction:column; gap:10px; margin-bottom:14px; }
+  .sensor-card { border:2px solid var(--border); border-radius:10px; padding:14px;
+                 background:var(--panel); cursor:pointer; transition:border-color .12s, background .12s; }
+  .sensor-card.sel { border-color:var(--accent); background:var(--accent-l); }
+  .sensor-card-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .sensor-card-left { display:flex; align-items:center; gap:10px; }
+  .sensor-icon { font-size:20px; }
+  .sensor-name { font-weight:700; font-size:14px; color:var(--primary); }
+  .sensor-tag { font-size:11px; color:var(--accent); font-weight:600; margin-top:1px; }
+  .sensor-check { width:22px; height:22px; border-radius:50%; border:2px solid var(--border);
+                  background:transparent; display:flex; align-items:center; justify-content:center;
+                  flex-shrink:0; font-size:11px; font-weight:900; color:transparent; transition:.12s; }
+  .sensor-card.sel .sensor-check { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .sensor-merkmale { display:none; padding-left:16px; margin-top:8px; }
+  .sensor-card.sel .sensor-merkmale { display:block; }
+  .sensor-merkmale li { font-size:12px; color:var(--muted); margin-bottom:3px; }
+
+  /* Summary + action buttons */
+  .big-btn { width:100%; padding:16px; border:none; border-radius:12px; font-size:15px;
+             font-weight:700; color:#fff; min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .big-btn.primary { background:var(--accent); }
+  .big-btn.dark    { background:var(--primary); }
+  .big-btn:disabled { background:var(--border); cursor:not-allowed; }
+
+  /* Summary panel */
+  #summary-panel { margin-top:14px; background:var(--panel); border:2px solid var(--accent);
+                   border-radius:12px; overflow:hidden; display:none; }
+  #summary-panel.visible { display:block; }
+  .sum-hdr { background:var(--accent); padding:12px 16px; color:#fff; font-weight:700; font-size:13px;
+             text-transform:uppercase; letter-spacing:.04em; }
+  .sum-body { padding:16px; }
+  .sum-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .sum-table tr { border-bottom:1px solid var(--border); }
+  .sum-table td { padding:8px 4px; vertical-align:top; }
+  .sum-table td:first-child { color:var(--muted); font-weight:500; width:42%; }
+  .sum-table td:last-child { font-weight:600; color:var(--primary); }
+  .norm-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+  .norm-badge { padding:3px 10px; background:var(--primary); color:#fff; border-radius:99px; font-size:11px; font-weight:600; }
+  .norm-badge.warn { background:var(--warn); }
+  .pdf-hint { font-size:11px; color:var(--muted); margin-top:8px; text-align:center; }
+</style>
+</head>
+<body>
+<div id="hdr">
+  <div style="display:flex;align-items:center">
+    <div id="hdr-bar"></div>
+    <div>
+      <div id="hdr-title">dormakaba ED 100/250</div>
+      <div id="hdr-sub">Drehtürantrieb &middot; Konfiguration</div>
+    </div>
+  </div>
+  <div id="prog-ring">
+    <div id="prog-inner"><span id="prog-pct">0%</span></div>
+  </div>
+</div>
+
+<div id="install-banner">
+  <span class="ib-icon">📲</span>
+  <div class="ib-text">
+    <div class="ib-title">Als App installieren</div>
+    <div class="ib-sub">Tippe auf <b>Teilen ⬆</b> &rarr; „Zum Home-Bildschirm"</div>
+  </div>
+  <button id="install-close">✕</button>
+</div>
+
+<div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+<div id="content"></div>
+
+<script>
+// ─── Constants ────────────────────────────────────────────────────────────────
+const LM = {
+  modell:        { ed100:"ED 100", ed250:"ED 250" },
+  fluegelanzahl: { "1":"Einflügelig", "2":"Zweiflügelig", esr:"ED ESR ½ – teilautomatisiert" },
+  tuerart:       { standard:"Standardtür", brandschutz:"Brandschutztür (T30/T90)", rauchschutz:"Rauchschutztür (RS)" },
+  betriebsart:   { low:"Low-Energy (Niedrigenergie)", full:"Full-Energy (Vollautomatik)" },
+  betriebsmodus: { auto:"Vollautomatik", assist:"Power-Assist (Öffnungsunterstützung)", manuell:"Manuell mit Rückhalt" },
+  montageart:    { "bg-gleit":"Bandgegenseite drückend · Gleitschiene", "bg-gestänge":"Bandgegenseite drückend · Normalgestänge", "bs-gleit":"Bandseite ziehend · Gleitschiene" },
+  verkleidung:   { basic:"BASIC", professionell:"PROFESSIONELL (VARIO)" },
+  oeffnungswinkel: { "80":"80°", "90":"90°", "110":"110° (max.)" },
+  windlast:      { ja:"Aktiviert", nein:"Deaktiviert" },
+  notfunktion:   { notstrom:"Notstromversorgung (24V)", batterie:"Batterie-Backup", keine:"Keine" },
+  farbgebung:    { silber:"Silber (Standard)", weiss:"Weiß RAL 9016", bronze:"Bronze", individuell:"RAL individuell" },
+  sensorik:      { irs4:"BEA IRS4 (4SAFE) · Sensorleiste", flatscan:"BEA LZR-FLATSCAN SW · Laserscanner", flatscan3d:"BEA LZR-FLATSCAN 3D SW · 3D-Laserscanner", keine:"Keine Absicherungssensorik" },
+  sensorFarbe:   { alu:"Aluminium", weiss:"Weiß", schwarz:"Schwarz" },
+};
+const ZL = {
+  radar:"Radar-Sensor", taster:"Aktivierungstaster", schluessel:"Schlüsselschalter",
+  nottaster:"Nottaster", profil:"Profil-Zylinder", zutrittskontrolle:"Zutrittskontrolle",
+  gegensprechanlage:"Gegensprechanlage", brandmeldeanlage:"BMA-Anbindung",
+  rauchdetektor:"Rauchmelder", fingerprint:"Fingerprint-Leser",
+};
+const SMl = { bandseite:"Bandseite", bandgegenseite:"Bandgegenseite", beidseitig:"Beidseitig" };
+const PFLICHT = ["modell","fluegelanzahl","tuerart","betriebsart","betriebsmodus","montageart"];
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let S = {
+  modell:"", fluegelanzahl:"", tuerart:"", betriebsart:"", betriebsmodus:"",
+  montageart:"", verkleidung:"", oeffnungswinkel:"", windlast:"",
+  tuerbreite:"", tuergewicht:"", zubehoer:[], notfunktion:"", farbgebung:"",
+  sensorik:"", sensorMontage:[], sensorFarbe:"",
+  showSummary: false,
+};
+
+function set(key, val) {
+  S = Object.assign({}, S, { [key]: val });
+  render();
+}
+function toggleArr(key, val) {
+  const arr = S[key] || [];
+  S = Object.assign({}, S, { [key]: arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val] });
+  render();
+}
+
+// ─── Derived ──────────────────────────────────────────────────────────────────
+function getEmpfehlung() {
+  const b = parseInt(S.tuerbreite), g = parseInt(S.tuergewicht);
+  if (!b && !g) return null;
+  if (b > 1100 || g > 160) return { modell:"ED 250", warn:true, reason:"Türblatt " + (b>1100 ? b+" mm Breite" : g+" kg") + " → ED 250 erforderlich" };
+  return { modell:"ED 100", warn:false, reason:"Maße im Bereich ED 100 (≤ 1100 mm / ≤ 160 kg)" };
+}
+
+// ─── HTML Builders ────────────────────────────────────────────────────────────
+function e(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+function radioGroup(label, hint, field, options, required) {
+  const val = S[field] || "";
+  return '<div class="field">' +
+    '<div class="field-label">' + label + (required ? '<span class="field-req">*</span>' : '') + '</div>' +
+    (hint ? '<p class="field-hint">' + hint + '</p>' : '') +
+    '<div class="btn-group">' +
+    options.map(function(opt) {
+      const sel = val === opt.value;
+      return '<button class="opt-btn' + (sel?' sel':'') + '" data-action="radio" data-field="' + field + '" data-value="' + opt.value + '">' +
+        (opt.icon ? '<span>' + opt.icon + '</span>' : '') +
+        '<span>' + opt.label + '</span>' +
+        (opt.sub ? '<span class="opt-sub">(' + opt.sub + ')</span>' : '') +
+        '</button>';
+    }).join('') +
+    '</div></div>';
+}
+
+function checkboxGroup(label, hint, field, options) {
+  const vals = S[field] || [];
+  return '<div class="field">' +
+    '<div class="field-label">' + label + '</div>' +
+    (hint ? '<p class="field-hint">' + hint + '</p>' : '') +
+    '<div class="btn-group">' +
+    options.map(function(opt) {
+      const chk = vals.includes(opt.value);
+      return '<button class="opt-btn' + (chk?' sel':'') + '" data-action="chk" data-field="' + field + '" data-value="' + opt.value + '">' +
+        '<span class="chk-box">' + (chk ? '✓' : '') + '</span>' +
+        (opt.icon ? '<span>' + opt.icon + '</span>' : '') +
+        opt.label +
+        '</button>';
+    }).join('') +
+    '</div></div>';
+}
+
+function numberInput(label, hint, field, unit, placeholder) {
+  return '<div class="field">' +
+    '<div class="field-label">' + label + '</div>' +
+    (hint ? '<p class="field-hint">' + hint + '</p>' : '') +
+    '<div class="num-row">' +
+    '<input type="number" class="num-input" data-field="' + field + '" value="' + e(S[field]) + '" placeholder="' + placeholder + '" inputmode="numeric">' +
+    (unit ? '<span class="num-unit">' + unit + '</span>' : '') +
+    '</div></div>';
+}
+
+function section(title, icon, body) {
+  return '<div class="section"><div class="sec-hdr"><span class="sec-icon">' + icon + '</span><span class="sec-title">' + title + '</span></div><div class="sec-body">' + body + '</div></div>';
+}
+
+function alert_(type, icon, head, body) {
+  return '<div class="alert alert-' + type + '"><span class="alert-icon">' + icon + '</span><div><div class="alert-head ' + type + '">' + head + '</div>' + (body ? '<div class="alert-body">' + body + '</div>' : '') + '</div></div>';
+}
+
+// ─── Sensor Cards ─────────────────────────────────────────────────────────────
+function sensorCards() {
+  const sensors = [
+    { value:"irs4",      icon:"📏", name:"IRS4 (4SAFE)", tag:"Aktiv-Infrarot · Sensorleiste",      merkmale:["Türblattmontage (mitfahrend)","3D-Schutzfeld bis 3 m Höhe","Bis 6 Module reihenschaltbar","Geeignet für Rollstuhlfahrer","TÜV-zertifiziert"] },
+    { value:"flatscan",  icon:"🔴", name:"LZR-FLATSCAN SW",  tag:"Laser · 2D-Scanner",             merkmale:["170 Messpunkte","1 Modul sichert gesamte Türbreite","Türbreiten bis 1600 mm","Winkeleinstellung 2°–10°","Master-Slave-kompatibel"] },
+    { value:"flatscan3d",icon:"🔷", name:"LZR-FLATSCAN 3D SW",tag:"Laser · 3D-Volumen-Scanner",   merkmale:["4 volumetrische Laservorhänge","Band- & Bandgegenseite + Schließkanten","Hygienische Aktivierungsfunktion","Dynamischer Fingerschutz","Höchste Sicherheitsstufe"] },
+    { value:"keine",     icon:"✕",  name:"Keine Sensorik",  tag:"Nicht erforderlich",               merkmale:["Nur bei internen Türen","Risikoanalyse erforderlich"] },
+  ];
+  return '<div class="sensor-list">' +
+    sensors.map(function(s) {
+      const sel = S.sensorik === s.value;
+      return '<div class="sensor-card' + (sel?' sel':'') + '" data-action="radio" data-field="sensorik" data-value="' + s.value + '">' +
+        '<div class="sensor-card-hdr">' +
+        '<div class="sensor-card-left">' +
+        '<span class="sensor-icon">' + s.icon + '</span>' +
+        '<div><div class="sensor-name">' + s.name + '</div><div class="sensor-tag">' + s.tag + '</div></div>' +
+        '</div>' +
+        '<div class="sensor-check">' + (sel ? '✓' : '') + '</div>' +
+        '</div>' +
+        '<ul class="sensor-merkmale">' + s.merkmale.map(function(m){ return '<li>' + m + '</li>'; }).join('') + '</ul>' +
+        '</div>';
+    }).join('') +
+    '</div>';
+}
+
+// ─── Summary Table ────────────────────────────────────────────────────────────
+function summaryTable() {
+  const rows = [
+    ["Antrieb",         LM.modell[S.modell] || "–"],
+    ["Türblatt",        (S.tuerbreite||"–")+" mm / "+(S.tuergewicht||"–")+" kg"],
+    ["Flügelanzahl",    LM.fluegelanzahl[S.fluegelanzahl] || "–"],
+    ["Türart",          LM.tuerart[S.tuerart] || "–"],
+    ["Betriebsart",     LM.betriebsart[S.betriebsart] || "–"],
+    ["Betriebsmodus",   LM.betriebsmodus[S.betriebsmodus] || "–"],
+    ["Montageart",      LM.montageart[S.montageart] || "–"],
+    ["Öffnungswinkel",  S.oeffnungswinkel ? LM.oeffnungswinkel[S.oeffnungswinkel] : "–"],
+    ["Verkleidung",     S.verkleidung ? LM.verkleidung[S.verkleidung] : "–"],
+    ["Farbgebung",      S.farbgebung ? LM.farbgebung[S.farbgebung] : "–"],
+    ["Windlast",        S.windlast ? LM.windlast[S.windlast] : "–"],
+    ["Notstrom",        S.notfunktion ? LM.notfunktion[S.notfunktion] : "–"],
+    ["Sensorik",        S.sensorik ? LM.sensorik[S.sensorik] : "–"],
+    ["Sensor-Montage",  S.sensorMontage.length ? S.sensorMontage.map(function(s){ return SMl[s]; }).join(", ") : "–"],
+    ["Sensor-Farbe",    S.sensorFarbe ? LM.sensorFarbe[S.sensorFarbe] : "–"],
+    ["Zubehör",         S.zubehoer.length ? S.zubehoer.map(function(z){ return ZL[z]; }).join(", ") : "Keines"],
+  ];
+  const isBrand = S.tuerart === "brandschutz" || S.tuerart === "rauchschutz";
+  return '<table class="sum-table"><tbody>' +
+    rows.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') +
+    '</tbody></table>' +
+    '<div class="norm-row">' +
+    ['EN 1154','EN 16005','DIN 18650','230V AC','IP 44'].map(function(n){ return '<span class="norm-badge">'+n+'</span>'; }).join('') +
+    (isBrand ? '<span class="norm-badge warn">⚠ Brandschutz</span>' : '') +
+    '</div>';
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function render() {
+  const filled  = PFLICHT.filter(function(k){ return !!S[k]; }).length;
+  const pct     = Math.round(filled / PFLICHT.length * 100);
+  const complete = filled === PFLICHT.length;
+  const emp     = getEmpfehlung();
+  const isBrand = S.tuerart === "brandschutz" || S.tuerart === "rauchschutz";
+
+  // Header ring
+  document.getElementById('prog-ring').style.background =
+    'conic-gradient(#D95E1F ' + (filled/PFLICHT.length*360) + 'deg, #2D4B66 0deg)';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  // Build sections
+  let html = '';
+
+  // Empfehlung
+  if (emp) {
+    html += alert_(emp.warn ? 'warn' : 'ok', emp.warn ? '⚠️' : '✅',
+      'Empfehlung: ' + emp.modell, emp.reason);
+  }
+
+  // 1. Modell
+  html += section('Modell &amp; Türspezifikation', '🚪',
+    radioGroup('Antriebsmodell', 'ED 100 bis 1100 mm / 160 kg &nbsp;·&nbsp; ED 250 bis 1600 mm / 400 kg', 'modell', [
+      {value:'ed100', label:'ED 100', sub:'bis 160 kg'},
+      {value:'ed250', label:'ED 250', sub:'bis 400 kg'},
+    ], true) +
+    '<div class="two-col">' +
+    numberInput('Türblattbreite', '', 'tuerbreite', 'mm', 'z. B. 900') +
+    numberInput('Türblattgewicht', '', 'tuergewicht', 'kg', 'z. B. 80') +
+    '</div>' +
+    radioGroup('Flügelanzahl', null, 'fluegelanzahl', [
+      {value:'1', label:'Einflügelig'},
+      {value:'2', label:'Zweiflügelig'},
+      {value:'esr', label:'ED ESR ½', sub:'teilauto.'},
+    ], true) +
+    radioGroup('Türart', 'Beeinflusst zulässige Montagearten', 'tuerart', [
+      {value:'standard', label:'Standard', icon:'🏢'},
+      {value:'brandschutz', label:'Brandschutz', sub:'T30/T90'},
+      {value:'rauchschutz', label:'Rauchschutz', sub:'RS'},
+    ], true) +
+    (isBrand ? alert_('warn', '⚠️', 'Brandschutz aktiv', 'Nur <b>drückende Montage</b> zulässig. Selbstschließfunktion muss aktiv sein.') : '')
+  );
+
+  // 2. Betrieb
+  html += section('Betrieb &amp; Energie', '⚡',
+    radioGroup('Betriebsart', 'Low-Energy: bewusstes Aktivieren &nbsp;·&nbsp; Full-Energy: automatisch', 'betriebsart', [
+      {value:'low', label:'Low-Energy', sub:'EN 1154'},
+      {value:'full', label:'Full-Energy', sub:'Vollautomatik'},
+    ], true) +
+    radioGroup('Betriebsmodus', null, 'betriebsmodus', [
+      {value:'auto', label:'Vollautomatik', icon:'🤖'},
+      {value:'assist', label:'Power-Assist'},
+      {value:'manuell', label:'Manuell + Rückhalt'},
+    ], true) +
+    radioGroup('Windlastregelung', 'Empfohlen für Außentüren', 'windlast', [
+      {value:'ja', label:'Aktiviert', icon:'💨'},
+      {value:'nein', label:'Deaktiviert'},
+    ])
+  );
+
+  // 3. Montage
+  html += section('Montage &amp; Mechanik', '🔧',
+    radioGroup('Montageart', 'Bezogen auf Ansicht von der Öffnungsseite', 'montageart', [
+      {value:'bg-gleit',    label:'BGS drückend', sub:'Gleitschiene'},
+      {value:'bg-gestänge', label:'BGS drückend', sub:'Normalgestänge'},
+      {value:'bs-gleit',    label:'BS ziehend',   sub:'Gleitschiene'},
+    ], true) +
+    radioGroup('Öffnungswinkel', null, 'oeffnungswinkel', [
+      {value:'80', label:'80°'}, {value:'90', label:'90°'}, {value:'110', label:'110°', sub:'max.'},
+    ]) +
+    radioGroup('Verkleidung', null, 'verkleidung', [
+      {value:'basic', label:'BASIC'},
+      {value:'professionell', label:'PROFESSIONELL', sub:'VARIO'},
+    ]) +
+    radioGroup('Farbgebung', null, 'farbgebung', [
+      {value:'silber', label:'Silber'}, {value:'weiss', label:'Weiß', sub:'RAL 9016'},
+      {value:'bronze', label:'Bronze'}, {value:'individuell', label:'RAL indiv.'},
+    ])
+  );
+
+  // 4. Sensorik
+  var sensorExtra = '';
+  if (S.sensorik && S.sensorik !== 'keine') {
+    sensorExtra =
+      checkboxGroup('Montagepositionen', null, 'sensorMontage', [
+        {value:'bandseite', label:'Bandseite'},
+        {value:'bandgegenseite', label:'Bandgegenseite'},
+        {value:'beidseitig', label:'Beidseitig'},
+      ]) +
+      radioGroup('Gehäusefarbe Sensor', null, 'sensorFarbe', [
+        {value:'alu', label:'Aluminium'}, {value:'weiss', label:'Weiß'}, {value:'schwarz', label:'Schwarz'},
+      ]) +
+      (S.sensorik === 'irs4' ? alert_('ok', 'ℹ️', 'IRS4 (4SAFE)', 'Master-Slave-kompatibel mit LZR-FLATSCAN SW. Reihenschaltung bis 6 Module möglich.') : '') +
+      (S.sensorik === 'flatscan3d' ? alert_('ok', 'ℹ️', 'FLATSCAN 3D SW', 'Dritter Ausgang für hygienische berührungslose Aktivierung konfigurierbar (bis 2 virtuelle Taster).') : '');
+  }
+  html += section('Absicherungssensorik (BEA)', '🛡️',
+    '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>' +
+    sensorCards() + sensorExtra
+  );
+
+  // 5. Zubehör
+  html += section('Aktivierung &amp; Zubehör', '🔌',
+    checkboxGroup('Aktivierung &amp; Peripherie', 'Mehrfachauswahl möglich', 'zubehoer', [
+      {value:'radar',            label:'Radar-Sensor',    icon:'📡'},
+      {value:'taster',           label:'Aktivierungstaster', icon:'🔘'},
+      {value:'schluessel',       label:'Schlüsselschalter'},
+      {value:'nottaster',        label:'Nottaster'},
+      {value:'profil',           label:'Profil-Zylinder'},
+      {value:'zutrittskontrolle',label:'Zutrittskontrolle', icon:'🏷'},
+      {value:'gegensprechanlage',label:'Gegensprechanlage', icon:'🔊'},
+      {value:'brandmeldeanlage', label:'BMA-Anbindung', icon:'🔴'},
+      {value:'rauchdetektor',    label:'Rauchmelder'},
+      {value:'fingerprint',      label:'Fingerprint', icon:'👆'},
+    ]) +
+    radioGroup('Notstrom / Backup', null, 'notfunktion', [
+      {value:'notstrom', label:'Notstrom', sub:'24V'},
+      {value:'batterie', label:'Batterie-Backup'},
+      {value:'keine',    label:'Keine'},
+    ])
+  );
+
+  // Summary button
+  html += '<button class="big-btn primary" id="summary-btn"' + (complete ? '' : ' disabled') + '>' +
+    (complete ? (S.showSummary ? '▲ Konfiguration schließen' : '✅ Konfiguration anzeigen') :
+      'Noch ' + (PFLICHT.length - filled) + ' Pflichtfeld' + (PFLICHT.length-filled!==1?'er':'') + ' ausfüllen') +
+    '</button>';
+
+  // Summary panel
+  html += '<div id="summary-panel" class="' + (S.showSummary && complete ? 'visible' : '') + '">' +
+    '<div class="sum-hdr">📋 Konfigurationsübersicht</div>' +
+    '<div class="sum-body">' +
+    summaryTable() +
+    '<button class="big-btn dark" id="pdf-btn" style="margin-top:14px"><span>📄</span> Als PDF exportieren / drucken</button>' +
+    '<p class="pdf-hint">Im Druckdialog „Als PDF speichern" wählen</p>' +
+    '</div></div>';
+
+  document.getElementById('content').innerHTML = html;
+}
+
+// ─── Events ───────────────────────────────────────────────────────────────────
+document.getElementById('content').addEventListener('click', function(ev) {
+  var btn = ev.target.closest('[data-action]');
+  if (!btn) {
+    // summary / pdf buttons
+    var sb = ev.target.closest('#summary-btn');
+    if (sb && !sb.disabled) { S.showSummary = !S.showSummary; render(); return; }
+    var pb = ev.target.closest('#pdf-btn');
+    if (pb) { exportPDF(); return; }
+    return;
+  }
+  var action = btn.dataset.action;
+  var field  = btn.dataset.field;
+  var value  = btn.dataset.value;
+  if (action === 'radio')  set(field, value);
+  if (action === 'chk')    toggleArr(field, value);
+});
+
+document.getElementById('content').addEventListener('change', function(ev) {
+  if (ev.target.classList.contains('num-input')) {
+    set(ev.target.dataset.field, ev.target.value);
+  }
+});
+
+document.getElementById('install-close').addEventListener('click', function() {
+  document.getElementById('install-banner').classList.add('hidden');
+});
+
+// Hide install banner on non-iOS
+if (!/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+  document.getElementById('install-banner').classList.add('hidden');
+}
+
+// ─── PDF Export ───────────────────────────────────────────────────────────────
+function exportPDF() {
+  var now   = new Date();
+  var datum  = now.toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit', year:'numeric'});
+  var uhrzeit = now.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
+  var emp   = getEmpfehlung();
+  var isBrand = S.tuerart === 'brandschutz' || S.tuerart === 'rauchschutz';
+  var rows  = [
+    ['Antriebsmodell',   LM.modell[S.modell]||'–'],
+    ['Türblattbreite',   S.tuerbreite ? S.tuerbreite+' mm' : '–'],
+    ['Türblattgewicht',  S.tuergewicht ? S.tuergewicht+' kg' : '–'],
+    ['Flügelanzahl',     LM.fluegelanzahl[S.fluegelanzahl]||'–'],
+    ['Türart',           LM.tuerart[S.tuerart]||'–'],
+    ['Betriebsart',      LM.betriebsart[S.betriebsart]||'–'],
+    ['Betriebsmodus',    LM.betriebsmodus[S.betriebsmodus]||'–'],
+    ['Montageart',       LM.montageart[S.montageart]||'–'],
+    ['Öffnungswinkel',   S.oeffnungswinkel ? LM.oeffnungswinkel[S.oeffnungswinkel] : '–'],
+    ['Verkleidung',      S.verkleidung ? LM.verkleidung[S.verkleidung] : '–'],
+    ['Farbgebung',       S.farbgebung ? LM.farbgebung[S.farbgebung] : '–'],
+    ['Windlastregelung', S.windlast ? LM.windlast[S.windlast] : '–'],
+    ['Notstrom',         S.notfunktion ? LM.notfunktion[S.notfunktion] : '–'],
+    ['Absicherungssensorik', S.sensorik ? LM.sensorik[S.sensorik] : '–'],
+    ['Sensor-Montage',   S.sensorMontage.length ? S.sensorMontage.map(function(s){return SMl[s];}).join(', ') : '–'],
+    ['Sensor-Farbe',     S.sensorFarbe ? LM.sensorFarbe[S.sensorFarbe] : '–'],
+    ['Zubehör',          S.zubehoer.length ? S.zubehoer.map(function(z){return ZL[z];}).join(', ') : 'Keines'],
+  ];
+  var empBanner = emp ? '<div style="margin:14px 0;padding:10px 14px;background:'+(emp.warn?'#FEF3C7':'#EAF7EF')+';border-left:4px solid '+(emp.warn?'#B45309':'#2A7A4B')+';border-radius:4px"><b style="color:'+(emp.warn?'#B45309':'#2A7A4B')+'">'+(emp.warn?'⚠':'✓')+' Empfehlung: '+emp.modell+'</b><span style="color:#6B7A8D;font-size:13px;margin-left:8px">'+emp.reason+'</span></div>' : '';
+  var tableRows = rows.map(function(r,i){return '<tr style="background:'+(i%2===0?'#F4F6F9':'#fff')+'"><td style="padding:8px 12px;font-weight:600;color:#6B7A8D;font-size:12px;border-bottom:1px solid #E0E8F0;width:38%">'+r[0]+'</td><td style="padding:8px 12px;font-weight:600;color:#1A2D44;font-size:12px;border-bottom:1px solid #E0E8F0">'+r[1]+'</td></tr>';}).join('');
+  var norms = ['EN 1154','EN 16005','DIN 18650','230V AC/50Hz','IP 44'].map(function(n){return '<span style="padding:2px 8px;background:#1A2D44;color:#fff;border-radius:99px;font-size:10px;font-weight:600">'+n+'</span>';}).join('')+(isBrand?'<span style="padding:2px 8px;background:#B45309;color:#fff;border-radius:99px;font-size:10px;font-weight:600">⚠ Brandschutz</span>':'');
+  var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>dormakaba ED Konfiguration</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;color:#1A2D44;background:#fff;padding:20px}@page{size:A4;margin:15mm}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body>'
+    +'<div style="background:#1A2D44;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-radius:6px 6px 0 0"><div style="display:flex;align-items:center;gap:10px"><div style="width:5px;height:32px;background:#D95E1F;border-radius:2px"></div><div><div style="color:#fff;font-size:17px;font-weight:800">dormakaba ED 100 / ED 250</div><div style="color:#8BA3BA;font-size:11px;margin-top:2px">Drehtürantrieb · Konfigurationsdokument</div></div></div><div style="text-align:right"><div style="color:#8BA3BA;font-size:10px">Erstellt</div><div style="color:#fff;font-weight:700;font-size:12px">'+datum+' · '+uhrzeit+'</div></div></div>'
+    +'<div style="height:3px;background:linear-gradient(90deg,#D95E1F,#F08040)"></div>'
+    +empBanner
+    +'<div style="margin-top:14px"><div style="background:#1A2D44;padding:8px 12px;border-radius:3px 3px 0 0"><span style="color:#fff;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase">Konfigurationsübersicht</span></div><table style="width:100%;border-collapse:collapse;border:1px solid #D2DAE3;border-top:none">'+tableRows+'</table></div>'
+    +'<div style="margin-top:14px;padding:12px;background:#F4F6F9;border:1px solid #D2DAE3;border-radius:4px"><div style="font-weight:700;font-size:11px;color:#1A2D44;margin-bottom:6px;text-transform:uppercase">Normen</div><div style="display:flex;flex-wrap:wrap;gap:6px">'+norms+'</div></div>'
+    +'<div style="margin-top:22px;display:flex;gap:24px"><div style="flex:1;border-top:2px solid #1A2D44;padding-top:6px"><div style="font-size:10px;color:#6B7A8D">Aufgenommen von</div><div style="font-size:10px;color:#6B7A8D;margin-top:18px">Unterschrift</div></div><div style="flex:1;border-top:2px solid #1A2D44;padding-top:6px"><div style="font-size:10px;color:#6B7A8D">Geprüft von</div><div style="font-size:10px;color:#6B7A8D;margin-top:18px">Unterschrift</div></div><div style="flex:1;border-top:2px solid #1A2D44;padding-top:6px"><div style="font-size:10px;color:#6B7A8D">Datum</div><div style="font-size:13px;color:#1A2D44;font-weight:600;margin-top:2px">'+datum+'</div></div></div>'
+    +'<div style="margin-top:18px;padding-top:8px;border-top:1px solid #D2DAE3;display:flex;justify-content:space-between"><span style="font-size:9px;color:#8BA3BA">dormakaba Deutschland GmbH · DORMA Platz 1 · 58256 Ennepetal</span><span style="font-size:9px;color:#8BA3BA">ED100/250-KONF · '+datum+'</span></div>'
+    +'</body></html>';
+  var w = window.open('','_blank','width=900,height=700');
+  w.document.write(html); w.document.close(); w.focus();
+  setTimeout(function(){ w.print(); }, 400);
+}
+
+// ─── PWA Manifest ─────────────────────────────────────────────────────────────
+(function() {
+  var manifest = {
+    name:"dormakaba ED 100/250 Konfigurator", short_name:"ED Konfigurator",
+    description:"Drehtürantrieb Konfigurationsformular", start_url:".", display:"standalone",
+    background_color:"#1A2D44", theme_color:"#1A2D44", orientation:"portrait",
+    icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231A2D44'/%3E%3Crect x='60' y='60' width='32' height='392' rx='10' fill='%23D95E1F'/%3E%3Ctext x='115' y='310' font-family='Arial' font-weight='900' font-size='200' fill='white'%3EED%3C/text%3E%3C/svg%3E", sizes:"512x512", type:"image/svg+xml"}]
+  };
+  var blob = new Blob([JSON.stringify(manifest)], {type:"application/json"});
+  var link = document.createElement("link");
+  link.rel = "manifest"; link.href = URL.createObjectURL(blob);
+  document.head.appendChild(link);
+})();
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
