@@ -119,6 +119,19 @@
   footer p { font-size: 11px; color: var(--muted); }
   .norm-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 10px; }
   .norm-badge { padding: 3px 10px; background: #091636; color: #fff; border-radius: 99px; font-size: 11px; font-weight: 600; }
+
+  /* Fehlerbericht Button */
+  .bug-btn-wrap { padding: 24px 14px 8px; text-align: center; }
+  .bug-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 99px;
+    border: 1.5px solid #D2DAE3; background: #fff;
+    color: #6B7A8D; font-size: 13px; font-weight: 500;
+    font-family: inherit; cursor: pointer;
+    text-decoration: none; transition: all .15s;
+  }
+  .bug-btn:hover { border-color: #C0392B; color: #C0392B; background: #FDECEA; }
+
 </style>
 </head>
 <body>
@@ -232,6 +245,12 @@
     </p>
   </div>
 
+
+  <!-- Fehlerbericht -->
+  <div class="bug-btn-wrap" style="margin-top:8px">
+    <a class="bug-btn" id="bug-link" href="#">🐛 Fehlerbericht an Entwickler senden</a>
+  </div>
+
 </main>
 
 <footer>
@@ -265,6 +284,20 @@ document.getElementById('install-close').addEventListener('click', function () {
   l.href = URL.createObjectURL(new Blob([JSON.stringify(m)], { type: "application/json" }));
   document.head.appendChild(l);
 })();
+
+// Fehlerbericht mailto
+(function(){
+  var subj = encodeURIComponent('Fehlerbericht – STOBER Türantrieb Konfigurator');
+  var body = encodeURIComponent(
+    'Hallo M. Gerdau,\n\nFehler-Beschreibung:\n[Bitte hier beschreiben]\n\n' +
+    'Seite: STOBER Türantrieb Konfigurator (Startseite)\n' +
+    'Datum: ' + new Date().toLocaleDateString('de-DE') + '\n' +
+    'Gerät: ' + navigator.userAgent.substring(0, 60) + '\n\nMit freundlichen Grüßen'
+  );
+  var el = document.getElementById('bug-link');
+  if(el) el.href = 'mailto:gerdau1979@gmail.com?subject=' + subj + '&body=' + body;
+})();
+
 </script>
 </body>
 </html>
