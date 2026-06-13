@@ -201,7 +201,7 @@ const SENSORIK_LM={
 };
 const SMl={bandseite:"Bandseite",bandgegenseite:"Bandgegenseite",beidseitig:"Beidseitig"};
 const PFLICHT_D=["modell","fluegelanzahl","tuerart","betriebsart","betriebsmodus","montageart"];
-const PFLICHT_G=["variante","tuerart","g_betriebsart","g_montageart"];
+const PFLICHT_G=["variante","g_tuerart","g_betriebsart","g_montageart"];
 
 // ─── State ─────────────────────────────────────────────────────────────────────
 let S={
@@ -246,7 +246,11 @@ function getEmpG(){
 // ─── HTML Builders ─────────────────────────────────────────────────────────────
 function radio(label,hint,field,options,req){
   var val=S[field]||"",cls=sc();
-  return '<div class="field"><div class="field-label">'+label+(req?'<span class="field-req">*</span>':'')+
+  var missing=req&&!val;
+  return '<div class="field" style="'+(missing?'border-left:3px solid #C0392B;padding-left:10px;margin-left:-13px;':'')+'">'+
+    '<div class="field-label">'+label+
+    (req?'<span class="field-req">*</span>':'')+
+    (missing?'<span style="margin-left:8px;font-size:11px;font-weight:600;color:#C0392B;background:#FDECEA;padding:2px 8px;border-radius:99px">Pflichtfeld</span>':'')+
     '</div>'+(hint?'<p class="field-hint">'+hint+'</p>':'')+
     '<div class="btn-group">'+
     options.map(function(o){
