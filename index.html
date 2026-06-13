@@ -168,6 +168,41 @@
       <div class="app-card-arrow">›</div>
     </div>
     <div class="card-divider"></div>
+    <div style="padding:14px 0;text-align:center;border-bottom:1px solid #E8EDF3;margin-bottom:12px"><svg viewBox="0 0 160 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:130px;height:auto">
+  <defs>
+    <radialGradient id="doorWallGradient" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" style="stop-color:#D4D9E0;stop-opacity:1"/>
+      <stop offset="70%" style="stop-color:#D4D9E0;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#D4D9E0;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Wand (faded an den Kanten) -->
+  <rect x="0" y="0" width="160" height="240" fill="url(#doorWallGradient)"/>
+  
+  <!-- Türrahmen (bleibt klar sichtbar) -->
+  <rect x="20" y="30" width="120" height="160" rx="4" fill="#E8EDF3" stroke="#6B7A8D" stroke-width="2"/>
+  <rect x="28" y="38" width="104" height="144" rx="2" fill="#C5D9F1" opacity="0.4" stroke="#8BA3BA" stroke-width="1"/>
+  <rect x="32" y="42" width="30" height="50" fill="#fff" opacity="0.15" rx="2"/>
+  <rect x="95" y="90" width="25" height="40" fill="#fff" opacity="0.1" rx="2"/>
+  
+  <!-- Türgriff -->
+  <g>
+    <rect x="105" y="110" width="8" height="20" rx="4" fill="#1A2D44"/>
+    <circle cx="109" cy="110" r="3" fill="#6B7A8D"/>
+  </g>
+  
+  <!-- Antrieb -->
+  <rect x="30" y="12" width="100" height="12" rx="3" fill="#D95E1F" stroke="#A84815" stroke-width="1"/>
+  <circle cx="45" cy="18" r="2" fill="#fff" opacity="0.5"/>
+  <circle cx="80" cy="18" r="2" fill="#fff" opacity="0.5"/>
+  <circle cx="115" cy="18" r="2" fill="#fff" opacity="0.5"/>
+  <line x1="80" y1="24" x2="80" y2="32" stroke="#6B7A8D" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/>
+  
+  <!-- Scharnier -->
+  <circle cx="30" cy="80" r="3" fill="#6B7A8D" opacity="0.4"/>
+  <circle cx="30" cy="130" r="3" fill="#6B7A8D" opacity="0.4"/>
+</svg></div>
     <div class="app-card-body" style="padding-top:12px">
       <div class="pills">
         <span class="pill dk">dormakaba ED 100</span>
@@ -194,6 +229,50 @@
       <div class="app-card-arrow">›</div>
     </div>
     <div class="card-divider"></div>
+    <div style="padding:14px 0;text-align:center;border-bottom:1px solid #E8EDF3;margin-bottom:12px"><svg viewBox="0 0 160 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:130px;height:auto">
+  <defs>
+    <radialGradient id="slideWallGradient" cx="50%" cy="25%" r="85%">
+      <stop offset="0%" style="stop-color:#D4D9E0;stop-opacity:1"/>
+      <stop offset="65%" style="stop-color:#D4D9E0;stop-opacity:0.5"/>
+      <stop offset="100%" style="stop-color:#D4D9E0;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Wand (faded an den Kanten) -->
+  <rect x="0" y="0" width="160" height="240" fill="url(#slideWallGradient)"/>
+  
+  <!-- Schienen -->
+  <rect x="20" y="28" width="120" height="12" rx="3" fill="#8BA3BA" opacity="0.4"/>
+  <rect x="20" y="170" width="120" height="12" rx="3" fill="#8BA3BA" opacity="0.4"/>
+  
+  <!-- Türflügel LINKS -->
+  <g>
+    <rect x="25" y="45" width="48" height="110" rx="2" fill="#C5D9F1" opacity="0.8" stroke="#8BA3BA" stroke-width="1.5"/>
+    <rect x="29" y="49" width="40" height="102" fill="#fff" opacity="0.2" rx="1"/>
+    <circle cx="62" cy="105" r="3" fill="#6B7A8D" opacity="0.5"/>
+    <rect x="30" y="12" width="32" height="12" rx="3" fill="#005A9C" stroke="#003570" stroke-width="1"/>
+    <circle cx="38" cy="18" r="1.5" fill="#fff" opacity="0.6"/>
+    <circle cx="52" cy="18" r="1.5" fill="#fff" opacity="0.6"/>
+  </g>
+  
+  <!-- Türflügel RECHTS -->
+  <g>
+    <rect x="87" y="45" width="48" height="110" rx="2" fill="#C5D9F1" opacity="0.8" stroke="#8BA3BA" stroke-width="1.5"/>
+    <rect x="91" y="49" width="40" height="102" fill="#fff" opacity="0.2" rx="1"/>
+    <circle cx="98" cy="105" r="3" fill="#6B7A8D" opacity="0.5"/>
+    <rect x="98" y="12" width="32" height="12" rx="3" fill="#D95E1F" stroke="#A84815" stroke-width="1"/>
+    <circle cx="106" cy="18" r="1.5" fill="#fff" opacity="0.6"/>
+    <circle cx="120" cy="18" r="1.5" fill="#fff" opacity="0.6"/>
+  </g>
+  
+  <!-- Schiebepfeile -->
+  <g>
+    <path d="M 30 75 L 15 75 L 20 70" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30 75 L 15 75 L 20 80" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 130 75 L 145 75 L 140 70" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 130 75 L 145 75 L 140 80" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg></div>
     <div class="app-card-body" style="padding-top:12px">
       <div class="pills">
         <span class="pill dk">ES 250 PRO / ES 400 PRO</span>
@@ -235,42 +314,3 @@
   </div>
   <p style="margin-top:12px">Türantrieb Konfigurator &nbsp;·&nbsp; Created by M.G.</p>
 </footer>
-
-<script>
-// iOS install banner
-if (!/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-  document.getElementById('install-banner').classList.add('hidden');
-}
-document.getElementById('install-close').addEventListener('click', function () {
-  document.getElementById('install-banner').classList.add('hidden');
-});
-
-// PWA Manifest
-(function () {
-  var m = {
-    name: "Türantrieb Konfigurator", short_name: "Konfigurator",
-    display: "standalone", start_url: ".", background_color: "#1A2D44",
-    theme_color: "#1A2D44", orientation: "portrait"
-  };
-  var l = document.createElement("link");
-  l.rel = "manifest";
-  l.href = URL.createObjectURL(new Blob([JSON.stringify(m)], { type: "application/json" }));
-  document.head.appendChild(l);
-})();
-
-// Fehlerbericht mailto
-(function(){
-  var subj = encodeURIComponent('Fehlerbericht – Türantrieb Konfigurator');
-  var body = encodeURIComponent(
-    'Hallo M. Gerdau,\n\nFehler-Beschreibung:\n[Bitte hier beschreiben]\n\n' +
-    'Seite: Türantrieb Konfigurator (Startseite)\n' +
-    'Datum: ' + new Date().toLocaleDateString('de-DE') + '\n' +
-    'Gerät: ' + navigator.userAgent.substring(0, 60) + '\n\nMit freundlichen Grüßen'
-  );
-  var el = document.getElementById('bug-link');
-  if(el) el.href = 'mailto:gerdau1979@gmail.com?subject=' + subj + '&body=' + body;
-})();
-
-</script>
-</body>
-</html>
