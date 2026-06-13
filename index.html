@@ -136,39 +136,12 @@
 </head>
 <body>
 
-<!-- Stober Briefkopf Header -->
-<header style="padding:0;background:#fff;box-shadow:0 2px 8px rgba(9,22,54,.15)">
-
-  <!-- Gradient-Balken wie im Briefkopf -->
-  <div style="height:44px;background:linear-gradient(90deg, #091636 0%, #1B3A6B 25%, #577496 65%, #B8C8DC 85%, #fff 100%);
-              display:flex;align-items:center;justify-content:flex-end;
-              padding-top:calc(var(--safe-top));padding-right:20px">
-    <span style="font-family:Arial,sans-serif;font-weight:900;font-size:28px;color:#001B43;
-                 letter-spacing:-.01em;text-shadow:none;line-height:1">STOBER</span>
-  </div>
-
-  <!-- Adresszeile wie im Briefkopf -->
-  <div style="background:#fff;padding:10px 16px 12px;display:flex;flex-wrap:wrap;gap:0;
-              border-bottom:1px solid #D2DAE3">
-    <!-- Hauptsitz -->
-    <div style="min-width:180px;flex:1;padding-right:12px;border-right:1px solid #D2DAE3;margin-right:12px">
-      <div style="font-weight:700;font-size:12px;color:#001B43">Willi Stober GmbH &amp; Co. KG</div>
-      <div style="font-size:11px;color:#4A5568;line-height:1.5">
-        Am Zinken 2 · 76149 Karlsruhe<br>
-        Tel. 0721 – 7808-0 · info@stober-online.de<br>
-        <span style="font-weight:700">www.stober-online.de</span>
-      </div>
-    </div>
-    <!-- Titel App -->
-    <div style="flex:2;display:flex;align-items:center;justify-content:center;padding:4px 0">
-      <div style="text-align:center">
-        <div style="font-size:15px;font-weight:800;color:#001B43;letter-spacing:-.02em">Türantrieb Konfigurator</div>
-        <div style="font-size:11px;color:#577496;margin-top:2px">dormakaba &amp; GEZE · Dreh- und Schiebetüren</div>
-      </div>
-    </div>
+<header style="padding:0;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.1)">
+  <div style="padding:16px;text-align:center">
+    <h1 style="font-size:18px;font-weight:800;color:#001B43;margin:0">Türantrieb Konfigurator</h1>
+    <p style="font-size:12px;color:#577496;margin:6px 0 0">dormakaba &amp; GEZE · Dreh- und Schiebetüren</p>
   </div>
 </header>
-<div style="height:3px;background:linear-gradient(90deg,#091636 0%,#577496 50%,#B8C8DC 100%)"></div>
 
 <!-- Install banner (iOS only) -->
 <div id="install-banner">
@@ -260,7 +233,7 @@
     <span class="norm-badge">EN 1154</span>
     <span class="norm-badge">AutSchR</span>
   </div>
-  <p style="margin-top:12px"><span style="font-weight:700;color:#001B43">STOBER</span> Türantrieb Konfigurator &nbsp;·&nbsp; Willi Stober GmbH &amp; Co. KG · Karlsruhe</p>
+  <p style="margin-top:12px">Türantrieb Konfigurator &nbsp;·&nbsp; Created by M.G.</p>
 </footer>
 
 <script>
@@ -287,10 +260,10 @@ document.getElementById('install-close').addEventListener('click', function () {
 
 // Fehlerbericht mailto
 (function(){
-  var subj = encodeURIComponent('Fehlerbericht – STOBER Türantrieb Konfigurator');
+  var subj = encodeURIComponent('Fehlerbericht – Türantrieb Konfigurator');
   var body = encodeURIComponent(
     'Hallo M. Gerdau,\n\nFehler-Beschreibung:\n[Bitte hier beschreiben]\n\n' +
-    'Seite: STOBER Türantrieb Konfigurator (Startseite)\n' +
+    'Seite: Türantrieb Konfigurator (Startseite)\n' +
     'Datum: ' + new Date().toLocaleDateString('de-DE') + '\n' +
     'Gerät: ' + navigator.userAgent.substring(0, 60) + '\n\nMit freundlichen Grüßen'
   );

@@ -691,11 +691,32 @@ function buildSummary(){
 
 // ─── Paywall ──────────────────────────────────────────────────────────────────
 window._paywallConfirmed = false;
-var MA_CODES = ['7808'];
+var MA_CODES = ['7808', '7890'];
+function logMaCode(code) {
+  try {
+    var logs = JSON.parse(localStorage.getItem('stober_ma_logs')) || [];
+    var now = new Date();
+    logs.push({
+      code: code,
+      timestamp: now.toISOString(),
+      date: now.toLocaleDateString('de-DE'),
+      time: now.toLocaleTimeString('de-DE'),
+      url: window.location.pathname,
+      userAgent: navigator.userAgent.substring(0, 80)
+    });
+    localStorage.setItem('stober_ma_logs', JSON.stringify(logs));
+    console.log('MA Code logged:', code, logs.length, 'total');
+  } catch(e) {
+    console.warn('Log failed:', e);
+  }
+}
+
 function checkMaCode(){
   var input = document.getElementById('ma-code-input');
   var errEl = document.getElementById('ma-code-error');
-  if(MA_CODES.indexOf(input.value.trim()) > -1){
+  var code = input.value.trim();
+  if(MA_CODES.indexOf(code) > -1){
+    logMaCode(code);
     window._paywallConfirmed = true;
     document.getElementById('paywall-overlay').classList.remove('visible');
     input.value = '';
@@ -716,6 +737,19 @@ function showPaywall() {
 
 // ─── PDF Export ────────────────────────────────────────────────────────────────
 function exportPDF(){
+  // Validierung: Alle Pflichtfelder prüfen
+  var pflicht = PFLICHT_D;
+  var missing = [];
+  for(var i=0; i<pflicht.length; i++){
+    if(!S[pflicht[i]]){
+      missing.push(pflicht[i]);
+    }
+  }
+  if(missing.length > 0){
+    alert('Bitte füllen Sie alle Pflichtfelder aus:\n- ' + missing.join('\n- '));
+    return;
+  }
+  
   var now=new Date();
   var datum=now.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
   var uhrzeit=now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
@@ -945,6 +979,49 @@ if(!/iPad|iPhone|iPod/.test(navigator.userAgent)) document.getElementById('insta
 })();
 
 render();
+
+
+// ─── Admin: MA-Code Logs (Browser-Konsole) ─────────────────────────────────
+window.viewMaLogs = function(){
+  var logs = JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');
+  console.log('═══ STOBER MA-CODE LOGS ═══');
+  console.log('Gesamt Einträge:', logs.length);
+  logs.forEach(function(log, i){
+    console.log(i+1 + '.', log.date, log.time, '| Code: ' + log.code);
+  });
+  console.log('\nJSON Export:\n' + JSON.stringify(logs, null, 2));
+  console.log('\nCSV Export (copy paste):');
+  var csv = 'Code,Datum,Uhrzeit,URL\n' + logs.map(l => l.code+','+l.date+','+l.time+','+l.url).join('\n');
+  console.log(csv);
+};
+window.downloadMaLogs = function(){
+  var logs = JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');
+  var csv = 'Code,Datum,Uhrzeit,URL,UserAgent\n' + 
+    logs.map(l => '"'+l.code+'","'+l.date+'","'+l.time+'","'+l.url+'","'+l.userAgent+'"').join('\n');
+  var blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'stober-ma-logs-'+new Date().toISOString().split('T')[0]+'.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+window.clearMaLogs = function(){
+  if(confirm('Alle MA-Code Logs wirklich löschen?')){
+    localStorage.removeItem('stober_ma_logs');
+    console.log('✓ Logs gelöscht');
+  }
+};
+if(!window._adminConsoleReady){
+  console.log('%c🔑 STOBER Admin-Befehle:', 'color:#001B43;font-weight:bold;font-size:13px');
+  console.log('viewMaLogs() - Alle MA-Code Logs in Konsole anzeigen');
+  console.log('downloadMaLogs() - Logs als CSV-Datei exportieren');
+  console.log('clearMaLogs() - Alle Logs löschen');
+  window._adminConsoleReady = true;
+}
+
 </script>
 </body>
 </html>
