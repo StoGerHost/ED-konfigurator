@@ -137,6 +137,60 @@
   .norm-badge{padding:3px 10px;color:#fff;border-radius:99px;font-size:11px;font-weight:600;background:var(--primary)}
   .norm-badge.ok{background:var(--ok)}  .norm-badge.warn{background:var(--warn)}
   .pdf-hint{font-size:11px;color:var(--muted);margin-top:8px;text-align:center}
+  /* PayPal Payment Modal */
+  #paywall-overlay{
+    display:none;position:fixed;inset:0;background:rgba(9,22,54,.65);
+    z-index:9999;align-items:center;justify-content:center;padding:20px;
+  }
+  #paywall-overlay.visible{display:flex;}
+  #paywall-box{
+    background:#fff;border-radius:16px;max-width:360px;width:100%;
+    box-shadow:0 8px 40px rgba(0,0,0,.25);overflow:hidden;
+  }
+  #paywall-header{
+    background:linear-gradient(135deg,#091636 0%,#1B3A6B 100%);
+    padding:20px;text-align:center;
+  }
+  #paywall-header h2{color:#fff;font-size:17px;font-weight:800;margin-bottom:4px;}
+  #paywall-header p{color:rgba(255,255,255,.7);font-size:12px;}
+  #paywall-body{padding:20px;}
+  #paywall-price{
+    text-align:center;padding:14px;background:#F8F9FC;
+    border-radius:10px;margin-bottom:16px;
+  }
+  #paywall-price .amount{font-size:32px;font-weight:900;color:#001B43;}
+  #paywall-price .label{font-size:12px;color:#6B7A8D;margin-top:2px;}
+  .paywall-step{
+    display:flex;align-items:flex-start;gap:10px;
+    margin-bottom:12px;font-size:13px;color:#4A5568;
+  }
+  .paywall-step .step-num{
+    width:22px;height:22px;border-radius:50%;background:#001B43;
+    color:#fff;font-weight:700;font-size:11px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  #btn-paypal{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;padding:14px;border-radius:10px;border:none;
+    background:#003087;color:#fff;font-size:15px;font-weight:700;
+    cursor:pointer;font-family:inherit;margin-bottom:10px;
+    text-decoration:none;
+  }
+  #btn-paypal .pp-yellow{color:#FFD700;font-weight:900;}
+  #btn-paid{
+    display:none;width:100%;padding:14px;border-radius:10px;border:none;
+    background:#2A7A4B;color:#fff;font-size:15px;font-weight:700;
+    cursor:pointer;font-family:inherit;margin-bottom:10px;
+  }
+  #btn-cancel-pay{
+    width:100%;padding:10px;border-radius:10px;border:1.5px solid #D2DAE3;
+    background:#fff;color:#6B7A8D;font-size:13px;cursor:pointer;font-family:inherit;
+  }
+  #paywall-hint{
+    font-size:11px;color:#6B7A8D;text-align:center;
+    margin-top:10px;line-height:1.5;
+  }
+
   /* Fehlerbericht Button */
   .bug-btn-wrap { padding: 24px 14px 8px; text-align: center; }
   .bug-btn {
@@ -152,6 +206,71 @@
 </style>
 </head>
 <body>
+<!-- PayPal Paywall Modal -->
+<div id="paywall-overlay">
+  <div id="paywall-box">
+    <div id="paywall-header">
+      <h2>📄 PDF-Export</h2>
+      <p>Einmaliger Beitrag für den Export</p>
+    </div>
+    <div id="paywall-body">
+      <div id="paywall-price">
+        <div class="amount">0,09 €</div>
+        <div class="label">einmalig pro PDF-Export</div>
+      </div>
+      <div class="paywall-step">
+        <span class="step-num">1</span>
+        <span>Klicke auf „Jetzt zahlen" – du wirst zu PayPal weitergeleitet.</span>
+      </div>
+      <div class="paywall-step">
+        <span class="step-num">2</span>
+        <span>Nach erfolgreicher Zahlung kehre zurück und klicke „Zahlung abgeschlossen".</span>
+      </div>
+      <div class="paywall-step">
+        <span class="step-num">3</span>
+        <span>Dein PDF wird sofort generiert.</span>
+      </div>
+      <a id="btn-paypal" href="https://www.paypal.me/Marko436/0.09EUR" target="_blank" onclick="document.getElementById('btn-paid').style.display='block';this.style.opacity='.5';">
+        <span>Pay</span><span class="pp-yellow">Pal</span>&nbsp; Jetzt 0,09 € zahlen
+      </a>
+      <button id="btn-paid" onclick="window._paywallConfirmed=true;document.getElementById('paywall-overlay').classList.remove('visible');exportPDF();">
+        ✅ Zahlung abgeschlossen – PDF erstellen
+      </button>
+      <button id="btn-cancel-pay" onclick="document.getElementById('paywall-overlay').classList.remove('visible');">
+        Abbrechen
+      </button>
+
+      <!-- Mitarbeitercode -->
+      <div style="margin-top:14px;border-top:1px solid #E8EDF3;padding-top:14px">
+        <div style="font-size:12px;font-weight:600;color:#6B7A8D;margin-bottom:8px;text-align:center">
+          🔑 Mitarbeiter? Code eingeben:
+        </div>
+        <div style="display:flex;gap:8px">
+          <input id="ma-code-input" type="password" placeholder="Mitarbeitercode"
+            style="flex:1;padding:10px 12px;border-radius:8px;border:2px solid #D2DAE3;
+                   font-size:15px;font-family:inherit;outline:none;letter-spacing:.2em"
+            onkeydown="if(event.key==='Enter') checkMaCode()">
+          <button onclick="checkMaCode()"
+            style="padding:10px 16px;border-radius:8px;border:none;
+                   background:#001B43;color:#fff;font-weight:700;font-size:13px;
+                   cursor:pointer;font-family:inherit;white-space:nowrap">
+            ✓ OK
+          </button>
+        </div>
+        <div id="ma-code-error"
+          style="display:none;margin-top:6px;font-size:12px;color:#C0392B;text-align:center">
+          ❌ Ungültiger Code. Bitte erneut versuchen.
+        </div>
+      </div>
+
+      <p id="paywall-hint">
+        Mit der Zahlung stimmst du den Nutzungsbedingungen zu.<br>
+        Bei Fragen: <a href="mailto:gerdau1979@gmail.com" style="color:#001B43">gerdau1979@gmail.com</a>
+      </p>
+    </div>
+  </div>
+</div>
+
 <div id="hdr" class="dk">
   <div style="display:flex;align-items:center">
     <div id="hdr-bar"></div>
@@ -661,6 +780,32 @@ function buildSummary(){
     '</div></div>';
 }
 
+
+// ─── Paywall ──────────────────────────────────────────────────────────────────
+window._paywallConfirmed = false;
+var MA_CODES = ['7808'];
+function checkMaCode(){
+  var input = document.getElementById('ma-code-input');
+  var errEl = document.getElementById('ma-code-error');
+  if(MA_CODES.indexOf(input.value.trim()) > -1){
+    window._paywallConfirmed = true;
+    document.getElementById('paywall-overlay').classList.remove('visible');
+    input.value = '';
+    exportPDF();
+  } else {
+    errEl.style.display = 'block';
+    input.value = '';
+    input.focus();
+    setTimeout(function(){ errEl.style.display='none'; }, 3000);
+  }
+}
+function showPaywall() {
+  window._paywallConfirmed = false;
+  document.getElementById('btn-paid').style.display = 'none';
+  document.getElementById('btn-paypal').style.opacity = '1';
+  document.getElementById('paywall-overlay').classList.add('visible');
+}
+
 // ─── PDF Export ───────────────────────────────────────────────────────────────
 function exportPDF(){
   var now=new Date();
@@ -806,7 +951,7 @@ function handleClick(ev){
   var btn=ev.target.closest('[data-action]');
   if(!btn){
     if(ev.target.closest('#summary-btn')&&!ev.target.closest('#summary-btn').disabled){S.showSummary=!S.showSummary;render();}
-    if(ev.target.closest('#pdf-btn')) exportPDF();
+    if(ev.target.closest('#pdf-btn')) showPaywall();
     return;
   }
   var a=btn.dataset.action,f=btn.dataset.field,v=btn.dataset.value;
