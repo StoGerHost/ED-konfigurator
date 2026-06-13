@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Schiebetür Konfigurator">
+  <meta name="apple-mobile-web-app-title" content="STOBER Schiebetür">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#1A2D44">
+  <meta name="theme-color" content="#001B43">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231A2D44'/%3E%3Crect x='40' y='60' width='20' height='392' rx='6' fill='%23D95E1F'/%3E%3Ctext x='75' y='310' font-family='Arial' font-weight='900' font-size='105' fill='white'%3ESCH%3C/text%3E%3C/svg%3E">
-  <title>Schiebetür Konfigurator</title>
+  <title>STOBER – Schiebetür Konfigurator</title>
 <style>
   :root{
-    --bg:#F2F4F7;--panel:#fff;--primary:#1A2D44;--accent:#D95E1F;
-    --accent-l:#FDF0EA;--border:#D2DAE3;--muted:#6B7A8D;
+    --bg:#F2F4F7;--panel:#fff;--primary:#091636;--accent:#001B43;
+    --accent-l:#EEF2F8;--border:#D2DAE3;--muted:#6B7A8D;
     --ok:#2A7A4B;--ok-l:#EAF7EF;--warn:#B45309;--warn-l:#FEF3C7;
     --geze:#005A9C;--geze-l:#E6F0FA;
     --safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
@@ -47,13 +47,13 @@
   #prod-sw{padding:14px 14px 0;display:flex;gap:10px}
   .ptab{flex:1;padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:var(--panel);
         display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.15s}
-  .ptab.ak-dk{border-color:#D95E1F;background:#FDF0EA}
-  .ptab.ak-gz{border-color:#005A9C;background:#E6F0FA}
+  .ptab.ak-dk{border-color:#D95E1F;background:#FFF5EF}
+  .ptab.ak-gz{border-color:#FFC72C;background:#FFFAEE}
   .ptab-icon{font-size:22px}
   .ptab-name{font-weight:700;font-size:13px;color:var(--primary)}
   .ptab-sub{font-size:11px;color:var(--muted)}
   .ptab.ak-dk .ptab-name{color:#D95E1F}
-  .ptab.ak-gz .ptab-name{color:#005A9C}
+  .ptab.ak-gz .ptab-name{color:#7A5000}
 
   #content{padding:14px 14px 0}
 
@@ -61,11 +61,11 @@
   .alert-ok{background:var(--ok-l);border:1px solid rgba(42,122,75,.25)}
   .alert-warn{background:var(--warn-l);border:1px solid rgba(180,83,9,.25)}
   .alert-info{background:#E8F0FE;border:1px solid rgba(26,45,68,.15)}
-  .alert-gz{background:#E6F0FA;border:1px solid rgba(0,90,156,.2)}
+  .alert-gz{background:#FFC72C22;border:1px solid rgba(255,199,44,.4)}
   .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
   .alert-head{font-weight:700;font-size:14px}
   .alert-head.ok{color:var(--ok)}.alert-head.warn{color:var(--warn)}
-  .alert-head.info{color:var(--primary)}.alert-head.gz{color:#005A9C}
+  .alert-head.info{color:var(--primary)}.alert-head.gz{color:#7A5000}
   .alert-body{color:var(--muted);font-size:12px;margin-top:2px}
 
   .section{background:var(--panel);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(26,45,68,.08)}
@@ -83,48 +83,50 @@
   .num-row{display:flex;align-items:center;gap:8px}
   .num-input{padding:12px 14px;border-radius:8px;border:2px solid var(--border);font-size:16px;width:130px;color:var(--primary);background:var(--panel);outline:none}
   .num-input:focus{border-color:var(--accent)}
+  .txt-input{padding:12px 14px;border-radius:8px;border:2px solid var(--border);font-size:16px;width:100%;color:var(--primary);background:var(--panel);outline:none;font-family:inherit}
+  .txt-input:focus{border-color:var(--accent)}
   .num-unit{color:var(--muted);font-size:14px;font-weight:500}
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:0}
 
   .btn-group{display:flex;flex-wrap:wrap;gap:8px}
   .opt-btn{padding:10px 14px;border-radius:8px;border:2px solid var(--border);background:var(--panel);color:var(--muted);
            font-weight:500;font-size:13px;display:flex;align-items:center;gap:5px;min-height:44px;transition:.12s}
-  .opt-btn.sel-dk{border-color:#D95E1F;background:#FDF0EA;color:#D95E1F;font-weight:700}
-  .opt-btn.sel-gz{border-color:#005A9C;background:#E6F0FA;color:#005A9C;font-weight:700}
+  .opt-btn.sel-dk{border-color:#D95E1F;background:#FFF5EF;color:#D95E1F;font-weight:700}
+  .opt-btn.sel-gz{border-color:#FFC72C;background:#FFFAEE;color:#7A5000;font-weight:700}
   .opt-sub{font-size:11px;opacity:.75;font-weight:400}
   .chk-box{width:16px;height:16px;border-radius:4px;border:2px solid var(--border);background:transparent;
            display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:900;color:transparent;transition:.12s}
   .opt-btn.sel-dk .chk-box{background:#D95E1F;border-color:#D95E1F;color:#fff}
-  .opt-btn.sel-gz .chk-box{background:#005A9C;border-color:#005A9C;color:#fff}
+  .opt-btn.sel-gz .chk-box{background:#FFC72C;border-color:#FFC72C;color:#001B43}
 
   /* Modell cards */
   .modell-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
   .modell-card{border:2px solid var(--border);border-radius:10px;padding:12px;background:var(--panel);cursor:pointer;transition:.12s}
-  .modell-card.sel-dk{border-color:#D95E1F;background:#FDF0EA}
-  .modell-card.sel-gz{border-color:#005A9C;background:#E6F0FA}
+  .modell-card.sel-dk{border-color:#D95E1F;background:#FFF5EF}
+  .modell-card.sel-gz{border-color:#FFC72C;background:#FFFAEE}
   .modell-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
   .modell-name{font-weight:800;font-size:13px;color:var(--primary)}
   .modell-card.sel-dk .modell-name{color:#D95E1F}
-  .modell-card.sel-gz .modell-name{color:#005A9C}
+  .modell-card.sel-gz .modell-name{color:#7A5000}
   .modell-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;display:inline-block;margin-bottom:5px}
   .modell-card.sel-dk .modell-badge{background:#D95E1F;color:#fff}
-  .modell-card.sel-gz .modell-badge{background:#005A9C;color:#fff}
+  .modell-card.sel-gz .modell-badge{background:#FFC72C;color:#001B43}
   .modell-badge:not(.sel-dk):not(.sel-gz){background:var(--primary);color:#fff}
   .modell-specs{font-size:11px;color:var(--muted);line-height:1.6}
   .modell-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:900;color:transparent;transition:.12s}
   .modell-card.sel-dk .modell-check{background:#D95E1F;border-color:#D95E1F;color:#fff}
-  .modell-card.sel-gz .modell-check{background:#005A9C;border-color:#005A9C;color:#fff}
+  .modell-card.sel-gz .modell-check{background:#FFC72C;border-color:#FFC72C;color:#001B43}
 
   .big-btn{width:100%;padding:16px;border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;
            min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px}
   .big-btn:disabled{background:var(--border);cursor:not-allowed}
-  .big-btn.dk{background:#D95E1F}  .big-btn.gz{background:#005A9C}  .big-btn.dark{background:#1A2D44}
+  .big-btn.dk{background:#D95E1F}  .big-btn.gz{background:#FFC72C;color:#001B43}  .big-btn.dark{background:#1A2D44}
 
   #summary-panel{margin-top:14px;background:var(--panel);border-radius:12px;overflow:hidden;display:none}
   #summary-panel.visible{display:block}
-  #summary-panel.dk{border:2px solid #D95E1F}  #summary-panel.gz{border:2px solid #005A9C}
+  #summary-panel.dk{border:2px solid #D95E1F}  #summary-panel.gz{border:2px solid #FFC72C}
   .sum-hdr{padding:12px 16px;color:#fff;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
-  .sum-hdr.dk{background:#D95E1F}  .sum-hdr.gz{background:#005A9C}
+  .sum-hdr.dk{background:#D95E1F}  .sum-hdr.gz{background:#FFC72C;color:#001B43}
   .sum-body{padding:16px}
   .sum-table{width:100%;border-collapse:collapse;font-size:13px}
   .sum-table tr{border-bottom:1px solid var(--border)}
@@ -141,7 +143,7 @@
 <div id="hdr" class="dk">
   <div style="display:flex;align-items:center">
     <div id="hdr-bar"></div>
-    <div><div id="hdr-title">Schiebetür Konfigurator</div><div id="hdr-sub">Automatische Schiebetür &middot; Konfiguration</div></div>
+    <div><div style="display:flex;align-items:center;gap:8px"><span style="background:#577496;color:#fff;font-weight:900;font-size:11px;padding:2px 7px;border-radius:3px;letter-spacing:.04em">STOBER</span><span id="hdr-title" style="color:#fff;font-weight:800;font-size:16px;letter-spacing:-.02em">Schiebetür Konfigurator</span></div><div id="hdr-sub">Automatische Schiebetür &middot; Konfiguration</div></div>
   </div>
   <div id="prog-ring"><div id="prog-inner"><span id="prog-pct">0%</span></div></div>
 </div>
@@ -152,6 +154,7 @@
   <button id="install-close">✕</button>
 </div>
 <div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+<div id="proj-data"></div>
 <div id="prod-sw"></div>
 <div id="content"></div>
 
@@ -230,20 +233,24 @@ let S={
   // dormakaba
   modell:"",fluegelanzahl:"",tuertyp:"",betriebsmodus:"",montageart:"",
   oeffnungsbreite:"",fluegelgewicht:"",verriegelung:"",profil:"",farbgebung:"",
-  notfunktion:"",oeffnungsgeschw:"",aktivierung:"",zubehoer:[],
+  notfunktion:"",oeffnungsgeschw:"",aktivierung:"",zubehoer:[],motioniq:"",
   // geze
   gz_modell:"",gz_fluegelanzahl:"",gz_tuertyp:"",gz_betriebsmodus:"",gz_montageart:"",
   gz_oeffnungsbreite:"",gz_fluegelgewicht:"",gz_verriegelung:"",gz_profil:"",gz_farbgebung:"",
   gz_notfunktion:"",gz_optionen:[],gz_aktivierung:"",
   // shared sensorik
   sensorik:"",sensorMontage:[],
+  // projekt
+  ag_firma:"",ag_ansprechpartner:"",ag_telefon:"",ag_email:"",
+  bs_strasse:"",bs_plzort:"",bs_objekt:"",bs_bauteil:"",
+  gpsLoading:false,gpsError:"",
   showSummary:false,
 };
 function set(k,v){S=Object.assign({},S,{[k]:v});render();}
 function toggleArr(k,v){var a=S[k]||[];S=Object.assign({},S,{[k]:a.includes(v)?a.filter(function(x){return x!==v}):[...a,v]});render();}
 function isDK(){return S.produkt==="dk";}
 function sc(){return isDK()?"sel-dk":"sel-gz";}
-function ac(){return isDK()?"#D95E1F":"#005A9C";}
+function ac(){return isDK()?"#D95E1F":"#FFC72C";}
 
 // ─── Derived ──────────────────────────────────────────────────────────────────
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
@@ -300,6 +307,42 @@ function numInput(label,hint,field,unit,ph){
     '<div class="num-row"><input type="number" class="num-input" data-field="'+field+'" value="'+esc(S[field])+'" placeholder="'+ph+'" inputmode="numeric">'+
     (unit?'<span class="num-unit">'+unit+'</span>':'')+
     '</div></div>';
+}
+function txtInput(label,field,placeholder){
+  return '<div class="field"><div class="field-label">'+label+'</div>'+
+    '<input type="text" class="txt-input" data-field="'+field+'" value="'+esc(S[field]||'')+'" placeholder="'+placeholder+'"></div>';
+}
+function buildProjectData(){
+  return '<div style="padding:14px 14px 0">'+
+    '<div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(26,45,68,.08)">'+
+    '<div style="background:#1A2D44;padding:13px 18px;display:flex;align-items:center;gap:10px">'+
+    '<span style="font-size:18px">📋</span>'+
+    '<span style="color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase">Projekt &amp; Auftraggeber</span>'+
+    '</div>'+
+    '<div style="padding:16px">'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0">'+
+    txtInput('Firma / Auftraggeber','ag_firma','z. B. Musterbau GmbH')+
+    txtInput('Ansprechpartner','ag_ansprechpartner','z. B. Max Mustermann')+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0">'+
+    txtInput('Telefon','ag_telefon','z. B. 0211 / 123456')+
+    txtInput('E-Mail','ag_email','z. B. info@musterbau.de')+
+    '</div>'+
+    '<div style="height:1px;background:var(--border);margin:12px 0 4px"></div>'+
+    '<div class="field"><div class="field-label">📍 Baustellenadresse</div>'+
+    '<button data-action="gps" style="display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:2px solid '+(S.gpsLoading?'var(--muted)':'var(--accent)')+';background:'+(S.gpsLoading?'var(--bg)':'var(--accent-l)')+';color:'+(S.gpsLoading?'var(--muted)':'var(--accent)')+';font-weight:700;font-size:13px;font-family:inherit;cursor:'+(S.gpsLoading?'not-allowed':'pointer')+';min-height:44px;width:100%;justify-content:center;margin-bottom:10px"'+(S.gpsLoading?' disabled':'')+'>'+
+    (S.gpsLoading?'<span style="animation:spin 1s linear infinite;display:inline-block">⏳</span> GPS wird ermittelt …':'📍 GPS-Standort ermitteln')+
+    '</button>'+
+    (S.gpsError?'<div style="background:var(--warn-l);border:1px solid rgba(180,83,9,.25);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--warn);margin-bottom:8px">⚠️ '+esc(S.gpsError)+'</div>':'')+
+    (S.bs_strasse||S.bs_plzort?'<div style="background:var(--ok-l);border:1px solid rgba(42,122,75,.25);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--ok);margin-bottom:8px">✅ Adresse übernommen – bitte prüfen und ggf. anpassen</div>':'')+
+    '</div>'+
+    txtInput('Straße &amp; Hausnummer (Baustelle)','bs_strasse','z. B. Musterstraße 12')+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0">'+
+    txtInput('PLZ &amp; Ort','bs_plzort','z. B. 40213 Düsseldorf')+
+    txtInput('Objekt- / Projektnummer','bs_objekt','z. B. P-2025-047')+
+    '</div>'+
+    txtInput('Türbezeichnung / Bauteil','bs_bauteil','z. B. EG-Eingang Süd, Tür 1.01')+
+    '</div></div></div>';
 }
 function sec(title,icon,body){
   var cls=isDK()?"dk":"gz";
@@ -428,6 +471,23 @@ function buildDK(){
     '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+sensorExtra()
   );
   html+=sec('Optionen &amp; Zubehör','🔌',
+    '<div class="field"><div class="field-label" style="display:flex;align-items:center;gap:8px"><span>🧠</span> dormakaba MotionIQ</div>'+
+    '<p class="field-hint">Intelligentes Radar-Impulsgeber-System für Schiebetüren · Radarsensor M A01 + Anschlussplatine CAN · Erfassungsbereich bis 10 m · bis zu 50 % Energieeinsparung · Firmware V3 erforderlich</p>'+
+    '<div class="btn-group">'+
+    [{value:'ja',label:'MotionIQ aktiv',sub:'Radarsensor M A01'},{value:'nein',label:'Ohne MotionIQ',sub:'Standard-Impulsgeber'}].map(function(o){
+      var sel=S.motioniq===o.value,cls=sc();
+      return '<button class="opt-btn'+(sel?' '+cls:'')+'" data-action="radio" data-field="motioniq" data-value="'+o.value+'">'+
+        '<span>'+o.label+'</span>'+(o.sub?'<span class="opt-sub">('+o.sub+')</span>':'')+
+        '</button>';
+    }).join('')+
+    '</div>'+
+    (S.motioniq==='ja'?
+      '<div style="background:var(--ok-l);border:1px solid rgba(42,122,75,.25);border-radius:8px;padding:12px 14px;margin-top:12px;font-size:13px;color:var(--ok)">'+
+      '<b>MotionIQ Komponenten:</b><br>'+
+      '📡 <b>Radarsensor M A01</b> – Montage mittig über Türanlage, Innen- und Außenbereich<br>'+
+      '🔌 <b>ED Anschlussplatine CAN</b> – CAN-Bus-Kommunikation, kein manuelles Nachstellen erforderlich<br>'+
+      '⚡ System öffnet nur bei erkannter Begehungsabsicht – bis zu 50 % weniger unnötige Öffnungen</div>':'')+
+    '</div>'+
     chkbox('Erweiterungen','Mehrfachauswahl möglich','zubehoer',[
       {value:'dpi',label:'Door Pilot Interface',icon:'📱',sub:'App'},{value:'sensorverk',label:'Sensorverkleidung'},
       {value:'rauchschalter',label:'Rauchschalter'},{value:'bma',label:'BMA-Anbindung',icon:'🔴'},
@@ -518,6 +578,16 @@ function buildGZ(){
 // ─── Summary ──────────────────────────────────────────────────────────────────
 function buildSummary(){
   var cls=isDK()?"dk":"gz",rows=[],normen=[],fst=false;
+  var projRows=[
+    ["Auftraggeber / Firma", S.ag_firma||"–"],
+    ["Ansprechpartner",      S.ag_ansprechpartner||"–"],
+    ["Telefon",              S.ag_telefon||"–"],
+    ["E-Mail",               S.ag_email||"–"],
+    ["Baustelle / Straße",   S.bs_strasse||"–"],
+    ["PLZ &amp; Ort",        S.bs_plzort||"–"],
+    ["Projektnummer",        S.bs_objekt||"–"],
+    ["Türbezeichnung",       S.bs_bauteil||"–"],
+  ];
   if(isDK()){
     var m=getDKModell(); fst=m&&m.fst;
     rows=[
@@ -526,6 +596,7 @@ function buildSummary(){
       ["Türtyp",LM_DK.tuertyp[S.tuertyp]||"–"],["Betriebsmodus",LM_DK.betriebsmodus[S.betriebsmodus]||"–"],
       ["Öffnungsgeschw.",S.oeffnungsgeschw?LM_DK.oeffnungsgeschw[S.oeffnungsgeschw]:"–"],
       ["Aktivierungssensor",S.aktivierung||"–"],["Montageart",LM_DK.montageart[S.montageart]||"–"],
+      ["MotionIQ",S.motioniq==="ja"?"Aktiv – Radarsensor M A01 + Anschlussplatine CAN":S.motioniq==="nein"?"Nicht verbaut":"–"],
       ["Profil",S.profil?LM_DK.profil[S.profil]:"–"],["Farbgebung",S.farbgebung?LM_DK.farbgebung[S.farbgebung]:"–"],
       ["Verriegelung",S.verriegelung?LM_DK.verriegelung[S.verriegelung]:"–"],
       ["Notstrom",S.notfunktion?LM_DK.notfunktion[S.notfunktion]:"–"],
@@ -553,6 +624,12 @@ function buildSummary(){
   return '<div id="summary-panel" class="visible '+cls+'">'+
     '<div class="sum-hdr '+cls+'">📋 Konfigurationsübersicht</div>'+
     '<div class="sum-body">'+
+    '<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Projekt &amp; Auftraggeber</div>'+
+    '<table class="sum-table"><tbody>'+
+    projRows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join('')+
+    '</tbody></table>'+
+    '<div style="height:1px;background:var(--border);margin:12px 0 8px"></div>'+
+    '<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Antriebskonfiguration</div>'+
     '<table class="sum-table"><tbody>'+
     rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join('')+
     '</tbody></table>'+
@@ -571,6 +648,20 @@ function exportPDF(){
   var uhrzeit=now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
   var hs=isDK()?'dormakaba':'GEZE',prod=isDK()?'ES PROLINE':'Schiebetürantrieb';
   var ac2=isDK()?'#D95E1F':'#005A9C';
+  var projBlock='<div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #D2DAE3;border-radius:4px;overflow:hidden">'+
+    [['Auftraggeber / Firma',S.ag_firma||'–'],['Ansprechpartner',S.ag_ansprechpartner||'–'],
+     ['Telefon',S.ag_telefon||'–'],['E-Mail',S.ag_email||'–']].map(function(r,i){
+      return '<div style="padding:7px 12px;background:'+(i%2===0?'#F4F6F9':'#fff')+';border-bottom:1px solid #E0E8F0">'+
+        '<div style="font-size:10px;color:#6B7A8D;font-weight:600">'+r[0]+'</div>'+
+        '<div style="font-size:12px;font-weight:700;color:#1A2D44;margin-top:1px">'+r[1]+'</div></div>';
+    }).join('')+'</div>'+
+    '<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #D2DAE3;border-radius:4px;overflow:hidden">'+
+    [['Baustelle / Straße',S.bs_strasse||'–'],['PLZ & Ort',S.bs_plzort||'–'],
+     ['Projektnummer',S.bs_objekt||'–'],['Türbezeichnung / Bauteil',S.bs_bauteil||'–']].map(function(r,i){
+      return '<div style="padding:7px 12px;background:'+(i%2===0?'#F4F6F9':'#fff')+';border-bottom:1px solid #E0E8F0">'+
+        '<div style="font-size:10px;color:#6B7A8D;font-weight:600">'+r[0]+'</div>'+
+        '<div style="font-size:12px;font-weight:700;color:#1A2D44;margin-top:1px">'+r[1]+'</div></div>';
+    }).join('')+'</div>';
   var rows=[];
   if(isDK()){
     var m=getDKModell();
@@ -578,6 +669,7 @@ function exportPDF(){
       ['Antriebsmodell',m?m.name:'–'],['Flügelanzahl',LM_DK.fluegelanzahl[S.fluegelanzahl]||'–'],
       ['Öffnungsbreite',S.oeffnungsbreite?S.oeffnungsbreite+' mm':'–'],['Flügelgewicht',S.fluegelgewicht?S.fluegelgewicht+' kg':'–'],
       ['Türtyp',LM_DK.tuertyp[S.tuertyp]||'–'],['Betriebsmodus',LM_DK.betriebsmodus[S.betriebsmodus]||'–'],
+      ['MotionIQ',S.motioniq==='ja'?'Aktiv – Radarsensor M A01 + Anschlussplatine CAN':S.motioniq==='nein'?'Nicht verbaut':'–'],
       ['Montageart',LM_DK.montageart[S.montageart]||'–'],['Verriegelung',S.verriegelung?LM_DK.verriegelung[S.verriegelung]:'–'],
       ['Profil',S.profil?LM_DK.profil[S.profil]:'–'],['Farbgebung',S.farbgebung?LM_DK.farbgebung[S.farbgebung]:'–'],
       ['Notstrom',S.notfunktion?LM_DK.notfunktion[S.notfunktion]:'–'],
@@ -611,7 +703,8 @@ function exportPDF(){
     +'<div style="text-align:right"><div style="color:rgba(255,255,255,.65);font-size:10px">Erstellt</div>'
     +'<div style="color:#fff;font-weight:700;font-size:12px">'+datum+' &middot; '+uhrzeit+'</div></div></div>'
     +'<div style="height:3px;background:linear-gradient(90deg,'+ac2+',#aaa)"></div>'
-    +'<div style="margin-top:14px"><div style="background:#1A2D44;padding:8px 12px;border-radius:3px 3px 0 0"><span style="color:#fff;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Konfigurationsübersicht</span></div>'
+    +projBlock
+    +'<div style="margin-top:14px"><div style="background:#1A2D44;padding:8px 12px;border-radius:3px 3px 0 0"><span style="color:#fff;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Antriebskonfiguration</span></div>'
     +'<table style="width:100%;border-collapse:collapse;border:1px solid #D2DAE3;border-top:none">'+tr+'</table></div>'
     +'<div style="margin-top:14px;padding:12px;background:#F4F6F9;border:1px solid #D2DAE3;border-radius:4px">'
     +'<div style="font-weight:700;font-size:11px;color:#1A2D44;margin-bottom:6px;text-transform:uppercase">Normen &amp; Zertifikate</div>'
@@ -621,7 +714,7 @@ function exportPDF(){
     +'<div style="flex:1;border-top:2px solid '+ac2+';padding-top:6px"><div style="font-size:10px;color:#6B7A8D">Geprüft von</div><div style="font-size:10px;color:#6B7A8D;margin-top:18px">Unterschrift</div></div>'
     +'<div style="flex:1;border-top:2px solid '+ac2+';padding-top:6px"><div style="font-size:10px;color:#6B7A8D">Datum</div><div style="font-size:13px;font-weight:600;margin-top:2px">'+datum+'</div></div></div>'
     +'<div style="margin-top:18px;padding-top:8px;border-top:1px solid #D2DAE3;display:flex;justify-content:space-between">'
-    +'<span style="font-size:9px;color:#8BA3BA">'+hs+' &middot; Schiebetürantrieb Konfigurationsdokument</span>'
+    +'<span style="font-size:9px;color:#8BA3BA">'+hs+' &middot; Schiebetürantrieb</span>'+'<span style="font-size:9px;color:#8BA3BA;font-weight:700"> &nbsp;|&nbsp; STOBER Karlsruhe</span>'
     +'<span style="font-size:9px;color:#8BA3BA">KONF &middot; '+datum+'</span></div></body></html>';
   var w=window.open('','_blank','width=900,height=700');
   w.document.write(html);w.document.close();w.focus();setTimeout(function(){w.print();},400);
@@ -641,6 +734,7 @@ function render(){
   document.getElementById('prog-pct').textContent=pct+'%';
   document.getElementById('prog-fill').style.width=pct+'%';
   document.getElementById('prog-fill').style.background=ac();
+  document.getElementById('proj-data').innerHTML=buildProjectData();
 
   // Product switcher
   document.getElementById('prod-sw').innerHTML=
@@ -671,10 +765,55 @@ function handleClick(ev){
   if(a==='radio') set(f,v);
   if(a==='chk')   toggleArr(f,v);
 }
+function handleGPS(){
+  if(!navigator.geolocation){
+    S=Object.assign({},S,{gpsError:'GPS nicht verfügbar auf diesem Gerät.'});render();return;
+  }
+  S=Object.assign({},S,{gpsLoading:true,gpsError:''});render();
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      var lat=pos.coords.latitude,lon=pos.coords.longitude;
+      fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lon+'&addressdetails=1&accept-language=de')
+        .then(function(r){return r.json();})
+        .then(function(d){
+          var a=d.address||{};
+          var road=a.road||a.pedestrian||a.footway||a.path||a.street||'';
+          var nr=a.house_number?(' '+a.house_number):'';
+          var city=a.city||a.town||a.village||a.municipality||a.suburb||'';
+          var plz=a.postcode||'';
+          S=Object.assign({},S,{
+            bs_strasse:(road+nr).trim(),
+            bs_plzort:(plz+(city?' '+city:'')).trim(),
+            gpsLoading:false,gpsError:''
+          });render();
+        })
+        .catch(function(){
+          S=Object.assign({},S,{gpsLoading:false,gpsError:'Adresse konnte nicht ermittelt werden. Internetverbindung prüfen.'});render();
+        });
+    },
+    function(err){
+      var msg=err.code===1?'GPS-Zugriff verweigert. Bitte in den Einstellungen erlauben.':
+              err.code===2?'Standort konnte nicht ermittelt werden.':
+              'GPS-Abfrage abgebrochen (Timeout).';
+      S=Object.assign({},S,{gpsLoading:false,gpsError:msg});render();
+    },
+    {enableHighAccuracy:true,timeout:12000,maximumAge:0}
+  );
+}
+
 document.getElementById('prod-sw').addEventListener('click',handleClick);
 document.getElementById('content').addEventListener('click',handleClick);
 document.getElementById('content').addEventListener('change',function(ev){
   if(ev.target.classList.contains('num-input')) set(ev.target.dataset.field,ev.target.value);
+});
+document.getElementById('proj-data').addEventListener('change',function(ev){
+  if(ev.target.classList.contains('txt-input')||ev.target.classList.contains('num-input')){
+    set(ev.target.dataset.field,ev.target.value);
+  }
+});
+document.getElementById('proj-data').addEventListener('click',function(ev){
+  var btn=ev.target.closest('[data-action="gps"]');
+  if(btn&&!btn.disabled) handleGPS();
 });
 document.getElementById('install-close').addEventListener('click',function(){
   document.getElementById('install-banner').classList.add('hidden');
