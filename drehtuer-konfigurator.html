@@ -349,15 +349,18 @@ const ARTIKEL = {
   sensorik:    { irs4:"BEA IRS4", flatscan:"BEA Flatscan", flatscan3d:"BEA Flatscan 3D" },
   zubehoer:    { radar:"BEA Eagle Artec", taster:"Flächentaster AP", schluessel:"Schlüsselschalter AP" },
   notfunktion: { notstrom:"Akkupack" },
-  montage:     { grundset:"GS", gestaenge:"Gestänge" },
+  montage:     { bgs:"Gestänge", bs:"GS", gestaenge:"Gestänge" },
   betriebsart: { full:"UGC Full" },
   tuerart:     { brandschutz:"UGC Fire", rauchschutz:"UGC Fire" },
+  motioniq:    { ja:"DK_M_A01" },
 };
 function getMontageArtikel(label){
   if(!label) return [];
-  var out=[ARTIKEL.montage.grundset];
-  if(label.toLowerCase().indexOf("gestänge")>-1) out.push(ARTIKEL.montage.gestaenge);
-  return out;
+  var l=label.toLowerCase(), out=[];
+  if(l.indexOf("bandgegenseite")>-1 || l.indexOf("bgs")>-1) out.push(ARTIKEL.montage.bgs);
+  if(l.indexOf("bandseite")>-1 || /\bbs\b/.test(l)) out.push(ARTIKEL.montage.bs);
+  if(l.indexOf("gestänge")>-1) out.push(ARTIKEL.montage.gestaenge);
+  return out.filter(function(v,i){return v&&out.indexOf(v)===i;});
 }
 function buildArtikelliste(){
   var rows=[];
@@ -369,13 +372,14 @@ function buildArtikelliste(){
     tuerartVal=S.tuerart; tuerartLabel=LM.tuerart[S.tuerart]||"";
     if(S.betriebsart==="full") add("Betriebsart: "+LM.betriebsart.full, ARTIKEL.betriebsart.full, 1);
     if(S.notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
+    if(S.motioniq==="ja") add("MotionIQ aktiv", ARTIKEL.motioniq.ja, 1);
   } else {
     montLabel=LM_G.montageart[S.g_montageart]||"";
     tuerartVal=S.g_tuerart; tuerartLabel=LM_G.tuerart[S.g_tuerart]||"";
     if(S.g_notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
   }
-  getMontageArtikel(montLabel).forEach(function(nr,i){
-    add((i===0?"Montage-Grundset: ":"Gestänge: ")+montLabel, nr, 1);
+  getMontageArtikel(montLabel).forEach(function(nr){
+    add("Montage ("+nr+"): "+montLabel, nr, 1);
   });
   if(tuerartVal==="brandschutz"||tuerartVal==="rauchschutz") add(tuerartLabel, ARTIKEL.tuerart[tuerartVal], 1);
   if(S.sensorik) add(SENSORIK_LM[S.sensorik], ARTIKEL.sensorik[S.sensorik], 1);
