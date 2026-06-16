@@ -313,6 +313,7 @@ const LM = {
   eoeffner:      { ja:"Ja, vorhanden",nein:"Nicht vorhanden" },
   eoeffnerSpannung:{ "12vdc":"12 V DC","24vdc":"24 V DC","12vac":"12 V AC","24vac":"24 V AC","230vac":"230 V AC" },
   motorschloss:  { ja:"Ja, vorhanden",nein:"Nicht vorhanden" },
+  sensorAbsicherungSeite: { einseitig:"Einseitig",beidseitig:"Beidseitig" },
 };
 const LM_G = {
   variante:{std:"Powerturn Standard",f:"Powerturn F (Feststellung)",fis:"Powerturn F-IS (Feststellung + IS, 2-flg.)",
@@ -328,13 +329,19 @@ const LM_G = {
 const ZL={radar:"Radar-Sensor",taster:"Aktivierungstaster",schluessel:"Schlüsselschalter",nottaster:"Nottaster",
           profil:"Profil-Zylinder",zutrittskontrolle:"Zutrittskontrolle",gegensprechanlage:"Gegensprechanlage",
           brandmeldeanlage:"BMA-Anbindung",rauchdetektor:"Rauchmelder",fingerprint:"Fingerprint-Leser"};
+const ZUBEHOER_OPTIONS=[
+  {value:'radar',label:'Radar-Sensor',icon:'📡'},{value:'taster',label:'Aktivierungstaster',icon:'🔘'},
+  {value:'schluessel',label:'Schlüsselschalter'},{value:'nottaster',label:'Nottaster'},
+  {value:'profil',label:'Profil-Zylinder'},{value:'zutrittskontrolle',label:'Zutrittskontrolle',icon:'🏷'},
+  {value:'gegensprechanlage',label:'Gegensprechanlage',icon:'🔊'},{value:'brandmeldeanlage',label:'BMA-Anbindung',icon:'🔴'},
+  {value:'rauchdetektor',label:'Rauchmelder'},{value:'fingerprint',label:'Fingerprint',icon:'👆'},
+];
 const SENSORIK_LM={
   irs4:"BEA IRS4 (4SAFE) · Sensorleiste",
   flatscan:"BEA LZR-FLATSCAN SW · Laserscanner",
   flatscan3d:"BEA LZR-FLATSCAN 3D SW · 3D-Laserscanner",
   keine:"Keine Absicherungssensorik",
 };
-const SMl={bandseite:"Bandseite",bandgegenseite:"Bandgegenseite",beidseitig:"Beidseitig"};
 const PFLICHT_D=["modell","fluegelanzahl","tuerart","betriebsart","betriebsmodus","montageart"];
 const PFLICHT_G=["variante","g_tuerart","g_betriebsart","g_montageart"];
 
@@ -355,7 +362,7 @@ let S={
   ag_firma:"",ag_ansprechpartner:"",ag_telefon:"",ag_email:"",
   bs_strasse:"",bs_plzort:"",bs_objekt:"",bs_bauteil:"",
   gpsLoading:false,gpsError:"",
-  sensorik:"",sensorMontage:[],sensorFarbe:"",
+  sensorik:"",sensorFarbe:"",sensorAbsicherungSeite:"",
   // verriegelung
   eoeffner:"",eoeffnerSpannung:"",eoeffnerEinschaltdauer:"",
   motorschloss:"",motorschlossHersteller:"",motorschlossModell:"",
@@ -369,6 +376,11 @@ function ac(){return isD()?"#D95E1F":"#FFC72C";}
 
 // ─── Derived ───────────────────────────────────────────────────────────────────
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function zubehoerQtyText(){
+  var zl=(S.zubehoer||[]).filter(function(z){return S['qty_'+z];});
+  if(!zl.length) return "–";
+  return zl.map(function(z){return ZL[z]+": "+S['qty_'+z]+" Stk.";}).join(", ");
+}
 function getEmpD(){
   var b=parseInt(S.tuerbreite),g=parseInt(S.tuergewicht);
   if(!b&&!g) return null;
@@ -411,6 +423,30 @@ function chkbox(label,hint,field,options){
         '<span class="chk-box">'+(c?'✓':'')+'</span>'+
         (o.icon?'<span>'+o.icon+'</span>':'')+o.label+'</button>';
     }).join('')+'</div></div>';
+}
+function chkboxQty(label,hint,field,options){
+  var vals=S[field]||[],cls=sc();
+  var html='<div class="field"><div class="field-label">'+label+'</div>'+
+    (hint?'<p class="field-hint">'+hint+'</p>':'')+
+    '<div class="btn-group">'+
+    options.map(function(o){
+      var c=vals.includes(o.value);
+      return '<button class="opt-btn'+(c?' '+cls:'')+'" data-action="chk" data-field="'+field+'" data-value="'+o.value+'">'+
+        '<span class="chk-box">'+(c?'✓':'')+'</span>'+
+        (o.icon?'<span>'+o.icon+'</span>':'')+o.label+'</button>';
+    }).join('')+'</div>';
+  var selected=options.filter(function(o){return vals.includes(o.value);});
+  if(selected.length){
+    html+='<div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);padding-top:12px">'+
+      selected.map(function(o){
+        var qf='qty_'+o.value;
+        return '<div class="num-row" style="justify-content:space-between"><span style="font-size:13px;color:var(--primary);font-weight:600">'+
+          (o.icon?o.icon+' ':'')+o.label+' &middot; Stückzahl</span>'+
+          '<input type="number" class="num-input" style="width:80px" data-field="'+qf+'" value="'+esc(S[qf]||'')+'" placeholder="1" inputmode="numeric"></div>';
+      }).join('')+
+      '</div>';
+  }
+  return html+'</div>';
 }
 function numInput(label,hint,field,unit,ph){
   return '<div class="field"><div class="field-label">'+label+'</div>'+
@@ -549,9 +585,10 @@ function buildDormakaba(){
   html+=sec('Absicherungssensorik (BEA)','🛡️',
     '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+
     (S.sensorik&&S.sensorik!=='keine'?
-      chkbox('Montagepositionen',null,'sensorMontage',[
-        {value:'bandseite',label:'Bandseite'},{value:'bandgegenseite',label:'Bandgegenseite'},{value:'beidseitig',label:'Beidseitig'},
-      ])+radio('Gehäusefarbe Sensor',null,'sensorFarbe',[{value:'alu',label:'Aluminium'},{value:'weiss',label:'Weiß'},{value:'schwarz',label:'Schwarz'}])+
+      radio('Absicherung','Schutzbereich auf einer oder beiden Türseiten','sensorAbsicherungSeite',[
+        {value:'einseitig',label:'Einseitig'},{value:'beidseitig',label:'Beidseitig'},
+      ])+
+      radio('Gehäusefarbe Sensor',null,'sensorFarbe',[{value:'alu',label:'Aluminium'},{value:'weiss',label:'Weiß'},{value:'schwarz',label:'Schwarz'}])+
       (S.sensorik==='irs4'?alertBox('ok','ℹ️','IRS4 (4SAFE)','Master-Slave-kompatibel mit LZR-FLATSCAN SW. Reihenschaltung bis 6 Module möglich.'):'') +
       (S.sensorik==='flatscan3d'?alertBox('ok','ℹ️','FLATSCAN 3D SW','Dritter Ausgang für hygienische berührungslose Aktivierung konfigurierbar (bis 2 virtuelle Taster).'):'')
     :'')
@@ -575,13 +612,7 @@ function buildDormakaba(){
       '🔌 <b>ED Anschlussplatine CAN</b> – ersetzt konventionelle Anschlussplatine im Antrieb<br>'+
       '⚡ Keine manuelle Sensoreinstellung erforderlich – System adaptiert automatisch</div>':'')+
     '</div>'+
-    chkbox('Weitere Aktivierung &amp; Peripherie','Mehrfachauswahl möglich','zubehoer',[
-      {value:'radar',label:'Radar-Sensor',icon:'📡'},{value:'taster',label:'Aktivierungstaster',icon:'🔘'},
-      {value:'schluessel',label:'Schlüsselschalter'},{value:'nottaster',label:'Nottaster'},
-      {value:'profil',label:'Profil-Zylinder'},{value:'zutrittskontrolle',label:'Zutrittskontrolle',icon:'🏷'},
-      {value:'gegensprechanlage',label:'Gegensprechanlage',icon:'🔊'},{value:'brandmeldeanlage',label:'BMA-Anbindung',icon:'🔴'},
-      {value:'rauchdetektor',label:'Rauchmelder'},{value:'fingerprint',label:'Fingerprint',icon:'👆'},
-    ])+
+    chkboxQty('Weitere Aktivierung &amp; Peripherie','Mehrfachauswahl möglich · pro Auswahl Stückzahl angeben','zubehoer',ZUBEHOER_OPTIONS)+
     radio('Notstrom / Backup',null,'notfunktion',[{value:'notstrom',label:'Notstrom',sub:'24V'},{value:'batterie',label:'Batterie-Backup'},{value:'keine',label:'Keine'}])
   );
   return html;
@@ -636,19 +667,14 @@ function buildGeze(){
   html+=sec('Absicherungssensorik (BEA)','🛡️',
     '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+
     (S.sensorik&&S.sensorik!=='keine'?
-      chkbox('Montagepositionen',null,'sensorMontage',[
-        {value:'bandseite',label:'Bandseite'},{value:'bandgegenseite',label:'Bandgegenseite'},{value:'beidseitig',label:'Beidseitig'},
-      ])+radio('Gehäusefarbe Sensor',null,'sensorFarbe',[{value:'alu',label:'Aluminium'},{value:'weiss',label:'Weiß'},{value:'schwarz',label:'Schwarz'}])
+      radio('Absicherung','Schutzbereich auf einer oder beiden Türseiten','sensorAbsicherungSeite',[
+        {value:'einseitig',label:'Einseitig'},{value:'beidseitig',label:'Beidseitig'},
+      ])+
+      radio('Gehäusefarbe Sensor',null,'sensorFarbe',[{value:'alu',label:'Aluminium'},{value:'weiss',label:'Weiß'},{value:'schwarz',label:'Schwarz'}])
     :'')
   );
   html+=sec('Aktivierung &amp; Zubehör','🔌',
-    chkbox('Aktivierung &amp; Peripherie','Mehrfachauswahl möglich','zubehoer',[
-      {value:'radar',label:'Radar-Sensor',icon:'📡'},{value:'taster',label:'Aktivierungstaster',icon:'🔘'},
-      {value:'schluessel',label:'Schlüsselschalter'},{value:'nottaster',label:'Nottaster'},
-      {value:'profil',label:'Profil-Zylinder'},{value:'zutrittskontrolle',label:'Zutrittskontrolle',icon:'🏷'},
-      {value:'gegensprechanlage',label:'Gegensprechanlage',icon:'🔊'},{value:'brandmeldeanlage',label:'BMA-Anbindung',icon:'🔴'},
-      {value:'rauchdetektor',label:'Rauchmelder'},{value:'fingerprint',label:'Fingerprint',icon:'👆'},
-    ])+
+    chkboxQty('Aktivierung &amp; Peripherie','Mehrfachauswahl möglich · pro Auswahl Stückzahl angeben','zubehoer',ZUBEHOER_OPTIONS)+
     radio('Notstrom / Backup',null,'g_notfunktion',[{value:'notstrom',label:'Notstrom',sub:'24V'},{value:'batterie',label:'Batterie-Backup'},{value:'keine',label:'Keine'}])
   );
   return html;
@@ -699,8 +725,9 @@ function buildSummary(){
   }
   rows.push(
     ["Sensorik",S.sensorik?SENSORIK_LM[S.sensorik]:"–"],
-    ["Sensor-Montage",S.sensorMontage.length?S.sensorMontage.map(function(s){return SMl[s];}).join(", "):"–"],
+    ["Absicherung",S.sensorAbsicherungSeite?LM.sensorAbsicherungSeite[S.sensorAbsicherungSeite]:"–"],
     ["Sensor-Farbe",S.sensorFarbe?LM.sensorFarbe[S.sensorFarbe]:"–"],
+    ["Stückzahlen Zubehör",zubehoerQtyText()],
     ["E-Öffner",S.eoeffner?LM.eoeffner[S.eoeffner]:"–"],
     ["Spannung E-Öffner",S.eoeffner==='ja'&&S.eoeffnerSpannung?LM.eoeffnerSpannung[S.eoeffnerSpannung]:"–"],
     ["Einschaltdauer E-Öffner",S.eoeffner==='ja'&&S.eoeffnerEinschaltdauer?S.eoeffnerEinschaltdauer+" % ED":"–"],
@@ -839,8 +866,9 @@ function exportPDF(){
   }
   rows.push(
     ['Absicherungssensorik',S.sensorik?SENSORIK_LM[S.sensorik]:'–'],
-    ['Sensor-Montage',S.sensorMontage.length?S.sensorMontage.map(function(s){return SMl[s];}).join(', '):'–'],
+    ['Absicherung',S.sensorAbsicherungSeite?LM.sensorAbsicherungSeite[S.sensorAbsicherungSeite]:'–'],
     ['Sensor-Farbe',S.sensorFarbe?LM.sensorFarbe[S.sensorFarbe]:'–'],
+    ['Stückzahlen Zubehör',zubehoerQtyText()],
     ['E-Öffner',S.eoeffner?LM.eoeffner[S.eoeffner]:'–'],
     ['Spannung E-Öffner',S.eoeffner==='ja'&&S.eoeffnerSpannung?LM.eoeffnerSpannung[S.eoeffnerSpannung]:'–'],
     ['Einschaltdauer E-Öffner',S.eoeffner==='ja'&&S.eoeffnerEinschaltdauer?S.eoeffnerEinschaltdauer+' % ED':'–'],
@@ -1006,8 +1034,12 @@ document.getElementById('proj-data').addEventListener('change',function(ev){
   }
 });
 document.getElementById('proj-data').addEventListener('click',function(ev){
-  var btn=ev.target.closest('[data-action="gps"]');
-  if(btn&&!btn.disabled) handleGPS();
+  var btn=ev.target.closest('[data-action]');
+  if(!btn) return;
+  var a=btn.dataset.action,f=btn.dataset.field,v=btn.dataset.value;
+  if(a==='gps'){ if(!btn.disabled) handleGPS(); return; }
+  if(a==='radio'){ set(f,v); return; }
+  if(a==='chk'){ toggleArr(f,v); return; }
 });
 document.getElementById('install-close').addEventListener('click',function(){
   document.getElementById('install-banner').classList.add('hidden');
