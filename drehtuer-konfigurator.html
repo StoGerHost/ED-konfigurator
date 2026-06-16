@@ -309,6 +309,10 @@ const LM = {
   notfunktion:   { notstrom:"Notstromversorgung (24V)",batterie:"Batterie-Backup",keine:"Keine" },
   farbgebung:    { silber:"Silber (Standard)",weiss:"Weiß RAL 9016",bronze:"Bronze",individuell:"RAL individuell" },
   sensorFarbe:   { alu:"Aluminium",weiss:"Weiß",schwarz:"Schwarz" },
+  projektart:    { neuanlage:"Neuanlage",modernisierung:"Modernisierung / Bestandsumbau" },
+  eoeffner:      { ja:"Ja, vorhanden",nein:"Nicht vorhanden" },
+  eoeffnerSpannung:{ "12vdc":"12 V DC","24vdc":"24 V DC","12vac":"12 V AC","24vac":"24 V AC","230vac":"230 V AC" },
+  motorschloss:  { ja:"Ja, vorhanden",nein:"Nicht vorhanden" },
 };
 const LM_G = {
   variante:{std:"Powerturn Standard",f:"Powerturn F (Feststellung)",fis:"Powerturn F-IS (Feststellung + IS, 2-flg.)",
@@ -347,10 +351,14 @@ let S={
   // shared
   lichteHoehe:"",lichteWeite:"",antriebsbreite:"",
   // projekt
+  projektart:"",
   ag_firma:"",ag_ansprechpartner:"",ag_telefon:"",ag_email:"",
   bs_strasse:"",bs_plzort:"",bs_objekt:"",bs_bauteil:"",
   gpsLoading:false,gpsError:"",
   sensorik:"",sensorMontage:[],sensorFarbe:"",
+  // verriegelung
+  eoeffner:"",eoeffnerSpannung:"",eoeffnerEinschaltdauer:"",
+  motorschloss:"",motorschlossHersteller:"",motorschlossModell:"",
   showSummary:false,
 };
 function set(k,v){S=Object.assign({},S,{[k]:v});render();}
@@ -423,6 +431,8 @@ function buildProjectData(){
     '<span style="color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase">Projekt &amp; Auftraggeber</span>'+
     '</div>'+
     '<div style="padding:16px">'+
+    radio('Projektart','Neuanlage oder Modernisierung der Türanlage','projektart',[
+      {value:'neuanlage',label:'Neuanlage',icon:'🆕'},{value:'modernisierung',label:'Modernisierung',icon:'🔄'}])+
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0">'+
     txtInput('Firma / Auftraggeber','ag_firma','z. B. Musterbau GmbH')+
     txtInput('Ansprechpartner','ag_ansprechpartner','z. B. Max Mustermann')+
@@ -481,6 +491,27 @@ function sensorCards(){
     }).join('')+'</div>';
 }
 
+// ─── Verriegelung: E-Öffner / Motorschloss (Drehtür, beide Hersteller) ─────────
+function buildVerriegelung(){
+  var html='';
+  html+=radio('E-Öffner vorhanden?','Elektrischer Türöffner zur Verriegelung der Tür','eoeffner',[
+    {value:'ja',label:'Ja',icon:'🔓'},{value:'nein',label:'Nein'}]);
+  if(S.eoeffner==='ja'){
+    html+=radio('Spannung E-Öffner',null,'eoeffnerSpannung',[
+      {value:'12vdc',label:'12 V DC'},{value:'24vdc',label:'24 V DC'},
+      {value:'12vac',label:'12 V AC'},{value:'24vac',label:'24 V AC'},
+      {value:'230vac',label:'230 V AC'}])+
+    numInput('Einschaltdauer E-Öffner','Dauerstrom = 100 % ED, sonst reduzierte Einschaltdauer angeben','eoeffnerEinschaltdauer','% ED','z. B. 100');
+  }
+  html+=radio('Motorschloss vorhanden?','Alternative zur Verriegelung per E-Öffner','motorschloss',[
+    {value:'ja',label:'Ja',icon:'🔐'},{value:'nein',label:'Nein'}]);
+  if(S.motorschloss==='ja'){
+    html+=txtInput('Hersteller','motorschlossHersteller','z. B. ASSA ABLOY, dormakaba, GEZE')+
+    txtInput('Modell / Typ','motorschlossModell','z. B. effeff 7270');
+  }
+  return html;
+}
+
 // ─── dormakaba ED Sections ─────────────────────────────────────────────────────
 function buildDormakaba(){
   var isBrand=S.tuerart==='brandschutz'||S.tuerart==='rauchschutz';
@@ -514,6 +545,7 @@ function buildDormakaba(){
     radio('Verkleidung',null,'verkleidung',[{value:'basic',label:'BASIC'},{value:'professionell',label:'PROFESSIONELL',sub:'VARIO'}])+
     radio('Farbgebung',null,'farbgebung',[{value:'silber',label:'Silber'},{value:'weiss',label:'Weiß',sub:'RAL 9016'},{value:'bronze',label:'Bronze'},{value:'individuell',label:'RAL indiv.'}])
   );
+  html+=sec('Verriegelung &amp; Schließtechnik','🔐',buildVerriegelung());
   html+=sec('Absicherungssensorik (BEA)','🛡️',
     '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+
     (S.sensorik&&S.sensorik!=='keine'?
@@ -600,6 +632,7 @@ function buildGeze(){
       {value:'silber',label:'Silber'},{value:'weiss',label:'Weiß',sub:'RAL 9016'},{value:'bronze',label:'Bronze'},{value:'individuell',label:'RAL indiv.'},
     ])
   );
+  html+=sec('Verriegelung &amp; Schließtechnik','🔐',buildVerriegelung());
   html+=sec('Absicherungssensorik (BEA)','🛡️',
     '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+
     (S.sensorik&&S.sensorik!=='keine'?
@@ -626,6 +659,7 @@ function buildSummary(){
   var cls=isD()?"dk":"gz",rows=[],normen=[],isBrand=false;
   // Projektdaten immer oben
   var projRows=[
+    ["Projektart",       S.projektart?LM.projektart[S.projektart]:"–"],
     ["Auftraggeber / Firma", S.ag_firma||"–"],
     ["Ansprechpartner",      S.ag_ansprechpartner||"–"],
     ["Telefon",              S.ag_telefon||"–"],
@@ -667,6 +701,12 @@ function buildSummary(){
     ["Sensorik",S.sensorik?SENSORIK_LM[S.sensorik]:"–"],
     ["Sensor-Montage",S.sensorMontage.length?S.sensorMontage.map(function(s){return SMl[s];}).join(", "):"–"],
     ["Sensor-Farbe",S.sensorFarbe?LM.sensorFarbe[S.sensorFarbe]:"–"],
+    ["E-Öffner",S.eoeffner?LM.eoeffner[S.eoeffner]:"–"],
+    ["Spannung E-Öffner",S.eoeffner==='ja'&&S.eoeffnerSpannung?LM.eoeffnerSpannung[S.eoeffnerSpannung]:"–"],
+    ["Einschaltdauer E-Öffner",S.eoeffner==='ja'&&S.eoeffnerEinschaltdauer?S.eoeffnerEinschaltdauer+" % ED":"–"],
+    ["Motorschloss",S.motorschloss?LM.motorschloss[S.motorschloss]:"–"],
+    ["Hersteller Motorschloss",S.motorschloss==='ja'&&S.motorschlossHersteller?S.motorschlossHersteller:"–"],
+    ["Modell Motorschloss",S.motorschloss==='ja'&&S.motorschlossModell?S.motorschlossModell:"–"],
   );
   return '<div id="summary-panel" class="visible '+cls+'">'+
     '<div class="sum-hdr '+cls+'">📋 Konfigurationsübersicht</div>'+
@@ -755,7 +795,8 @@ function exportPDF(){
   var ac2=isD()?'#D95E1F':'#005A9C';
   // Projektdaten Block
   var projBlock='<div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #D2DAE3;border-radius:4px;overflow:hidden">'+
-    [['Auftraggeber / Firma',S.ag_firma||'–'],['Ansprechpartner',S.ag_ansprechpartner||'–'],
+    [['Projektart',S.projektart?LM.projektart[S.projektart]:'–'],
+     ['Auftraggeber / Firma',S.ag_firma||'–'],['Ansprechpartner',S.ag_ansprechpartner||'–'],
      ['Telefon',S.ag_telefon||'–'],['E-Mail',S.ag_email||'–']].map(function(r,i){
       return '<div style="padding:7px 12px;background:'+(i%2===0?'#F4F6F9':'#fff')+';border-bottom:1px solid #E0E8F0">'+
         '<div style="font-size:10px;color:#6B7A8D;font-weight:600">'+r[0]+'</div>'+
@@ -800,6 +841,12 @@ function exportPDF(){
     ['Absicherungssensorik',S.sensorik?SENSORIK_LM[S.sensorik]:'–'],
     ['Sensor-Montage',S.sensorMontage.length?S.sensorMontage.map(function(s){return SMl[s];}).join(', '):'–'],
     ['Sensor-Farbe',S.sensorFarbe?LM.sensorFarbe[S.sensorFarbe]:'–'],
+    ['E-Öffner',S.eoeffner?LM.eoeffner[S.eoeffner]:'–'],
+    ['Spannung E-Öffner',S.eoeffner==='ja'&&S.eoeffnerSpannung?LM.eoeffnerSpannung[S.eoeffnerSpannung]:'–'],
+    ['Einschaltdauer E-Öffner',S.eoeffner==='ja'&&S.eoeffnerEinschaltdauer?S.eoeffnerEinschaltdauer+' % ED':'–'],
+    ['Motorschloss',S.motorschloss?LM.motorschloss[S.motorschloss]:'–'],
+    ['Hersteller Motorschloss',S.motorschloss==='ja'&&S.motorschlossHersteller?S.motorschlossHersteller:'–'],
+    ['Modell Motorschloss',S.motorschloss==='ja'&&S.motorschlossModell?S.motorschlossModell:'–'],
   );
   var tr=rows.map(function(r,i){return '<tr style="background:'+(i%2===0?'#F4F6F9':'#fff')+'"><td style="padding:8px 12px;font-weight:600;color:#6B7A8D;font-size:12px;border-bottom:1px solid #E0E8F0;width:38%">'+r[0]+'</td><td style="padding:8px 12px;font-weight:600;color:#1A2D44;font-size:12px;border-bottom:1px solid #E0E8F0">'+r[1]+'</td></tr>';}).join('');
   var normen=isD()?['EN 1154','EN 16005','DIN 18650','230V AC','IP 44']:['EN 1154','EN 16005','DIN 18650','230V AC','TÜV P-4061/14'];
@@ -1009,16 +1056,8 @@ window.downloadMaLogs = function(){
 window.clearMaLogs = function(){
   if(confirm('Alle MA-Code Logs wirklich löschen?')){
     localStorage.removeItem('stober_ma_logs');
-    console.log('✓ Logs gelöscht');
   }
 };
-if(!window._adminConsoleReady){
-  console.log('%c🔑 STOBER Admin-Befehle:', 'color:#001B43;font-weight:bold;font-size:13px');
-  console.log('viewMaLogs() - Alle MA-Code Logs in Konsole anzeigen');
-  console.log('downloadMaLogs() - Logs als CSV-Datei exportieren');
-  console.log('clearMaLogs() - Alle Logs löschen');
-  window._adminConsoleReady = true;
-}
 
 
   // ═══════════════════════════════════════════════════════════════════
