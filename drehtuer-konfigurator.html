@@ -345,43 +345,48 @@ const SENSORIK_LM={
 
 // ─── Artikelnummern (aus Artikelnummer.xlsx, hier editierbar) ──────────────────
 const ARTIKEL = {
-  modell:      { ed100:"DK_ED1", ed250:"DK_ED2" },
-  sensorik:    { irs4:"BEA IRS4", flatscan:"BEA Flatscan", flatscan3d:"BEA Flatscan 3D" },
+  modell:      { ed100:"10513882", ed250:"10513889" },
+  sensorik:    { irs4:"10282489", flatscan:"10805080", flatscan3d:"BEA Flatscan 3D" },
   zubehoer:    { radar:"BEA Eagle Artec", taster:"Flächentaster AP", schluessel:"Schlüsselschalter AP" },
   notfunktion: { notstrom:"Akkupack" },
-  montage:     { bgs:"Gestänge", bs:"GS", gestaenge:"Gestänge" },
-  betriebsart: { full:"UGC Full" },
-  tuerart:     { brandschutz:"UGC Fire", rauchschutz:"UGC Fire" },
+  montage:     { bgs:"10176432", bs:"10513893", gestaenge:"10176432" },
+  // Upgradecards: abhängig vom Türmodell (ED100 / ED250)
+  betriebsart: { full:{ ed100:"10385422", ed250:"10385423" } },
+  tuerart:     { brandschutz:{ ed100:"Kein angelegter Artikel", ed250:"10385421" },
+                 rauchschutz:{ ed100:"Kein angelegter Artikel", ed250:"10385421" } },
   motioniq:    { ja:"DK_M_A01" },
 };
 function getMontageArtikel(label){
   if(!label) return [];
   var l=label.toLowerCase(), out=[];
-  if(l.indexOf("bandgegenseite")>-1 || l.indexOf("bgs")>-1) out.push(ARTIKEL.montage.bgs);
-  if(l.indexOf("bandseite")>-1 || /\bbs\b/.test(l)) out.push(ARTIKEL.montage.bs);
-  if(l.indexOf("gestänge")>-1) out.push(ARTIKEL.montage.gestaenge);
-  return out.filter(function(v,i){return v&&out.indexOf(v)===i;});
+  if(l.indexOf("bandgegenseite")>-1 || l.indexOf("bgs")>-1) out.push({bez:"Montagebeschlag (BGS)",nr:ARTIKEL.montage.bgs});
+  if(l.indexOf("bandseite")>-1 || /\bbs\b/.test(l)) out.push({bez:"Montagebeschlag (BS)",nr:ARTIKEL.montage.bs});
+  if(l.indexOf("gestänge")>-1) out.push({bez:"Gestänge-Set",nr:ARTIKEL.montage.gestaenge});
+  var seen={},res=[];
+  out.forEach(function(o){ if(o.nr&&!seen[o.nr]){ seen[o.nr]=true; res.push(o); } });
+  return res;
 }
 function buildArtikelliste(){
   var rows=[];
   function add(bez,nr,menge){ if(nr) rows.push([bez,nr,menge||1]); }
-  var montLabel,tuerartVal,tuerartLabel;
+  var montLabel;
   if(isD()){
-    add(LM.modell[S.modell]||S.modell, ARTIKEL.modell[S.modell], 1);
+    var modellLabel=LM.modell[S.modell]||S.modell;
+    add(modellLabel, ARTIKEL.modell[S.modell], 1);
     montLabel=LM.montageart[S.montageart]||"";
-    tuerartVal=S.tuerart; tuerartLabel=LM.tuerart[S.tuerart]||"";
-    if(S.betriebsart==="full") add("Betriebsart: "+LM.betriebsart.full, ARTIKEL.betriebsart.full, 1);
+    if(S.betriebsart==="full") add("Upgradecard Full Energy ("+modellLabel+")", ARTIKEL.betriebsart.full[S.modell], 1);
+    if((S.tuerart==="brandschutz"||S.tuerart==="rauchschutz") && ARTIKEL.tuerart[S.tuerart]){
+      add("Upgradecard "+LM.tuerart[S.tuerart]+" ("+modellLabel+")", ARTIKEL.tuerart[S.tuerart][S.modell], 1);
+    }
     if(S.notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
     if(S.motioniq==="ja") add("MotionIQ aktiv", ARTIKEL.motioniq.ja, 1);
   } else {
     montLabel=LM_G.montageart[S.g_montageart]||"";
-    tuerartVal=S.g_tuerart; tuerartLabel=LM_G.tuerart[S.g_tuerart]||"";
     if(S.g_notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
   }
-  getMontageArtikel(montLabel).forEach(function(nr){
-    add("Montage ("+nr+"): "+montLabel, nr, 1);
+  getMontageArtikel(montLabel).forEach(function(o){
+    add(o.bez+": "+montLabel, o.nr, 1);
   });
-  if(tuerartVal==="brandschutz"||tuerartVal==="rauchschutz") add(tuerartLabel, ARTIKEL.tuerart[tuerartVal], 1);
   if(S.sensorik) add(SENSORIK_LM[S.sensorik], ARTIKEL.sensorik[S.sensorik], 1);
   (S.zubehoer||[]).forEach(function(z){
     if(ARTIKEL.zubehoer[z]) add(ZL[z], ARTIKEL.zubehoer[z], S['qty_'+z]||1);
@@ -1154,88 +1159,6 @@ window.clearMaLogs = function(){
     localStorage.removeItem('stober_ma_logs');
   }
 };
-
-
-  // ═══════════════════════════════════════════════════════════════════
-  // 🔒 KOPIER-SCHUTZ - Aggressiv
-  // ═══════════════════════════════════════════════════════════════════
-  
-  // 1. Rechtsklick deaktivieren
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    alert('Rechtsklick ist deaktiviert. Inhalte sind urheberrechtlich geschützt.');
-    return false;
-  }, false);
-  
-  // 2. Drag & Drop verhindern
-  document.addEventListener('dragstart', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
-  
-  document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }, false);
-  
-  // 3. Copy/Cut/Paste verhindern
-  document.addEventListener('copy', function(e) {
-    e.preventDefault();
-    alert('Kopieren ist deaktiviert. Diese Inhalte sind geschützt.');
-    return false;
-  }, false);
-  
-  document.addEventListener('cut', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
-  
-  document.addEventListener('paste', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
-  
-  // 4. Text-Auswahl blockieren
-  document.body.style.userSelect = 'none';
-  document.body.style.webkitUserSelect = 'none';
-  document.body.style.msUserSelect = 'none';
-  document.body.style.mozUserSelect = 'none';
-  
-  // 5. DevTools Warnung  
-  // 6. Keyboard-Shortcuts für Copy blockieren (Ctrl+C, Cmd+C, etc.)
-  document.addEventListener('keydown', function(e) {
-    // Ctrl+C oder Cmd+C
-    if ((e.ctrlKey || e.metaKey) && e.keyCode === 67) {
-      e.preventDefault();
-      alert('Kopieren mit Tastenkombination ist deaktiviert.');
-      return false;
-    }
-    // Ctrl+X (Cut)
-    if ((e.ctrlKey || e.metaKey) && e.keyCode === 88) {
-      e.preventDefault();
-      return false;
-    }
-    // Ctrl+V (Paste)
-    if ((e.ctrlKey || e.metaKey) && e.keyCode === 86) {
-      e.preventDefault();
-      return false;
-    }
-  }, false);
-  
-  // 7. Mousedown für Text-Selection blockieren
-  document.addEventListener('mousedown', function(e) {
-    if (e.detail > 1) {  // Mehrfach-Klick (Doppel-Klick)
-      e.preventDefault();
-      return false;
-    }
-  }, false);
-  
-  // 8. Selectstart verhindern
-  document.addEventListener('selectstart', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
 
 </script>
 </body>
