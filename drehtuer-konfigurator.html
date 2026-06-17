@@ -342,8 +342,8 @@
 <script>
 // ─── Label Maps ────────────────────────────────────────────────────────────────
 const LM = {
-  modell:        { ed100:"ED 100", ed250:"ED 250" },
-  fluegelanzahl: { "1":"Einflügelig","2":"Zweiflügelig",esr:"ED ESR ½ – teilautomatisiert" },
+  modell:        { ed100:"ED 100", ed250:"ED 250", ed250pa:"ED 250 PA" },
+  fluegelanzahl: { "1":"Einflügelig","2":"Zweiflügelig" },
   schliessfolge: { ja:"Aktiviert (ESR)", nein:"Deaktiviert" },
   tuerart:       { standard:"Standardtür",brandschutz:"Brandschutztür (T30/T90)",rauchschutz:"Rauchschutztür (RS)" },
   betriebsart:   { low:"Low-Energy (Niedrigenergie)",full:"Full-Energy (Vollautomatik)" },
@@ -677,12 +677,12 @@ function buildDormakaba(){
 
   html+=sec('Modell &amp; Türspezifikation','🚪',
     '<img src="'+IMG_DK+'" alt="dormakaba ED 100/250" class="prod-img-banner" onerror="this.style.display=\'none\'">'+
-    radio('Antriebsmodell','ED 100 bis 1100 mm / 160 kg &nbsp;·&nbsp; ED 250 bis 1600 mm / 400 kg','modell',[
-      {value:'ed100',label:'ED 100',sub:'bis 160 kg'},{value:'ed250',label:'ED 250',sub:'bis 400 kg'}],true)+
+    radio('Antriebsmodell','ED 100 bis 1100 mm / 160 kg &nbsp;·&nbsp; ED 250 bis 1600 mm / 400 kg &nbsp;·&nbsp; ED 250 PA mit Power-Assist','modell',[
+      {value:'ed100',label:'ED 100',sub:'bis 160 kg'},{value:'ed250',label:'ED 250',sub:'bis 400 kg'},{value:'ed250pa',label:'ED 250 PA',sub:'Power-Assist'}],true)+
     '<div class="two-col">'+numInput('Türblattbreite','','tuerbreite','mm','z. B. 900')+numInput('Türblattgewicht','','tuergewicht','kg','z. B. 80')+'</div>'+
     '<div class="two-col">'+numInput('Lichte Höhe','Lichte Durchgangshöhe','lichteHoehe','mm','z. B. 2100')+numInput('Lichte Weite','Lichte Durchgangsbreite','lichteWeite','mm','z. B. 900')+'</div>'+
     '<div class="two-col">'+numInput('Antriebsbreite','Breite des Antriebs','antriebsbreite','mm','z. B. 1200')+'</div>'+
-    radio('Flügelanzahl',null,'fluegelanzahl',[{value:'1',label:'Einflügelig'},{value:'2',label:'Zweiflügelig'},{value:'esr',label:'ED ESR ½',sub:'teilauto.'}],true)+
+    radio('Flügelanzahl',null,'fluegelanzahl',[{value:'1',label:'Einflügelig'},{value:'2',label:'Zweiflügelig'}],true)+
     (S.fluegelanzahl==='2'?radio('Schließfolgeregelung','Bei Zweiflügelanlagen erforderlich, damit Standflügel vor Gangflügel schließt','schliessfolge',[
       {value:'ja',label:'Aktiviert',icon:'🔒'},{value:'nein',label:'Deaktiviert'}]):'')+
     radio('Türart','Beeinflusst zulässige Montagearten','tuerart',[
