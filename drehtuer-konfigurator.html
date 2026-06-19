@@ -422,7 +422,7 @@ function buildArtikelliste(){
   if(isD()){
     var modellLabel=LM.modell[S.modell]||S.modell;
     var basis=modellBasis(S.modell);
-    add(modellLabel, ARTIKEL.modell[S.modell], 1);
+    add(modellLabel, ARTIKEL.modell[S.modell]||"Kein angelegter Artikel", 1);
     if(S.modell==="ed250pa") add("ED 250 (Basisantrieb, automatisch mit ausgewählt)", ARTIKEL.modell.ed250, 1);
     montLabel=LM.montageart[S.montageart]||"";
     if(S.betriebsart==="full") add("Upgradecard Full Energy ("+modellLabel+")", ARTIKEL.betriebsart.full[basis], 1);
