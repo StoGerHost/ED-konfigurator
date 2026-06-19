@@ -403,6 +403,8 @@ const ARTIKEL = {
   motioniq:    { ja:"DK_M_A01" },
   schliessfolge:{ ja:"10529214" },
 };
+// ED 250 PA basiert technisch auf ED 250 → für Upgradecards/Zubehör-Kompatibilität gilt ED 250
+function modellBasis(m){ return m==="ed250pa" ? "ed250" : m; }
 function getMontageArtikel(label){
   if(!label) return [];
   var l=label.toLowerCase(), out=[];
@@ -419,11 +421,13 @@ function buildArtikelliste(){
   var montLabel;
   if(isD()){
     var modellLabel=LM.modell[S.modell]||S.modell;
+    var basis=modellBasis(S.modell);
     add(modellLabel, ARTIKEL.modell[S.modell], 1);
+    if(S.modell==="ed250pa") add("ED 250 (Basisantrieb, automatisch mit ausgewählt)", ARTIKEL.modell.ed250, 1);
     montLabel=LM.montageart[S.montageart]||"";
-    if(S.betriebsart==="full") add("Upgradecard Full Energy ("+modellLabel+")", ARTIKEL.betriebsart.full[S.modell], 1);
+    if(S.betriebsart==="full") add("Upgradecard Full Energy ("+modellLabel+")", ARTIKEL.betriebsart.full[basis], 1);
     if((S.tuerart==="brandschutz"||S.tuerart==="rauchschutz") && ARTIKEL.tuerart[S.tuerart]){
-      add("Upgradecard "+LM.tuerart[S.tuerart]+" ("+modellLabel+")", ARTIKEL.tuerart[S.tuerart][S.modell], 1);
+      add("Upgradecard "+LM.tuerart[S.tuerart]+" ("+modellLabel+")", ARTIKEL.tuerart[S.tuerart][basis], 1);
     }
     if(S.notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
     if(S.motioniq==="ja") add("MotionIQ aktiv", ARTIKEL.motioniq.ja, 1);
@@ -821,7 +825,7 @@ function buildSummary(){
   if(isD()){
     isBrand=S.tuerart==='brandschutz'||S.tuerart==='rauchschutz';
     rows=[
-      ["Antrieb",LM.modell[S.modell]||"–"],["Türblatt",(S.tuerbreite||"–")+" mm / "+(S.tuergewicht||"–")+" kg"],
+      ["Antrieb",(LM.modell[S.modell]||"–")+(S.modell==='ed250pa'?" (inkl. ED 250 Basis)":"")],["Türblatt",(S.tuerbreite||"–")+" mm / "+(S.tuergewicht||"–")+" kg"],
       ["Lichte Höhe",S.lichteHoehe?S.lichteHoehe+" mm":"–"],["Lichte Weite",S.lichteWeite?S.lichteWeite+" mm":"–"],["Antriebsbreite",S.antriebsbreite?S.antriebsbreite+" mm":"–"],
       ["Flügelanzahl",LM.fluegelanzahl[S.fluegelanzahl]||"–"],
       ["Schließfolgeregelung",S.fluegelanzahl==='2'?(LM.schliessfolge[S.schliessfolge]||"–"):"–"],
@@ -1012,7 +1016,7 @@ function exportPDF(){
   var rows=[];
   if(isD()){
     rows=[
-      ['Antriebsmodell',LM.modell[S.modell]||'–'],['Türblattbreite',S.tuerbreite?S.tuerbreite+' mm':'–'],
+      ['Antriebsmodell',(LM.modell[S.modell]||'–')+(S.modell==='ed250pa'?' (inkl. ED 250 Basis)':'')],['Türblattbreite',S.tuerbreite?S.tuerbreite+' mm':'–'],
       ['Türblattgewicht',S.tuergewicht?S.tuergewicht+' kg':'–'],
       ['Lichte Höhe',S.lichteHoehe?S.lichteHoehe+' mm':'–'],['Lichte Weite',S.lichteWeite?S.lichteWeite+' mm':'–'],['Antriebsbreite',S.antriebsbreite?S.antriebsbreite+' mm':'–'],['Flügelanzahl',LM.fluegelanzahl[S.fluegelanzahl]||'–'],
       ['Schließfolgeregelung',S.fluegelanzahl==='2'?(LM.schliessfolge[S.schliessfolge]||'–'):'–'],
