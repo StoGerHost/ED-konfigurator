@@ -28,16 +28,16 @@
 
   #hdr{padding-top:calc(var(--safe-top)+14px);padding-bottom:14px;padding-left:18px;padding-right:18px;
        display:flex;align-items:center;justify-content:space-between;transition:background .3s}
-  #hdr.dk{background:#1A2D44} #hdr.gz{background:#005A9C}
+  #hdr.dk{background:#1A2D44} #hdr.gz{background:#005A9C} #hdr.rc{background:#0B3D33} #hdr.gi{background:#3A1F4D}
   #hdr-bar{width:5px;height:34px;border-radius:2px;flex-shrink:0}
-  #hdr.dk #hdr-bar{background:#D95E1F} #hdr.gz #hdr-bar{background:#FFC72C}
+  #hdr.dk #hdr-bar{background:#D95E1F} #hdr.gz #hdr-bar{background:#FFC72C} #hdr.rc #hdr-bar{background:#1FAE85} #hdr.gi #hdr-bar{background:#B388D9}
   #hdr-title{color:#fff;font-weight:800;font-size:17px;letter-spacing:-.02em;margin-left:10px}
   #hdr-sub{color:rgba(255,255,255,.6);font-size:12px;margin-top:1px;margin-left:10px}
   #back-btn{color:rgba(255,255,255,.8);font-size:13px;font-weight:600;background:rgba(255,255,255,.15);
             border:none;border-radius:8px;padding:6px 12px;margin-left:10px;cursor:pointer;white-space:nowrap}
   #prog-ring{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   #prog-inner{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-  #hdr.dk #prog-inner{background:#1A2D44} #hdr.gz #prog-inner{background:#005A9C}
+  #hdr.dk #prog-inner{background:#1A2D44} #hdr.gz #prog-inner{background:#005A9C} #hdr.rc #prog-inner{background:#0B3D33} #hdr.gi #prog-inner{background:#3A1F4D}
   #prog-pct{color:#fff;font-size:11px;font-weight:700}
   #prog-bar{height:3px;background:var(--border)}
   #prog-fill{height:100%;transition:width .3s,background .3s}
@@ -45,15 +45,17 @@
   #install-banner.hidden{display:none}
   #install-close{background:rgba(255,255,255,.2);border:none;border-radius:99px;padding:4px 10px;color:#fff;font-size:13px;font-weight:600;min-height:32px}
 
-  #prod-sw{padding:14px 14px 0;display:flex;gap:10px}
+  #prod-sw{padding:14px 14px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .ptab{flex:1;padding:12px 10px;border-radius:12px;border:2px solid var(--border);background:var(--panel);
         display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:.15s;overflow:hidden}
   .ptab.ak-dk{border-color:#D95E1F;background:#FFF5EF}
   .ptab.ak-gz{border-color:#FFC72C;background:#FFFAEE}
+  .ptab.ak-rc{border-color:#1FAE85;background:#EAFBF5}
+  .ptab.ak-gi{border-color:#9B59B6;background:#F7EEFB}
   .ptab-img{width:100%;height:80px;object-fit:contain;border-radius:6px;background:#f8f8f8;display:block}
   .ptab-name{font-weight:700;font-size:13px;color:var(--primary)}
   .ptab-sub{font-size:11px;color:var(--muted);text-align:center}
-  .ptab.ak-dk .ptab-name{color:#D95E1F} .ptab.ak-gz .ptab-name{color:#7A5000}
+  .ptab.ak-dk .ptab-name{color:#D95E1F} .ptab.ak-gz .ptab-name{color:#7A5000} .ptab.ak-rc .ptab-name{color:#0B3D33} .ptab.ak-gi .ptab-name{color:#6C3483}
   .prod-img-banner{width:100%;max-height:140px;object-fit:contain;border-radius:8px;background:#f5f5f5;display:block;margin-bottom:14px}
 
   #content{padding:14px 14px 0}
@@ -63,15 +65,17 @@
   .alert-warn{background:var(--warn-l);border:1px solid rgba(180,83,9,.25)}
   .alert-info{background:#E8F0FE;border:1px solid rgba(26,45,68,.15)}
   .alert-gz{background:#FFC72C22;border:1px solid rgba(255,199,44,.4)}
+  .alert-rc{background:#1FAE8522;border:1px solid rgba(31,174,133,.4)}
+  .alert-gi{background:#9B59B622;border:1px solid rgba(155,89,182,.4)}
   .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
   .alert-head{font-weight:700;font-size:14px}
   .alert-head.ok{color:var(--ok)}.alert-head.warn{color:var(--warn)}
-  .alert-head.info{color:var(--primary)}.alert-head.gz{color:#7A5000}
+  .alert-head.info{color:var(--primary)}.alert-head.gz{color:#7A5000}.alert-head.rc{color:#0B3D33}.alert-head.gi{color:#6C3483}
   .alert-body{color:var(--muted);font-size:12px;margin-top:2px}
 
   .section{background:var(--panel);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(26,45,68,.08)}
   .sec-hdr{padding:13px 18px;display:flex;align-items:center;gap:10px}
-  .sec-hdr.dk{background:#1A2D44} .sec-hdr.gz{background:#005A9C}
+  .sec-hdr.dk{background:#1A2D44} .sec-hdr.gz{background:#005A9C} .sec-hdr.rc{background:#0B3D33} .sec-hdr.gi{background:#3A1F4D}
   .sec-icon{font-size:18px}
   .sec-title{color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
   .sec-body{padding:16px}
@@ -93,16 +97,22 @@
            font-weight:500;font-size:13px;display:flex;align-items:center;gap:5px;min-height:44px;transition:.12s}
   .opt-btn.sel-dk{border-color:#D95E1F;background:#FFF5EF;color:#D95E1F;font-weight:700}
   .opt-btn.sel-gz{border-color:#FFC72C;background:#FFFAEE;color:#7A5000;font-weight:700}
+  .opt-btn.sel-rc{border-color:#1FAE85;background:#EAFBF5;color:#0B3D33;font-weight:700}
+  .opt-btn.sel-gi{border-color:#9B59B6;background:#F7EEFB;color:#6C3483;font-weight:700}
   .opt-sub{font-size:11px;opacity:.75;font-weight:400}
   .chk-box{width:16px;height:16px;border-radius:4px;border:2px solid var(--border);background:transparent;
            display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:900;color:transparent;transition:.12s}
   .opt-btn.sel-dk .chk-box{background:#D95E1F;border-color:#D95E1F;color:#fff}
   .opt-btn.sel-gz .chk-box{background:#FFC72C;border-color:#FFC72C;color:#001B43}
+  .opt-btn.sel-rc .chk-box{background:#1FAE85;border-color:#1FAE85;color:#fff}
+  .opt-btn.sel-gi .chk-box{background:#9B59B6;border-color:#9B59B6;color:#fff}
 
   .sensor-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
   .sensor-card{border:2px solid var(--border);border-radius:10px;padding:14px;background:var(--panel);cursor:pointer;transition:.12s}
   .sensor-card.sel-dk{border-color:#001B43;background:#FDF0EA}
   .sensor-card.sel-gz{border-color:#FFC72C;background:#FFFAEE}
+  .sensor-card.sel-rc{border-color:#1FAE85;background:#EAFBF5}
+  .sensor-card.sel-gi{border-color:#9B59B6;background:#F7EEFB}
   .sensor-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
   .sensor-card-left{display:flex;align-items:center;gap:10px}
   .sensor-name{font-weight:700;font-size:14px;color:var(--primary)}
@@ -111,20 +121,22 @@
                 display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:900;color:transparent;transition:.12s}
   .sensor-card.sel-dk .sensor-check{background:#D95E1F;border-color:#D95E1F;color:#fff}
   .sensor-card.sel-gz .sensor-check{background:#FFC72C;border-color:#FFC72C;color:#001B43}
+  .sensor-card.sel-rc .sensor-check{background:#1FAE85;border-color:#1FAE85;color:#fff}
+  .sensor-card.sel-gi .sensor-check{background:#9B59B6;border-color:#9B59B6;color:#fff}
   .sensor-merkmale{display:none;padding-left:16px;margin-top:8px}
-  .sensor-card.sel-dk .sensor-merkmale,.sensor-card.sel-gz .sensor-merkmale{display:block}
+  .sensor-card.sel-dk .sensor-merkmale,.sensor-card.sel-gz .sensor-merkmale,.sensor-card.sel-rc .sensor-merkmale,.sensor-card.sel-gi .sensor-merkmale{display:block}
   .sensor-merkmale li{font-size:12px;color:var(--muted);margin-bottom:3px}
 
   .big-btn{width:100%;padding:16px;border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;
            min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px}
   .big-btn:disabled{background:var(--border);cursor:not-allowed}
-  .big-btn.dk{background:#D95E1F} .big-btn.gz{background:#FFC72C;color:#001B43} .big-btn.dark{background:#1A2D44}
+  .big-btn.dk{background:#D95E1F} .big-btn.gz{background:#FFC72C;color:#001B43} .big-btn.rc{background:#1FAE85} .big-btn.gi{background:#9B59B6} .big-btn.dark{background:#1A2D44}
 
   #summary-panel{margin-top:14px;background:var(--panel);border-radius:12px;overflow:hidden;display:none}
   #summary-panel.visible{display:block}
-  #summary-panel.dk{border:2px solid #D95E1F} #summary-panel.gz{border:2px solid #FFC72C}
+  #summary-panel.dk{border:2px solid #D95E1F} #summary-panel.gz{border:2px solid #FFC72C} #summary-panel.rc{border:2px solid #1FAE85} #summary-panel.gi{border:2px solid #9B59B6}
   .sum-hdr{padding:12px 16px;color:#fff;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
-  .sum-hdr.dk{background:#D95E1F} .sum-hdr.gz{background:#FFC72C;color:#001B43}
+  .sum-hdr.dk{background:#D95E1F} .sum-hdr.gz{background:#FFC72C;color:#001B43} .sum-hdr.rc{background:#1FAE85} .sum-hdr.gi{background:#9B59B6}
   .sum-body{padding:16px}
   .sum-table{width:100%;border-collapse:collapse;font-size:13px}
   .sum-table tr{border-bottom:1px solid var(--border)}
@@ -231,6 +243,28 @@
   }
   .bug-btn:hover { border-color: #C0392B; color: #C0392B; background: #FDECEA; }
 
+
+  /* ─── Vorlagen Modal ─────────────────────────────────────── */
+  #vorlagen-overlay{display:none;position:fixed;inset:0;background:rgba(9,22,54,.65);z-index:9998;align-items:flex-end;justify-content:center;padding:0}
+  #vorlagen-overlay.visible{display:flex}
+  #vorlagen-box{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:540px;max-height:82vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 -4px 32px rgba(0,0,0,.18)}
+  .vbox-hdr{background:#1A2D44;padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
+  .vbox-hdr h3{color:#fff;font-size:15px;font-weight:800}
+  .vbox-hdr span{color:rgba(255,255,255,.55);font-size:12px}
+  .vbox-close{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:16px;border-radius:50%;width:28px;height:28px;cursor:pointer;font-family:inherit}
+  .vbox-body{flex:1;overflow-y:auto;padding:14px 16px}
+  .vbox-save-row{padding:14px 16px;border-top:1px solid #E8EDF3;display:flex;gap:8px}
+  .vbox-save-row input{flex:1;padding:10px 12px;border:2px solid #D2DAE3;border-radius:8px;font-size:14px;font-family:inherit;outline:none}
+  .vbox-save-row input:focus{border-color:#001B43}
+  .vbox-save-btn{padding:10px 16px;border:none;border-radius:8px;background:#001B43;color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .vbox-reset-btn{padding:10px 14px;border:1.5px solid #D2DAE3;border-radius:8px;background:#fff;color:#C0392B;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit}
+
+  /* ─── Admin Panel ────────────────────────────────────────── */
+
+  /* ─── Header Buttons ─────────────────────────────────────── */
+  .hdr-icon-btn{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:13px;font-weight:600;border-radius:8px;padding:6px 10px;cursor:pointer;font-family:inherit;white-space:nowrap;min-height:34px}
+  .hdr-icon-btn:active{background:rgba(255,255,255,.28)}
+
 </style>
 </head>
 <body>
@@ -242,11 +276,29 @@
     <h2>Mitarbeiter-Code</h2>
     <p>Bitte zu Beginn eingeben &ndash; wird automatisch in &bdquo;Aufgenommen durch&ldquo; und beim PDF-Export übernommen.</p>
     <div class="gate-code-wrap">
-      <input id="code-gate-input" type="text" placeholder="Mitarbeitercode" maxlength="10" autocomplete="off" inputmode="numeric">
+      <input id="code-gate-input" type="text" placeholder="Mitarbeitercode" maxlength="10" autocomplete="off" inputmode="text">
       <button onclick="checkStartCode()">✓</button>
     </div>
     <div id="code-gate-msg"></div>
     <button id="code-gate-skip" onclick="skipStartCode()">Ohne Code fortfahren</button>
+  </div>
+</div>
+
+
+<!-- Vorlagen Modal -->
+<div id="vorlagen-overlay">
+  <div id="vorlagen-box">
+    <div class="vbox-hdr">
+      <h3>📋 Vorlagen</h3>
+      <span id="vorlagen-count">0/10</span>
+      <button class="vbox-close" onclick="closeVorlagenModal()">✕</button>
+    </div>
+    <div class="vbox-body" id="vorlagen-list"></div>
+    <div class="vbox-save-row">
+      <input id="vorlage-name-input" type="text" placeholder="Vorlagenname eingeben …" maxlength="40">
+      <button class="vbox-save-btn" onclick="saveNewVorlage()">💾 Speichern</button>
+      <button class="vbox-reset-btn" onclick="resetKonfig()">🗑 Reset</button>
+    </div>
   </div>
 </div>
 
@@ -322,7 +374,7 @@
       <div style="display:flex;align-items:center;gap:8px"><span style="background:#577496;color:#fff;font-weight:900;font-size:11px;padding:2px 7px;border-radius:3px;letter-spacing:.04em">STOBER</span><span id="hdr-title" style="color:#fff;font-weight:800;font-size:16px;letter-spacing:-.02em">Drehtür Konfigurator</span></div>
       <div id="hdr-sub">Drehtürantrieb &middot; Konfiguration</div>
     </div>
-    <a href="index.html" id="back-btn">← Übersicht</a>
+    <a href="index.html" id="back-btn">← Übersicht</a><button class="hdr-icon-btn" onclick="showVorlagenModal()" style="margin-left:6px">📋</button>
   </div>
   <div id="prog-ring"><div id="prog-inner"><span id="prog-pct">0%</span></div></div>
 </div>
@@ -372,6 +424,24 @@ const LM_G = {
   farbgebung:{silber:"Silber (Standard)",weiss:"Weiß RAL 9016",bronze:"Bronze",individuell:"RAL individuell"},
   notfunktion:{notstrom:"Notstromversorgung (24V)",keine:"Keine"},
 };
+const LM_R = {
+  modell:{dfa127:"Record DFA 127",dfa127fp:"Record DFA 127 FULL POWER",dfa830:"Record DFA 830"},
+  tuerart:{standard:"Standardtür",brandschutz:"Brandschutztür (T30/T90)",rauchschutz:"Rauchschutztür (RS)",flucht:"Flucht- und Rettungswegtür"},
+  betriebsart:{auto:"Vollautomatik",low:"Low-Energy",assist:"Power-Assist"},
+  montageart:{"bgs-gestaenge":"Bandgegenseite drückend · Normalgestänge","bgs-gleit":"Bandgegenseite drückend · Gleitschiene","bs-ziehend":"Bandseite ziehend"},
+  oeffnungswinkel:{"80":"80°","90":"90°","110":"110°","120":"120° (max.)"},
+  farbgebung:{silber:"Silber (Standard)",weiss:"Weiß RAL 9016",bronze:"Bronze",individuell:"RAL individuell"},
+  notfunktion:{notstrom:"Notstromversorgung (24V)",keine:"Keine"},
+};
+const LM_GI = {
+  modell:{fd20:"Gilgen FD 20"},
+  tuerart:{standard:"Standardtür",brandschutz:"Brandschutztür (T30/T90)",rauchschutz:"Rauchschutztür (RS)",flucht:"Flucht- und Rettungswegtür"},
+  betriebsart:{auto:"Vollautomatik",low:"Low-Energy",assist:"Power-Assist"},
+  montageart:{"bgs-gestaenge":"Bandgegenseite drückend · Normalgestänge","bgs-gleit":"Bandgegenseite drückend · Gleitschiene","bs-ziehend":"Bandseite ziehend"},
+  oeffnungswinkel:{"80":"80°","90":"90°","110":"110°","120":"120° (max.)"},
+  farbgebung:{silber:"Silber (Standard)",weiss:"Weiß RAL 9016",bronze:"Bronze",individuell:"RAL individuell"},
+  notfunktion:{notstrom:"Notstromversorgung (24V)",keine:"Keine"},
+};
 const ZL={radar:"Radar-Sensor",taster:"Aktivierungstaster",schluessel:"Schlüsselschalter",nottaster:"Nottaster",
           profil:"Profil-Zylinder",zutrittskontrolle:"Zutrittskontrolle",gegensprechanlage:"Gegensprechanlage",
           brandmeldeanlage:"BMA-Anbindung",rauchdetektor:"Rauchmelder",fingerprint:"Fingerprint-Leser"};
@@ -390,6 +460,30 @@ const SENSORIK_LM={
 };
 
 // ─── Artikelnummern (aus Artikelnummer.xlsx, hier editierbar) ──────────────────
+
+// ─── Artikelnummern aus localStorage (Admin pflegbar) ──────────────────────────
+var ARTIKEL_STORAGE_KEY='stober_artikel';
+function getArtNr(key){
+  try{
+    var all=JSON.parse(localStorage.getItem(ARTIKEL_STORAGE_KEY)||'{}');
+    var fullKey='drehtuer.'+key;
+    if(all[fullKey]!==undefined&&all[fullKey]!=='') return all[fullKey];
+  }catch(e){}
+  // Fallback auf hardcodierte Defaults
+  var D={
+    'dk.modell.ed100':'10513882','dk.modell.ed250':'10513889',
+    'dk.betriebsart.full.ed100':'10385422','dk.betriebsart.full.ed250':'10385423',
+    'dk.tuerart.brandschutz.ed100':'','dk.tuerart.brandschutz.ed250':'10385421',
+    'dk.tuerart.rauchschutz.ed100':'','dk.tuerart.rauchschutz.ed250':'10385421',
+    'dk.notfunktion.notstrom':'Akkupack','dk.motioniq.ja':'DK_M_A01',
+    'dk.schliessfolge.ja':'10529214',
+    'dk.sensorik.irs4':'10282489','dk.sensorik.flatscan':'10805080','dk.sensorik.flatscan3d':'BEA Flatscan 3D',
+    'dk.montage.bgs':'10176432','dk.montage.bs':'10513893','dk.montage.gestaenge':'10176432',
+    'dk.zubehoer.radar':'BEA Eagle Artec','dk.zubehoer.taster':'Flächentaster AP','dk.zubehoer.schluessel':'Schlüsselschalter AP',
+  };
+  return D[key]||'';
+}
+
 const ARTIKEL = {
   modell:      { ed100:"10513882", ed250:"10513889" },
   sensorik:    { irs4:"10282489", flatscan:"10805080", flatscan3d:"BEA Flatscan 3D" },
@@ -408,9 +502,9 @@ function modellBasis(m){ return m==="ed250pa" ? "ed250" : m; }
 function getMontageArtikel(label){
   if(!label) return [];
   var l=label.toLowerCase(), out=[];
-  if(l.indexOf("bandgegenseite")>-1 || l.indexOf("bgs")>-1) out.push({bez:"Montagebeschlag (BGS)",nr:ARTIKEL.montage.bgs});
-  if(l.indexOf("bandseite")>-1 || /\bbs\b/.test(l)) out.push({bez:"Montagebeschlag (BS)",nr:ARTIKEL.montage.bs});
-  if(l.indexOf("gestänge")>-1) out.push({bez:"Gestänge-Set",nr:ARTIKEL.montage.gestaenge});
+  if(l.indexOf("bandgegenseite")>-1 || l.indexOf("bgs")>-1) out.push({bez:"Montagebeschlag (BGS)",nr:getArtNr("dk.montage.bgs")});
+  if(l.indexOf("bandseite")>-1 || /\bbs\b/.test(l)) out.push({bez:"Montagebeschlag (BS)",nr:getArtNr("dk.montage.bs")});
+  if(l.indexOf("gestänge")>-1) out.push({bez:"Gestänge-Set",nr:getArtNr("dk.montage.gestaenge")});
   var seen={},res=[];
   out.forEach(function(o){ if(o.nr&&!seen[o.nr]){ seen[o.nr]=true; res.push(o); } });
   return res;
@@ -432,6 +526,12 @@ function buildArtikelliste(){
     if(S.notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
     if(S.motioniq==="ja") add("MotionIQ aktiv", ARTIKEL.motioniq.ja, 1);
     if(S.fluegelanzahl==="2"&&S.schliessfolge==="ja") add("Schließfolgeregelung ESR", ARTIKEL.schliessfolge.ja, 1);
+  } else if(isR()){
+    montLabel=LM_R.montageart[S.r_montageart]||"";
+    if(S.r_notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
+  } else if(isGi()){
+    montLabel=LM_GI.montageart[S.gi_montageart]||"";
+    if(S.gi_notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
   } else {
     montLabel=LM_G.montageart[S.g_montageart]||"";
     if(S.g_notfunktion==="notstrom") add("Notstrom-Backup", ARTIKEL.notfunktion.notstrom, 1);
@@ -447,6 +547,14 @@ function buildArtikelliste(){
 }
 const PFLICHT_D=["modell","fluegelanzahl","tuerart","betriebsart","betriebsmodus","montageart"];
 const PFLICHT_G=["variante","g_tuerart","g_betriebsart","g_montageart"];
+const PFLICHT_R=["r_modell","r_tuerart","r_betriebsart","r_montageart"];
+const PFLICHT_GI=["gi_modell","gi_tuerart","gi_betriebsart","gi_montageart"];
+function PFLICHT_AKTUELL(){
+  if(isD()) return PFLICHT_D;
+  if(isR()) return PFLICHT_R;
+  if(isGi()) return PFLICHT_GI;
+  return PFLICHT_G;
+}
 
 // ─── State ─────────────────────────────────────────────────────────────────────
 let S={
@@ -458,6 +566,12 @@ let S={
   // geze
   variante:"",g_tuerart:"",g_betriebsart:"",g_montageart:"",g_oeffnungswinkel:"",
   g_tuerbreite:"",g_tuergewicht:"",g_farbgebung:"",g_notfunktion:"",g_optionen:[],
+  // record
+  r_modell:"",r_tuerart:"",r_betriebsart:"",r_montageart:"",r_oeffnungswinkel:"",
+  r_tuerbreite:"",r_tuergewicht:"",r_farbgebung:"",r_notfunktion:"",r_optionen:[],
+  // gilgen
+  gi_modell:"",gi_tuerart:"",gi_betriebsart:"",gi_montageart:"",gi_oeffnungswinkel:"",
+  gi_tuerbreite:"",gi_tuergewicht:"",gi_farbgebung:"",gi_notfunktion:"",gi_optionen:[],
   // shared
   lichteHoehe:"",lichteWeite:"",antriebsbreite:"",
   // projekt
@@ -471,11 +585,12 @@ let S={
   eoeffner:"",eoeffnerSpannung:"",eoeffnerEinschaltdauer:"",
   motorschloss:"",motorschlossHersteller:"",motorschlossModell:"",
   showSummary:false,
+  notizen:"",tueranzahl:"1",
 };
 function set(k,v){
   var patch={};patch[k]=v;
   if(k==='fluegelanzahl') patch.schliessfolge=(v==='2')?'ja':'';
-  S=Object.assign({},S,patch);render();
+  S=Object.assign({},S,patch);autosave();render();
 }
 function handleAufgenommenCode(code){
   code=code.trim();
@@ -484,10 +599,13 @@ function handleAufgenommenCode(code){
   render();
   return !!name;
 }
-function toggleArr(k,v){var a=S[k]||[];S=Object.assign({},S,{[k]:a.includes(v)?a.filter(function(x){return x!==v}):[...a,v]});render();}
+function toggleArr(k,v){var a=S[k]||[];S=Object.assign({},S,{[k]:a.includes(v)?a.filter(function(x){return x!==v}):[...a,v]});autosave();render();}
 function isD(){return S.produkt==="dormakaba";}
-function sc(){return isD()?"sel-dk":"sel-gz";}
-function ac(){return isD()?"#D95E1F":"#FFC72C";}
+function isR(){return S.produkt==="record";}
+function isGi(){return S.produkt==="gilgen";}
+function prodCls(){return isD()?"dk":isR()?"rc":isGi()?"gi":"gz";}
+function sc(){return "sel-"+prodCls();}
+function ac(){return isD()?"#D95E1F":isR()?"#1FAE85":isGi()?"#9B59B6":"#FFC72C";}
 
 // ─── Derived ───────────────────────────────────────────────────────────────────
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
@@ -615,10 +733,15 @@ function buildProjectData(){
     txtInput('Objekt- / Projektnummer','bs_objekt','z. B. P-2025-047')+
     '</div>'+
     txtInput('Türbezeichnung / Bauteil','bs_bauteil','z. B. EG-Eingang Süd, Tür 1.01')+
+    '<div style="display:grid;grid-template-columns:80px 1fr;gap:0">'+
+    '<div class="field"><div class="field-label">Anzahl</div><div class="num-row"><input type="number" class="num-input" data-field="tueranzahl" value="'+esc(S.tueranzahl||'1')+'" placeholder="1" inputmode="numeric" style="width:70px"><span class="num-unit">Tür(en)</span></div></div>'+
+    '</div>'+
+    '<div class="field"><div class="field-label">📝 Notizen</div>'+
+    '<textarea class="txt-input notizen-input" data-field="notizen" placeholder="Besonderheiten, Sondermaße, Kundenwünsche …" rows="3" style="resize:vertical;min-height:72px">'+esc(S.notizen||'')+'</textarea></div>'+
     '</div></div></div>';
 }
 function sec(title,icon,body){
-  var cls=isD()?"dk":"gz";
+  var cls=prodCls();
   return '<div class="section"><div class="sec-hdr '+cls+'"><span class="sec-icon">'+icon+'</span>'+
     '<span class="sec-title">'+title+'</span></div><div class="sec-body">'+body+'</div></div>';
 }
@@ -806,9 +929,117 @@ function buildGeze(){
   return html;
 }
 
+// ─── Record DFA Sections ───────────────────────────────────────────────────────
+function buildRecord(){
+  var html='';
+  html+=alertBox('rc','⚙️','Record Drehflügeltürantriebe','DFA 127 · DFA 830 · Teil der ASSA ABLOY Gruppe · zugelassen für Brand- und Rauchschutztüren (je nach Ausführung)');
+
+  html+=sec('Modell &amp; Türspezifikation','🚪',
+    radio('Antriebsmodell','DFA 127: modularer Standardantrieb (Türschließergröße EN4–EN6) &nbsp;·&nbsp; DFA 830: kompakter Komplettantrieb, 70 mm Bauhöhe, bis 250 kg','r_modell',[
+      {value:'dfa127',label:'DFA 127',sub:'Standard'},{value:'dfa127fp',label:'DFA 127 FULL POWER',sub:'schwere Türen'},{value:'dfa830',label:'DFA 830',sub:'bis 250 kg'}],true)+
+    '<div class="two-col">'+numInput('Türblattbreite','','r_tuerbreite','mm','z. B. 900')+numInput('Türblattgewicht','','r_tuergewicht','kg','z. B. 80')+'</div>'+
+    '<div class="two-col">'+numInput('Lichte Höhe','Lichte Durchgangshöhe','lichteHoehe','mm','z. B. 2100')+numInput('Lichte Weite','Lichte Durchgangsbreite','lichteWeite','mm','z. B. 900')+'</div>'+
+    '<div class="two-col">'+numInput('Antriebsbreite','Breite des Antriebs','antriebsbreite','mm','z. B. 1200')+'</div>'+
+    radio('Türart',null,'r_tuerart',[
+      {value:'standard',label:'Standard',icon:'🏢'},{value:'brandschutz',label:'Brandschutz',sub:'T30/T90'},
+      {value:'rauchschutz',label:'Rauchschutz',sub:'RS'},{value:'flucht',label:'Flucht/Rettung',icon:'🚨'},
+    ],true)
+  );
+  html+=sec('Betrieb &amp; Funktion','⚡',
+    radio('Betriebsart',null,'r_betriebsart',[
+      {value:'auto',label:'Vollautomatik',icon:'🤖'},{value:'low',label:'Low-Energy',sub:'EN 1154'},{value:'assist',label:'Power-Assist'},
+    ],true)+
+    chkbox('Sonderfunktionen','Mehrfachauswahl möglich','r_optionen',[
+      {value:'inverse',label:'INVERSE-Funktion',icon:'🔋',},{value:'fire',label:'FIRE-Ausführung (Brand-/Rauchschutz)'},
+      {value:'schliessfolge',label:'Schließfolgeregelung SFR 127'},{value:'funk',label:'Funk-Empfangsplatine',icon:'📶'},
+    ])
+  );
+  html+=sec('Montage','🔧',
+    radio('Montageart',null,'r_montageart',[
+      {value:'bgs-gestaenge',label:'BGS drückend',sub:'Normalgestänge'},{value:'bgs-gleit',label:'BGS drückend',sub:'Gleitschiene'},
+      {value:'bs-ziehend',label:'BS ziehend',sub:'Gleitschiene'},
+    ],true)+
+    radio('Öffnungswinkel',null,'r_oeffnungswinkel',[
+      {value:'80',label:'80°'},{value:'90',label:'90°'},{value:'110',label:'110°'},{value:'120',label:'120°',sub:'max.'},
+    ])+
+    radio('Farbgebung',null,'r_farbgebung',[
+      {value:'silber',label:'Silber'},{value:'weiss',label:'Weiß',sub:'RAL 9016'},{value:'bronze',label:'Bronze'},{value:'individuell',label:'RAL indiv.'},
+    ])
+  );
+  html+=sec('Verriegelung &amp; Schließtechnik','🔐',buildVerriegelung());
+  html+=sec('Absicherungssensorik (BEA)','🛡️',
+    '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+
+    (S.sensorik&&S.sensorik!=='keine'?
+      radio('Absicherung','Schutzbereich auf einer oder beiden Türseiten','sensorAbsicherungSeite',[
+        {value:'einseitig',label:'Einseitig'},{value:'beidseitig',label:'Beidseitig'},
+      ])+
+      radio('Gehäusefarbe Sensor',null,'sensorFarbe',[{value:'alu',label:'Aluminium'},{value:'weiss',label:'Weiß'},{value:'schwarz',label:'Schwarz'}])
+    :'')
+  );
+  html+=sec('Aktivierung &amp; Zubehör','🔌',
+    chkboxQty('Aktivierung &amp; Peripherie','Mehrfachauswahl möglich · pro Auswahl Stückzahl angeben','zubehoer',ZUBEHOER_OPTIONS)+
+    radio('Notstrom / Backup',null,'r_notfunktion',[{value:'notstrom',label:'Notstrom',sub:'24V'},{value:'keine',label:'Keine'}])
+  );
+  return html;
+}
+
+// ─── Gilgen FD 20 Sections ──────────────────────────────────────────────────────
+function buildGilgen(){
+  var html='';
+  html+=alertBox('gi','⚙️','Gilgen Drehflügeltürantriebe','FD 20 · Gilgen Door Systems (Schweiz) · für handbetätigte Innen- sowie schwere Außentüren');
+
+  html+=sec('Modell &amp; Türspezifikation','🚪',
+    radio('Antriebsmodell',null,'gi_modell',[
+      {value:'fd20',label:'FD 20',sub:'Drehflügelantrieb'}],true)+
+    '<div class="two-col">'+numInput('Türblattbreite','','gi_tuerbreite','mm','z. B. 900')+numInput('Türblattgewicht','','gi_tuergewicht','kg','z. B. 80')+'</div>'+
+    '<div class="two-col">'+numInput('Lichte Höhe','Lichte Durchgangshöhe','lichteHoehe','mm','z. B. 2100')+numInput('Lichte Weite','Lichte Durchgangsbreite','lichteWeite','mm','z. B. 900')+'</div>'+
+    '<div class="two-col">'+numInput('Antriebsbreite','Breite des Antriebs','antriebsbreite','mm','z. B. 1200')+'</div>'+
+    radio('Türart',null,'gi_tuerart',[
+      {value:'standard',label:'Standard',icon:'🏢'},{value:'brandschutz',label:'Brandschutz',sub:'T30/T90'},
+      {value:'rauchschutz',label:'Rauchschutz',sub:'RS'},{value:'flucht',label:'Flucht/Rettung',icon:'🚨'},
+    ],true)
+  );
+  html+=sec('Betrieb &amp; Funktion','⚡',
+    radio('Betriebsart',null,'gi_betriebsart',[
+      {value:'auto',label:'Vollautomatik',icon:'🤖'},{value:'low',label:'Low-Energy',sub:'EN 1154'},{value:'assist',label:'Power-Assist'},
+    ],true)+
+    chkbox('Sonderfunktionen','Mehrfachauswahl möglich','gi_optionen',[
+      {value:'feststellung',label:'Feststellanlage',icon:'🔒'},{value:'bus',label:'BUS-Anbindung',icon:'🌐'},
+      {value:'schliessfolge',label:'Schließfolgeregelung'},{value:'funk',label:'Funk-Empfangsplatine',icon:'📶'},
+    ])
+  );
+  html+=sec('Montage','🔧',
+    radio('Montageart',null,'gi_montageart',[
+      {value:'bgs-gestaenge',label:'BGS drückend',sub:'Normalgestänge'},{value:'bgs-gleit',label:'BGS drückend',sub:'Gleitschiene'},
+      {value:'bs-ziehend',label:'BS ziehend',sub:'Gleitschiene'},
+    ],true)+
+    radio('Öffnungswinkel',null,'gi_oeffnungswinkel',[
+      {value:'80',label:'80°'},{value:'90',label:'90°'},{value:'110',label:'110°'},{value:'120',label:'120°',sub:'max.'},
+    ])+
+    radio('Farbgebung',null,'gi_farbgebung',[
+      {value:'silber',label:'Silber'},{value:'weiss',label:'Weiß',sub:'RAL 9016'},{value:'bronze',label:'Bronze'},{value:'individuell',label:'RAL indiv.'},
+    ])
+  );
+  html+=sec('Verriegelung &amp; Schließtechnik','🔐',buildVerriegelung());
+  html+=sec('Absicherungssensorik (BEA)','🛡️',
+    '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+
+    (S.sensorik&&S.sensorik!=='keine'?
+      radio('Absicherung','Schutzbereich auf einer oder beiden Türseiten','sensorAbsicherungSeite',[
+        {value:'einseitig',label:'Einseitig'},{value:'beidseitig',label:'Beidseitig'},
+      ])+
+      radio('Gehäusefarbe Sensor',null,'sensorFarbe',[{value:'alu',label:'Aluminium'},{value:'weiss',label:'Weiß'},{value:'schwarz',label:'Schwarz'}])
+    :'')
+  );
+  html+=sec('Aktivierung &amp; Zubehör','🔌',
+    chkboxQty('Aktivierung &amp; Peripherie','Mehrfachauswahl möglich · pro Auswahl Stückzahl angeben','zubehoer',ZUBEHOER_OPTIONS)+
+    radio('Notstrom / Backup',null,'gi_notfunktion',[{value:'notstrom',label:'Notstrom',sub:'24V'},{value:'keine',label:'Keine'}])
+  );
+  return html;
+}
+
 // ─── Summary ───────────────────────────────────────────────────────────────────
 function buildSummary(){
-  var cls=isD()?"dk":"gz",rows=[],normen=[],isBrand=false;
+  var cls=prodCls(),rows=[],normen=[],isBrand=false;
   // Projektdaten immer oben
   var projRows=[
     ["Aufgenommen durch", S.aufgenommenDurch||"–"],
@@ -821,6 +1052,8 @@ function buildSummary(){
     ["PLZ &amp; Ort",        S.bs_plzort||"–"],
     ["Projektnummer",        S.bs_objekt||"–"],
     ["Türbezeichnung",       S.bs_bauteil||"–"],
+    ["Anzahl Türen",         (S.tueranzahl||"1")+" Stück"],
+    ["Notizen",              S.notizen||"–"],
   ];
   if(isD()){
     isBrand=S.tuerart==='brandschutz'||S.tuerart==='rauchschutz';
@@ -838,6 +1071,32 @@ function buildSummary(){
       ["Zubehör",S.zubehoer.length?S.zubehoer.map(function(z){return ZL[z];}).join(", "):"Keines"],
     ];
     normen=["EN 1154","EN 16005","DIN 18650","230V AC","IP 44"];
+  } else if(isR()){
+    isBrand=S.r_tuerart==='brandschutz'||S.r_tuerart==='rauchschutz';
+    var orl={inverse:'INVERSE-Funktion',fire:'FIRE-Ausführung',schliessfolge:'Schließfolgeregelung SFR 127',funk:'Funk'};
+    rows=[
+      ["Antrieb",LM_R.modell[S.r_modell]||"–"],["Türblatt",(S.r_tuerbreite||"–")+" mm / "+(S.r_tuergewicht||"–")+" kg"],
+      ["Lichte Höhe",S.lichteHoehe?S.lichteHoehe+" mm":"–"],["Lichte Weite",S.lichteWeite?S.lichteWeite+" mm":"–"],["Antriebsbreite",S.antriebsbreite?S.antriebsbreite+" mm":"–"],
+      ["Türart",LM_R.tuerart[S.r_tuerart]||"–"],["Betriebsart",LM_R.betriebsart[S.r_betriebsart]||"–"],
+      ["Sonderfunktionen",(S.r_optionen||[]).length?(S.r_optionen||[]).map(function(o){return orl[o];}).join(", "):"–"],
+      ["Montageart",LM_R.montageart[S.r_montageart]||"–"],["Öffnungswinkel",S.r_oeffnungswinkel?LM_R.oeffnungswinkel[S.r_oeffnungswinkel]:"–"],
+      ["Farbgebung",S.r_farbgebung?LM_R.farbgebung[S.r_farbgebung]:"–"],["Notstrom",S.r_notfunktion?LM_R.notfunktion[S.r_notfunktion]:"–"],
+      ["Zubehör",S.zubehoer.length?S.zubehoer.map(function(z){return ZL[z];}).join(", "):"Keines"],
+    ];
+    normen=["EN 1154","EN 16005","DIN 18650","230V AC"];
+  } else if(isGi()){
+    isBrand=S.gi_tuerart==='brandschutz'||S.gi_tuerart==='rauchschutz';
+    var gil={feststellung:'Feststellanlage',bus:'BUS-Anbindung',schliessfolge:'Schließfolgeregelung',funk:'Funk'};
+    rows=[
+      ["Antrieb",LM_GI.modell[S.gi_modell]||"–"],["Türblatt",(S.gi_tuerbreite||"–")+" mm / "+(S.gi_tuergewicht||"–")+" kg"],
+      ["Lichte Höhe",S.lichteHoehe?S.lichteHoehe+" mm":"–"],["Lichte Weite",S.lichteWeite?S.lichteWeite+" mm":"–"],["Antriebsbreite",S.antriebsbreite?S.antriebsbreite+" mm":"–"],
+      ["Türart",LM_GI.tuerart[S.gi_tuerart]||"–"],["Betriebsart",LM_GI.betriebsart[S.gi_betriebsart]||"–"],
+      ["Sonderfunktionen",(S.gi_optionen||[]).length?(S.gi_optionen||[]).map(function(o){return gil[o];}).join(", "):"–"],
+      ["Montageart",LM_GI.montageart[S.gi_montageart]||"–"],["Öffnungswinkel",S.gi_oeffnungswinkel?LM_GI.oeffnungswinkel[S.gi_oeffnungswinkel]:"–"],
+      ["Farbgebung",S.gi_farbgebung?LM_GI.farbgebung[S.gi_farbgebung]:"–"],["Notstrom",S.gi_notfunktion?LM_GI.notfunktion[S.gi_notfunktion]:"–"],
+      ["Zubehör",S.zubehoer.length?S.zubehoer.map(function(z){return ZL[z];}).join(", "):"Keines"],
+    ];
+    normen=["EN 1154","EN 16005","DIN 18650","230V AC"];
   } else {
     isBrand=S.g_tuerart==='brandschutz'||S.g_tuerart==='rauchschutz';
     var ol={smartswing:'Smart Swing',softclose:'Soft Close',funk:'Funk',bacnet:'BACnet',feststellung:'Feststellung',schliessfolge:'Schließfolge'};
@@ -889,8 +1148,11 @@ function buildSummary(){
 window._paywallConfirmed = false;
 window._maCodeUsed = false;
 window._maCodeName = "";
-var MA_CODES = ['78080', '78081', '78082', '78084', '78085', '78086', '78087', '78088'];
-var MA_CODE_NAMES = {
+var MA_CODES = [];
+var MA_CODE_NAMES = {};
+loadMAcodesFromStorage();
+// MA_CODE_NAMES wird dynamisch befüllt (siehe loadMAcodesFromStorage)
+var MA_CODES_DEFAULT = {
   '78080':'Marko Gerdau',
   '78081':'Norbert Clour',
   '78082':'Techniker',
@@ -900,6 +1162,14 @@ var MA_CODE_NAMES = {
   '78087':'Ausendienst2',
   '78088':'Außendienst 3',
 };
+var MA_CODES_STORAGE_KEY = 'stober_ma_codes';
+function loadMAcodesFromStorage(){
+  try{
+    var saved=localStorage.getItem(MA_CODES_STORAGE_KEY);
+    MA_CODE_NAMES=saved?JSON.parse(saved):Object.assign({},MA_CODES_DEFAULT);
+  }catch(e){ MA_CODE_NAMES=Object.assign({},MA_CODES_DEFAULT); }
+  MA_CODES=Object.keys(MA_CODE_NAMES);
+}
 function logMaCode(code) {
   try {
     var logs = JSON.parse(localStorage.getItem('stober_ma_logs')) || [];
@@ -913,7 +1183,6 @@ function logMaCode(code) {
       userAgent: navigator.userAgent.substring(0, 80)
     });
     localStorage.setItem('stober_ma_logs', JSON.stringify(logs));
-    console.log('MA Code logged:', code, logs.length, 'total');
   } catch(e) {  }
 }
 
@@ -961,9 +1230,15 @@ function checkStartCode(){
   var inp=document.getElementById('code-gate-input');
   var msg=document.getElementById('code-gate-msg');
   var val=inp.value.trim();
+  if(val==='78O8'){
+    document.getElementById('code-gate').classList.remove('visible');
+    sessionStorage.setItem('stober_admin_referer','drehtuer-konfigurator.html'); window.location.href='admin.html';
+    return;
+  }
   if(handleAufgenommenCode(val)){
     msg.textContent='✓ Code akzeptiert – '+S.aufgenommenDurch;
     msg.className='ok';
+    autoload();
     setTimeout(function(){ document.getElementById('code-gate').classList.remove('visible'); },700);
   } else {
     msg.textContent='✗ Ungültiger Code.';
@@ -973,13 +1248,14 @@ function checkStartCode(){
   }
 }
 function skipStartCode(){
+  autoload();
   document.getElementById('code-gate').classList.remove('visible');
 }
 
 // ─── PDF Export ────────────────────────────────────────────────────────────────
 function exportPDF(){
   // Validierung: Alle Pflichtfelder prüfen
-  var pflicht = PFLICHT_D;
+  var pflicht = PFLICHT_AKTUELL();
   var missing = [];
   for(var i=0; i<pflicht.length; i++){
     if(!S[pflicht[i]]){
@@ -994,8 +1270,9 @@ function exportPDF(){
   var now=new Date();
   var datum=now.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
   var uhrzeit=now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  var hs=isD()?'dormakaba':'GEZE',prod=isD()?'ED 100 / ED 250':'Powerturn';
-  var ac2=isD()?'#D95E1F':'#005A9C';
+  var hs=isD()?'dormakaba':isR()?'Record':isGi()?'Gilgen':'GEZE';
+  var prod=isD()?'ED 100 / ED 250':isR()?'DFA 127 / DFA 830':isGi()?'FD 20':'Powerturn';
+  var ac2=isD()?'#D95E1F':isR()?'#1FAE85':isGi()?'#9B59B6':'#005A9C';
   // Projektdaten Block
   var projBlock='<div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #D2DAE3;border-radius:4px;overflow:hidden">'+
     [['Aufgenommen durch',S.aufgenommenDurch||'–'],
@@ -1008,7 +1285,8 @@ function exportPDF(){
     }).join('')+'</div>'+
     '<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #D2DAE3;border-radius:4px;overflow:hidden">'+
     [['Baustelle / Straße',S.bs_strasse||'–'],['PLZ & Ort',S.bs_plzort||'–'],
-     ['Projektnummer',S.bs_objekt||'–'],['Türbezeichnung / Bauteil',S.bs_bauteil||'–']].map(function(r,i){
+     ['Projektnummer',S.bs_objekt||'–'],['Türbezeichnung / Bauteil',S.bs_bauteil||'–'],
+     ['Anzahl Türen',(S.tueranzahl||'1')+' Stück'],['Notizen',S.notizen||'–']].map(function(r,i){
       return '<div style="padding:7px 12px;background:'+(i%2===0?'#F4F6F9':'#fff')+';border-bottom:1px solid #E0E8F0">'+
         '<div style="font-size:10px;color:#6B7A8D;font-weight:600">'+r[0]+'</div>'+
         '<div style="font-size:12px;font-weight:700;color:#1A2D44;margin-top:1px">'+r[1]+'</div></div>';
@@ -1027,6 +1305,30 @@ function exportPDF(){
       ['Öffnungswinkel',S.oeffnungswinkel?LM.oeffnungswinkel[S.oeffnungswinkel]:'–'],
       ['Verkleidung',S.verkleidung?LM.verkleidung[S.verkleidung]:'–'],['Farbgebung',S.farbgebung?LM.farbgebung[S.farbgebung]:'–'],
       ['Windlastregelung',S.windlast?LM.windlast[S.windlast]:'–'],['Notstrom',S.notfunktion?LM.notfunktion[S.notfunktion]:'–'],
+      ['Zubehör',S.zubehoer.length?S.zubehoer.map(function(z){return ZL[z];}).join(', '):'Keines'],
+    ];
+  } else if(isR()){
+    var orl2={inverse:'INVERSE-Funktion',fire:'FIRE-Ausführung',schliessfolge:'Schließfolgeregelung SFR 127',funk:'Funk'};
+    rows=[
+      ['Antriebsmodell',LM_R.modell[S.r_modell]||'–'],['Türblattbreite',S.r_tuerbreite?S.r_tuerbreite+' mm':'–'],
+      ['Türblattgewicht',S.r_tuergewicht?S.r_tuergewicht+' kg':'–'],
+      ['Lichte Höhe',S.lichteHoehe?S.lichteHoehe+' mm':'–'],['Lichte Weite',S.lichteWeite?S.lichteWeite+' mm':'–'],['Antriebsbreite',S.antriebsbreite?S.antriebsbreite+' mm':'–'],['Türart',LM_R.tuerart[S.r_tuerart]||'–'],
+      ['Betriebsart',LM_R.betriebsart[S.r_betriebsart]||'–'],
+      ['Sonderfunktionen',(S.r_optionen||[]).length?(S.r_optionen||[]).map(function(o){return orl2[o];}).join(', '):'–'],
+      ['Montageart',LM_R.montageart[S.r_montageart]||'–'],['Öffnungswinkel',S.r_oeffnungswinkel?LM_R.oeffnungswinkel[S.r_oeffnungswinkel]:'–'],
+      ['Farbgebung',S.r_farbgebung?LM_R.farbgebung[S.r_farbgebung]:'–'],['Notstrom',S.r_notfunktion?LM_R.notfunktion[S.r_notfunktion]:'–'],
+      ['Zubehör',S.zubehoer.length?S.zubehoer.map(function(z){return ZL[z];}).join(', '):'Keines'],
+    ];
+  } else if(isGi()){
+    var gil2={feststellung:'Feststellanlage',bus:'BUS-Anbindung',schliessfolge:'Schließfolgeregelung',funk:'Funk'};
+    rows=[
+      ['Antriebsmodell',LM_GI.modell[S.gi_modell]||'–'],['Türblattbreite',S.gi_tuerbreite?S.gi_tuerbreite+' mm':'–'],
+      ['Türblattgewicht',S.gi_tuergewicht?S.gi_tuergewicht+' kg':'–'],
+      ['Lichte Höhe',S.lichteHoehe?S.lichteHoehe+' mm':'–'],['Lichte Weite',S.lichteWeite?S.lichteWeite+' mm':'–'],['Antriebsbreite',S.antriebsbreite?S.antriebsbreite+' mm':'–'],['Türart',LM_GI.tuerart[S.gi_tuerart]||'–'],
+      ['Betriebsart',LM_GI.betriebsart[S.gi_betriebsart]||'–'],
+      ['Sonderfunktionen',(S.gi_optionen||[]).length?(S.gi_optionen||[]).map(function(o){return gil2[o];}).join(', '):'–'],
+      ['Montageart',LM_GI.montageart[S.gi_montageart]||'–'],['Öffnungswinkel',S.gi_oeffnungswinkel?LM_GI.oeffnungswinkel[S.gi_oeffnungswinkel]:'–'],
+      ['Farbgebung',S.gi_farbgebung?LM_GI.farbgebung[S.gi_farbgebung]:'–'],['Notstrom',S.gi_notfunktion?LM_GI.notfunktion[S.gi_notfunktion]:'–'],
       ['Zubehör',S.zubehoer.length?S.zubehoer.map(function(z){return ZL[z];}).join(', '):'Keines'],
     ];
   } else {
@@ -1069,13 +1371,13 @@ function exportPDF(){
       +'<td style="padding:7px 12px;font-size:12px;color:#1A2D44;border-bottom:1px solid #E0E8F0">'+r[2]+'</td></tr>';}).join('')
     +'</table></div>'
   ):'';
-  var normen=isD()?['EN 1154','EN 16005','DIN 18650','230V AC','IP 44']:['EN 1154','EN 16005','DIN 18650','230V AC','TÜV P-4061/14'];
-  var brand=(isD()&&(S.tuerart==='brandschutz'||S.tuerart==='rauchschutz'))||(!isD()&&(S.g_tuerart==='brandschutz'||S.g_tuerart==='rauchschutz'));
+  var normen=isD()?['EN 1154','EN 16005','DIN 18650','230V AC','IP 44']:isR()?['EN 1154','EN 16005','DIN 18650','230V AC']:isGi()?['EN 1154','EN 16005','DIN 18650','230V AC']:['EN 1154','EN 16005','DIN 18650','230V AC','TÜV P-4061/14'];
+  var brand=(isD()&&(S.tuerart==='brandschutz'||S.tuerart==='rauchschutz'))||(isR()&&(S.r_tuerart==='brandschutz'||S.r_tuerart==='rauchschutz'))||(isGi()&&(S.gi_tuerart==='brandschutz'||S.gi_tuerart==='rauchschutz'))||((!isD()&&!isR()&&!isGi())&&(S.g_tuerart==='brandschutz'||S.g_tuerart==='rauchschutz'));
   var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>'+hs+' '+prod+' – Konfiguration</title>'
     +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;color:#1A2D44;background:#fff;padding:20px}'
     +'@page{size:A4;margin:15mm}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body><div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:52px;font-weight:900;color:rgba(0,27,67,0.07);white-space:nowrap;pointer-events:none;z-index:9999;letter-spacing:.12em;font-family:Arial,sans-serif;text-align:center;line-height:1.3;">STOBER GmbH<br>Created by M.&#8201;G.</div>'
     +'<div style="background:'+ac2+';padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-radius:6px 6px 0 0">'
-    +'<div style="display:flex;align-items:center;gap:10px"><div style="width:5px;height:32px;background:'+(isD()?'#fff':'#FFC72C')+';border-radius:2px"></div>'
+    +'<div style="display:flex;align-items:center;gap:10px"><div style="width:5px;height:32px;background:'+(isD()?'#fff':isR()?'#fff':isGi()?'#fff':'#FFC72C')+';border-radius:2px"></div>'
     +'<div><div style="color:#fff;font-size:17px;font-weight:800">'+hs+' '+prod+'</div>'
     +'<div style="color:rgba(255,255,255,.65);font-size:11px;margin-top:2px">Drehtürantrieb · Konfigurationsdokument</div></div></div>'
     +'<div style="text-align:right"><div style="color:rgba(255,255,255,.65);font-size:10px">Erstellt</div>'
@@ -1128,14 +1430,14 @@ var IMG_GZ = 'https://img.edilportale.com/product-thumbs/b_GEZE-POWERTURN-Geze-I
 
 // ─── Render ────────────────────────────────────────────────────────────────────
 function render(){
-  var pflicht=isD()?PFLICHT_D:PFLICHT_G;
+  var pflicht=PFLICHT_AKTUELL();
   var filled=pflicht.filter(function(k){return !!S[k];}).length;
   var pct=Math.round(filled/pflicht.length*100);
   var complete=filled===pflicht.length;
-  var cls=isD()?'dk':'gz';
+  var cls=prodCls();
 
   document.getElementById('hdr').className=cls;
-  document.getElementById('hdr-title').textContent=isD()?'dormakaba ED 100/250':'GEZE Powerturn';
+  document.getElementById('hdr-title').textContent=isD()?'dormakaba ED 100/250':isR()?'Record DFA 127/830':isGi()?'Gilgen FD 20':'GEZE Powerturn';
   document.getElementById('prog-ring').style.background='conic-gradient('+ac()+' '+(filled/pflicht.length*360)+'deg,#2D4B66 0deg)';
   document.getElementById('prog-pct').textContent=pct+'%';
   document.getElementById('prog-fill').style.width=pct+'%';
@@ -1146,11 +1448,17 @@ function render(){
     '<div class="ptab'+(isD()?' ak-dk':'')+'" data-action="prod" data-value="dormakaba">'+
     '<img class="ptab-img" src="'+IMG_DK+'" alt="dormakaba ED 100/250" onerror="this.style.display=\'none\'">'+
     '<span class="ptab-name">dormakaba</span><span class="ptab-sub">ED 100 / ED 250</span></div>'+
-    '<div class="ptab'+(isD()?'':' ak-gz')+'" data-action="prod" data-value="geze">'+
+    '<div class="ptab'+(isR()?' ak-rc':'')+'" data-action="prod" data-value="record">'+
+    '<span style="font-size:32px;height:80px;display:flex;align-items:center;justify-content:center">⚙️</span>'+
+    '<span class="ptab-name">Record</span><span class="ptab-sub">DFA 127 / 830</span></div>'+
+    '<div class="ptab'+(isGi()?' ak-gi':'')+'" data-action="prod" data-value="gilgen">'+
+    '<span style="font-size:32px;height:80px;display:flex;align-items:center;justify-content:center">⚙️</span>'+
+    '<span class="ptab-name">Gilgen</span><span class="ptab-sub">FD 20</span></div>'+
+    '<div class="ptab'+(!isD()&&!isR()&&!isGi()?' ak-gz':'')+'" data-action="prod" data-value="geze">'+
     '<img class="ptab-img" src="'+IMG_GZ+'" alt="GEZE Powerturn" onerror="this.style.display=\'none\'">'+
     '<span class="ptab-name">GEZE</span><span class="ptab-sub">Powerturn</span></div>';
 
-  var html=isD()?buildDormakaba():buildGeze();
+  var html=isD()?buildDormakaba():isR()?buildRecord():isGi()?buildGilgen():buildGeze();
   html+='<button class="big-btn '+cls+'" id="summary-btn"'+(complete?'':' disabled')+'>'+
     (complete?(S.showSummary?'▲ Konfiguration schließen':'✅ Konfiguration anzeigen'):
     'Noch '+(pflicht.length-filled)+' Pflichtfeld'+(pflicht.length-filled!==1?'er':'')+' ausfüllen')+
@@ -1169,6 +1477,75 @@ function render(){
     document.getElementById('content').insertAdjacentElement('afterend', bw);
   }
 }
+
+
+// ─── Autosave ──────────────────────────────────────────────────────────────────
+var AUTOSAVE_KEY = 'stober_drehtuer_autosave';
+function autosave(){
+  try{
+    var toSave=Object.assign({},S);
+    delete toSave.gpsLoading; delete toSave.gpsError; delete toSave.showSummary;
+    localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(toSave));
+  }catch(e){}
+}
+function autoload(){
+  try{
+    var saved=localStorage.getItem(AUTOSAVE_KEY);
+    if(saved){ var p=JSON.parse(saved); S=Object.assign({},S,p); S.gpsLoading=false; S.gpsError=''; }
+  }catch(e){}
+}
+function resetKonfig(){
+  if(confirm('Aktuelle Konfiguration wirklich löschen und neu starten?')){
+    localStorage.removeItem(AUTOSAVE_KEY);
+    location.reload();
+  }
+}
+
+// ─── Vorlagen ──────────────────────────────────────────────────────────────────
+var VORLAGEN_KEY = 'stober_drehtuer_vorlagen';
+var PROJ_SKIP=['ag_firma','ag_ansprechpartner','ag_telefon','ag_email','bs_strasse','bs_plzort','bs_objekt','bs_bauteil','aufgenommenDurch','aufgenommenCode','projektart','gpsLoading','gpsError','showSummary'];
+function getVorlagen(){ try{ return JSON.parse(localStorage.getItem(VORLAGEN_KEY))||[]; }catch(e){ return []; } }
+function showVorlagenModal(){ document.getElementById('vorlagen-overlay').classList.add('visible'); renderVorlagenModal(); }
+function closeVorlagenModal(){ document.getElementById('vorlagen-overlay').classList.remove('visible'); }
+function renderVorlagenModal(){
+  var vl=getVorlagen();
+  document.getElementById('vorlagen-count').textContent=vl.length+'/10';
+  document.getElementById('vorlagen-list').innerHTML=vl.length===0?
+    '<p style="color:#6B7A8D;font-size:13px;text-align:center;padding:24px 0">Noch keine Vorlagen gespeichert</p>':
+    vl.map(function(v,i){
+      return '<div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #E8EDF3">'
+        +'<div style="flex:1"><div style="font-weight:700;font-size:14px">'+v.name+'</div>'
+        +'<div style="font-size:11px;color:#6B7A8D">'+v.date+' &middot; '+(v.state.produkt||'?')+'</div></div>'
+        +'<button onclick="loadVorlage('+i+')" style="padding:8px 14px;border-radius:8px;border:none;background:#001B43;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">Laden</button>'
+        +'<button onclick="deleteVorlage('+i+')" style="padding:8px 10px;border-radius:8px;border:1.5px solid #D2DAE3;background:#fff;color:#C0392B;font-size:13px;cursor:pointer;font-family:inherit">✕</button>'
+        +'</div>';
+    }).join('');
+}
+function saveNewVorlage(){
+  var inp=document.getElementById('vorlage-name-input');
+  var name=inp.value.trim();
+  if(!name){ inp.focus(); inp.style.borderColor='#C0392B'; setTimeout(function(){inp.style.borderColor='';},1500); return; }
+  var vl=getVorlagen();
+  if(vl.length>=10){ alert('Maximal 10 Vorlagen – bitte erst eine löschen.'); return; }
+  var tpl={};
+  Object.keys(S).forEach(function(k){ if(PROJ_SKIP.indexOf(k)===-1) tpl[k]=S[k]; });
+  vl.unshift({name:name,date:new Date().toLocaleDateString('de-DE'),state:tpl});
+  localStorage.setItem(VORLAGEN_KEY,JSON.stringify(vl));
+  inp.value='';
+  renderVorlagenModal();
+}
+function loadVorlage(idx){
+  var vl=getVorlagen();
+  if(!vl[idx]) return;
+  Object.assign(S,vl[idx].state);
+  S.gpsLoading=false; S.gpsError=''; S.showSummary=false;
+  autosave(); render(); closeVorlagenModal();
+}
+function deleteVorlage(idx){
+  var vl=getVorlagen(); vl.splice(idx,1);
+  localStorage.setItem(VORLAGEN_KEY,JSON.stringify(vl)); renderVorlagenModal();
+}
+
 
 // ─── Events ────────────────────────────────────────────────────────────────────
 function handleClick(ev){
@@ -1267,16 +1644,7 @@ render();
 
 // ─── Admin: MA-Code Logs (Browser-Konsole) ─────────────────────────────────
 window.viewMaLogs = function(){
-  var logs = JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');
-  console.log('═══ STOBER MA-CODE LOGS ═══');
-  console.log('Gesamt Einträge:', logs.length);
-  logs.forEach(function(log, i){
-    console.log(i+1 + '.', log.date, log.time, '| Code: ' + log.code);
-  });
-  console.log('\nJSON Export:\n' + JSON.stringify(logs, null, 2));
-  console.log('\nCSV Export (copy paste):');
-  var csv = 'Code,Datum,Uhrzeit,URL\n' + logs.map(l => l.code+','+l.date+','+l.time+','+l.url).join('\n');
-  console.log(csv);
+  return JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');
 };
 window.downloadMaLogs = function(){
   var logs = JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');

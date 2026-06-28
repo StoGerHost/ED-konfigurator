@@ -8,147 +8,352 @@
   <meta name="apple-mobile-web-app-title" content="Tür Konfigurator">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#001B43">
-  <meta name="description" content="Türantrieb Konfigurator – dormakaba & GEZE Dreh- und Schiebetüren">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231A2D44'/%3E%3Crect x='50' y='60' width='22' height='392' rx='6' fill='%23D95E1F'/%3E%3Crect x='92' y='100' width='140' height='320' rx='8' fill='white' opacity='.15'/%3E%3Crect x='252' y='100' width='140' height='155' rx='8' fill='white' opacity='.1'/%3E%3Crect x='252' y='265' width='140' height='155' rx='8' fill='white' opacity='.1'/%3E%3C/svg%3E">
   <title>Türantrieb Konfigurator</title>
 <style>
-  :root {
-    --bg: #F2F4F7; --panel: #fff; --primary: #1A2D44; --accent: #001B43;
-    --border: #D2DAE3; --muted: #6B7A8D; --geze: #005A9C;
-    --safe-top: env(safe-area-inset-top, 0px); --safe-bot: env(safe-area-inset-bottom, 0px);
+  :root{
+    --bg:#F2F4F7;--panel:#fff;--primary:#1A2D44;--accent:#001B43;
+    --border:#D2DAE3;--muted:#6B7A8D;--ok:#2A7A4B;--err:#C0392B;
+    --safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { height: -webkit-fill-available; }
-  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: var(--bg);
-         color: var(--primary); min-height: 100vh; -webkit-font-smoothing: antialiased;
-         padding-bottom: calc(var(--safe-bot) + 24px); user-select: none; }
-  a { text-decoration: none; color: inherit; }
-  header { background: #fff; padding-top: calc(var(--safe-top) + 20px); padding-bottom: 24px; padding-left: 20px; padding-right: 20px; text-align: center; }
-  .hdr-bar-row { display: flex; justify-content: center; gap: 6px; margin-bottom: 16px; }
-  .hdr-bar { width: 5px; height: 40px; border-radius: 2px; }
-  .hdr-bar.o { background: var(--accent); }
-  .hdr-bar.g { background: #FFC72C; height: 30px; align-self: flex-end; }
-  .hdr-bar.s { background: #6B7A8D; height: 22px; align-self: flex-end; }
-  header h1 { color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -.03em; }
-  header p  { color: #8BA3BA; font-size: 13px; margin-top: 6px; }
-  .hdr-stripe { height: 3px; background: linear-gradient(90deg, #091636 0%, #577496 50%, #B8C8DC 100%); }
-  #install-banner { background: #0A84FF; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
-  #install-banner.hidden { display: none; }
-  #install-close { background: rgba(255,255,255,.2); border: none; border-radius: 99px; padding: 4px 10px; color: #fff; font-size: 13px; font-weight: 600; min-height: 32px; cursor: pointer; font-family: inherit; }
-  main { padding: 20px 16px; max-width: 500px; margin: 0 auto; }
-  .section-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; margin-top: 24px; padding-left: 4px; }
-  .section-label:first-child { margin-top: 0; }
-  .app-card { background: var(--panel); border-radius: 16px; margin-bottom: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(26,45,68,.1); display: block; transition: transform .15s, box-shadow .15s; border: 2px solid transparent; cursor: pointer; }
-  .app-card:active { transform: scale(.98); box-shadow: 0 1px 4px rgba(26,45,68,.08); }
-  .app-card-header { padding: 18px 18px 14px; display: flex; align-items: center; gap: 14px; }
-  .app-card-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-  .app-card-icon.dk { background: #091636; }
-  .app-card-icon.gz { background: #005A9C; }
-  .app-card-title { font-weight: 800; font-size: 16px; color: var(--primary); line-height: 1.2; }
-  .app-card-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
-  .app-card-arrow { margin-left: auto; font-size: 18px; color: var(--muted); flex-shrink: 0; }
-  .app-card-body { padding: 0 18px 16px; }
-  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
-  .pill { padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
-  .pill.dk { background: #EEF2F8; color: var(--accent); }
-  .pill.gz { background: #FFF4E6; color: #D95E1F; }
-  .pill.neutral { background: #F0F1F3; color: var(--muted); }
-  .card-divider { height: 1px; background: var(--border); }
-  .info-box { background: var(--panel); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; border-left: 3px solid var(--accent); }
-  .info-box p { font-size: 13px; line-height: 1.6; color: var(--primary); }
-  .bug-btn-wrap { text-align: center; }
-  .bug-btn { display: inline-block; padding: 8px 16px; border: 1px solid var(--muted); border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--primary); transition: all .2s; }
-  .bug-btn:active { border-color: #C0392B; color: #C0392B; }
-  footer { padding: 24px 16px calc(24px + var(--safe-bot)); text-align: center; color: var(--muted); font-size: 12px; }
-  .norm-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{height:-webkit-fill-available}
+  body{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;background:var(--bg);
+       color:var(--primary);min-height:100vh;-webkit-font-smoothing:antialiased;
+       padding-bottom:calc(var(--safe-bot)+24px);user-select:none}
+  a{text-decoration:none;color:inherit}
+  button{-webkit-appearance:none;font-family:inherit;cursor:pointer}
+  input{font-family:inherit}
+
+  /* ── Header ─────────────────────────────────────────────── */
+  header{background:#fff;padding-top:calc(var(--safe-top)+20px);padding-bottom:24px;
+         padding-left:20px;padding-right:20px;text-align:center}
+  .hdr-bar-row{display:flex;justify-content:center;gap:6px;margin-bottom:16px}
+  .hdr-bar{width:5px;border-radius:2px}
+  .hdr-bar.o{background:var(--accent);height:40px}
+  .hdr-bar.g{background:#FFC72C;height:30px;align-self:flex-end}
+  .hdr-bar.s{background:#6B7A8D;height:22px;align-self:flex-end}
+  header h1{color:var(--accent);font-size:22px;font-weight:800;letter-spacing:-.03em}
+  header p{color:#8BA3BA;font-size:13px;margin-top:6px}
+  .hdr-stripe{height:3px;background:linear-gradient(90deg,#091636 0%,#577496 50%,#B8C8DC 100%)}
+
+  /* ── App Cards ───────────────────────────────────────────── */
+  main{padding:20px 16px;max-width:500px;margin:0 auto}
+  .section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+                 color:var(--muted);margin-bottom:12px;margin-top:24px;padding-left:4px}
+  .section-label:first-child{margin-top:0}
+
+  .app-card{background:var(--panel);border-radius:16px;margin-bottom:14px;overflow:hidden;
+            box-shadow:0 2px 8px rgba(26,45,68,.1);display:block;
+            transition:transform .15s,box-shadow .15s;border:2px solid transparent}
+  .app-card:active{transform:scale(.98);box-shadow:0 1px 4px rgba(26,45,68,.08)}
+  .app-card-header{padding:18px 18px 14px;display:flex;align-items:center;gap:14px}
+  .app-card-icon{width:52px;height:52px;border-radius:12px;display:flex;
+                 align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+  .app-card-icon.dk{background:#091636}
+  .app-card-icon.gz{background:#005A9C}
+  .app-card-icon.admin{background:#3A1F4D}
+  .app-card-title{font-weight:800;font-size:16px;color:var(--primary);line-height:1.2}
+  .app-card-sub{font-size:12px;color:var(--muted);margin-top:3px}
+  .app-card-arrow{margin-left:auto;font-size:18px;color:var(--muted);flex-shrink:0}
+  .card-divider{height:1px;background:var(--border)}
+  .app-card-body{padding:12px 18px 16px}
+  .pills{display:flex;flex-wrap:wrap;gap:6px}
+  .pill{padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600}
+  .pill.dk{background:#EEF2F8;color:var(--accent)}
+  .pill.gz{background:#FFF4E6;color:#D95E1F}
+  .pill.neutral{background:#F0F1F3;color:var(--muted)}
+  .pill.admin{background:#F0EBF8;color:#6C3483}
+
+  /* ── Info & Bug ──────────────────────────────────────────── */
+  .info-box{background:var(--panel);border-radius:12px;padding:14px 16px;
+            margin-bottom:14px;border-left:3px solid var(--accent)}
+  .info-box p{font-size:13px;line-height:1.6;color:var(--primary)}
+  .bug-btn-wrap{text-align:center}
+  .bug-btn{display:inline-block;padding:8px 16px;border:1px solid var(--muted);
+           border-radius:8px;font-size:12px;font-weight:600;color:var(--primary)}
+
+  /* ── Admin Gate Modal ────────────────────────────────────── */
+  #admin-overlay{display:none;position:fixed;inset:0;background:rgba(9,22,54,.65);
+                 z-index:9999;align-items:flex-end;justify-content:center;padding:0}
+  #admin-overlay.visible{display:flex}
+  #admin-sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:540px;
+               max-height:92vh;overflow:hidden;display:flex;flex-direction:column;
+               box-shadow:0 -4px 32px rgba(0,0,0,.18)}
+
+  /* Sheet Header */
+  .sheet-hdr{background:#091636;padding:16px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .sheet-hdr-bar{width:5px;height:28px;border-radius:2px;background:#D95E1F;flex-shrink:0}
+  .sheet-hdr-text{flex:1}
+  .sheet-hdr-title{color:#fff;font-weight:800;font-size:15px}
+  .sheet-hdr-sub{color:rgba(255,255,255,.55);font-size:12px;margin-top:2px}
+  .sheet-close{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:16px;
+               border-radius:50%;width:30px;height:30px;line-height:30px;text-align:center}
+
+  /* Gate */
+  #gate-view{padding:32px 20px;text-align:center}
+  .gate-icon{font-size:36px;margin-bottom:10px}
+  #gate-view h2{font-size:17px;font-weight:800;color:var(--accent);margin-bottom:6px}
+  #gate-view p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:18px}
+  .gate-row{display:flex;gap:8px;max-width:320px;margin:0 auto}
+  .gate-row input{flex:1;padding:12px 14px;border:2px solid var(--border);border-radius:10px;
+                  font-size:16px;outline:none;text-align:center;letter-spacing:.1em}
+  .gate-row input:focus{border-color:var(--accent)}
+  .gate-row button{padding:12px 18px;border:none;border-radius:10px;background:var(--accent);
+                   color:#fff;font-weight:700;font-size:15px}
+  #gate-msg{margin-top:10px;font-size:13px;min-height:18px;font-weight:600;color:var(--err)}
+
+  /* Admin Content */
+  #admin-content{display:none;flex:1;overflow-y:auto;padding:16px}
+  #admin-content.visible{display:block}
+
+  .a-section{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+             color:var(--muted);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+  .a-section:first-child{margin-top:0}
+
+  .code-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #F0F2F5}
+  .code-row:last-child{border-bottom:none}
+  .code-num{width:80px;font-weight:700;font-size:13px;color:var(--accent);
+            font-family:monospace;letter-spacing:.06em;flex-shrink:0}
+  .code-name-input{flex:1;padding:8px 10px;border:1.5px solid var(--border);
+                   border-radius:7px;font-size:13px;outline:none}
+  .code-name-input:focus{border-color:var(--accent)}
+  .del-btn{padding:7px 11px;border-radius:7px;border:1.5px solid var(--border);
+           background:#fff;color:var(--err);font-size:14px;line-height:1}
+
+  .add-row{display:flex;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+  .add-row input{padding:9px 11px;border:2px solid var(--border);border-radius:8px;
+                 font-size:13px;outline:none}
+  .add-row input:focus{border-color:var(--accent)}
+  .add-row .inp-code{width:90px}
+  .add-row .inp-name{flex:1}
+  .add-row button{padding:9px 14px;border:none;border-radius:8px;background:var(--accent);
+                  color:#fff;font-weight:700;font-size:13px;white-space:nowrap}
+
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .btn-primary{flex:1;padding:12px;border:none;border-radius:9px;
+               background:var(--ok);color:#fff;font-weight:700;font-size:13px}
+  .btn-secondary{padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;
+                 background:#fff;color:var(--primary);font-weight:600;font-size:12px}
+  .btn-danger{padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;
+              background:#fff;color:var(--err);font-weight:600;font-size:12px}
+
+  .log-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+  .log-table th{background:#F4F6F9;padding:7px 10px;text-align:left;font-weight:700;
+                color:var(--muted);border-bottom:2px solid var(--border)}
+  .log-table td{padding:7px 10px;border-bottom:1px solid #F0F2F5;color:var(--primary)}
+  .log-table tr:last-child td{border-bottom:none}
+
+  .empty-hint{color:var(--muted);font-size:13px;text-align:center;padding:16px 0}
+
+  /* Toast */
+  #toast{position:fixed;bottom:calc(var(--safe-bot)+24px);left:50%;
+         transform:translateX(-50%);background:#1A2D44;color:#fff;
+         padding:10px 22px;border-radius:99px;font-size:13px;font-weight:600;
+         opacity:0;transition:opacity .25s;pointer-events:none;z-index:10000;white-space:nowrap}
+
+  footer{padding:24px 16px calc(24px + var(--safe-bot));text-align:center;
+         color:var(--muted);font-size:12px}
+  .norm-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+
+  /* ─── Admin Tabs ─────────────────────────────────────────── */
+  .admin-tabs{display:flex;background:#091636;padding:0 16px}
+  .admin-tab{flex:1;padding:10px 6px;border:none;border-bottom:3px solid transparent;
+             background:none;color:rgba(255,255,255,.5);font-size:13px;font-weight:600;
+             font-family:inherit;cursor:pointer;transition:.15s}
+  .admin-tab.active{color:#fff;border-bottom-color:#D95E1F}
+  .tab-panel{display:none;flex:1;overflow-y:auto;padding:16px}
+  .tab-panel.active{display:block}
+
+  /* ─── Artikel-Panel ──────────────────────────────────────── */
+  .art-konfig{margin-bottom:20px}
+  .art-konfig-hdr{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+                  color:#fff;padding:8px 12px;border-radius:8px 8px 0 0;margin-bottom:0}
+  .art-hersteller{border:1px solid var(--border);border-radius:0 0 8px 8px;overflow:hidden;margin-bottom:14px}
+  .art-hst-hdr{display:flex;align-items:center;gap:8px;padding:9px 12px;
+               background:#F8F9FC;border-bottom:1px solid var(--border);cursor:pointer}
+  .art-hst-hdr .hst-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .art-hst-hdr .hst-name{font-weight:700;font-size:13px;flex:1}
+  .art-hst-hdr .hst-arrow{color:var(--muted);font-size:13px;transition:.2s}
+  .art-hst-body{display:none;padding:10px 12px}
+  .art-hst-body.open{display:block}
+  .art-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #F5F7FA}
+  .art-row:last-child{border-bottom:none}
+  .art-label{flex:1;font-size:12px;color:var(--primary)}
+  .art-input{width:140px;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;
+             font-size:12px;font-family:inherit;outline:none;text-align:right;
+             font-family:monospace}
+  .art-input:focus{border-color:var(--accent)}
+  .art-input.has-val{border-color:var(--ok);background:#F0FBF5}
+
 </style>
 </head>
 <body>
 
-  <!-- Install Banner -->
-  <div id="install-banner">
-    <span style="flex: 1; color: #fff; font-size: 13px;">📲 Als App installieren</span>
-    <button id="install-close">✕</button>
-  </div>
-
-  <!-- Header -->
-  <header>
-    <div class="hdr-bar-row">
-      <div class="hdr-bar o"></div>
-      <div class="hdr-bar g"></div>
-      <div class="hdr-bar s"></div>
+<!-- Admin Sheet -->
+<div id="admin-overlay" onclick="overlayClick(event)">
+  <div id="admin-sheet">
+    <div class="sheet-hdr">
+      <div class="sheet-hdr-bar"></div>
+      <div class="sheet-hdr-text">
+        <div class="sheet-hdr-title">🔐 Admin – Mitarbeitercodes</div>
+        <div class="sheet-hdr-sub">Drehtür &amp; Schiebetür · gemeinsame Codes</div>
+      </div>
+      <button class="sheet-close" onclick="closeAdmin()">✕</button>
     </div>
-    <h1>Türantrieb Konfigurator</h1>
-    <p>dormakaba · GEZE</p>
-    <div class="hdr-stripe"></div>
-  </header>
 
-  <main>
+    <!-- Tabs (nur sichtbar wenn eingeloggt) -->
+    <div class="admin-tabs" id="admin-tabs" style="display:none">
+      <button class="admin-tab active" onclick="switchTab('codes')">🔑 Codes</button>
+      <button class="admin-tab" onclick="switchTab('artikel')">📦 Artikel</button>
+      <button class="admin-tab" onclick="switchTab('log')">📋 Log</button>
+    </div>
 
-  <!-- Drehtür -->
+    <!-- Gate -->
+    <div id="gate-view">
+      <div class="gate-icon">🔑</div>
+      <h2>Admin-Code eingeben</h2>
+      <p>Zugang für Administratoren</p>
+      <div class="gate-row">
+        <input id="gate-input" type="text" placeholder="Code" maxlength="10"
+               autocomplete="off" inputmode="text"
+               onkeydown="if(event.key==='Enter') checkGate()">
+        <button onclick="checkGate()">✓</button>
+      </div>
+      <div id="gate-msg"></div>
+    </div>
+
+    <!-- Admin-Inhalt -->
+    <div id="admin-content" style="display:none;flex:1;overflow:hidden;flex-direction:column">
+
+      <!-- Tab: Codes -->
+      <div class="tab-panel active" id="tab-codes">
+        <div class="a-section">Aktive Mitarbeitercodes <span id="code-count" style="font-weight:400;text-transform:none;letter-spacing:0"></span></div>
+        <div id="code-list"></div>
+        <div class="add-row">
+          <input class="inp-code" id="new-code" type="text" placeholder="Code" maxlength="10" inputmode="text">
+          <input class="inp-name" id="new-name" type="text" placeholder="Name" maxlength="40">
+          <button onclick="addCode()">+ Hinzufügen</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="saveCodes()">✓ Speichern</button>
+        </div>
+      </div>
+
+      <!-- Tab: Artikel -->
+      <div class="tab-panel" id="tab-artikel">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5">
+          Artikelnummern werden automatisch im PDF-Export verwendet.<br>
+          Leere Felder erscheinen nicht in der Stückliste.
+        </p>
+        <div id="artikel-panel"></div>
+        <div class="btn-row" style="position:sticky;bottom:0;background:var(--bg);padding:10px 0 4px">
+          <button class="btn-primary" onclick="saveArtikel()">✓ Artikelnummern speichern</button>
+        </div>
+      </div>
+
+      <!-- Tab: Log -->
+      <div class="tab-panel" id="tab-log">
+        <div class="a-section">Nutzungslog <span id="log-count" style="font-weight:400;text-transform:none;letter-spacing:0"></span></div>
+        <div id="log-list"></div>
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="downloadLog()">📥 CSV exportieren</button>
+          <button class="btn-danger" onclick="clearLog()">🗑 Log löschen</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- Header -->
+<header>
+  <div class="hdr-bar-row">
+    <div class="hdr-bar o"></div>
+    <div class="hdr-bar g"></div>
+    <div class="hdr-bar s"></div>
+  </div>
+  <h1>Türantrieb Konfigurator</h1>
+  <p>dormakaba · GEZE · Record · Gilgen</p>
+  <div class="hdr-stripe"></div>
+</header>
+
+<main>
+
   <div class="section-label">🚪 Drehtürantriebe</div>
-
   <a class="app-card" href="drehtuer-konfigurator.html">
     <div class="app-card-header">
       <div class="app-card-icon dk">🔧</div>
       <div>
         <div class="app-card-title">Drehtür Konfigurator</div>
-        <div class="app-card-sub">dormakaba ED 100/250 &nbsp;·&nbsp; GEZE Powerturn</div>
+        <div class="app-card-sub">dormakaba ED 100/250 &nbsp;·&nbsp; GEZE Powerturn &nbsp;·&nbsp; Record DFA &nbsp;·&nbsp; Gilgen FD 20</div>
       </div>
       <div class="app-card-arrow">›</div>
     </div>
     <div class="card-divider"></div>
-    <div class="app-card-body" style="padding-top:12px"><div style="padding:14px 0;text-align:center;border-bottom:1px solid #E8EDF3;margin-bottom:12px"><svg viewBox="0 0 160 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:130px;height:auto"><defs><radialGradient id="doorWallRadial" cx="50%" cy="20%" r="85%"><stop offset="0%" style="stop-color:#D4D9E0;stop-opacity:1"/><stop offset="80%" style="stop-color:#D4D9E0;stop-opacity:0.5"/><stop offset="100%" style="stop-color:#D4D9E0;stop-opacity:0"/></radialGradient></defs><rect x="0" y="0" width="160" height="240" fill="url(#doorWallRadial)"/><rect x="20" y="30" width="120" height="160" rx="4" fill="#E8EDF3" stroke="#6B7A8D" stroke-width="2"/><rect x="28" y="38" width="104" height="144" rx="2" fill="#C5D9F1" opacity="0.4" stroke="#8BA3BA" stroke-width="1"/><rect x="32" y="42" width="30" height="50" fill="#fff" opacity="0.15" rx="2"/><rect x="95" y="90" width="25" height="40" fill="#fff" opacity="0.1" rx="2"/><g><rect x="105" y="110" width="8" height="20" rx="4" fill="#1A2D44"/><circle cx="109" cy="110" r="3" fill="#6B7A8D"/></g><rect x="30" y="12" width="100" height="12" rx="3" fill="#D95E1F" stroke="#A84815" stroke-width="1"/><circle cx="45" cy="18" r="2" fill="#fff" opacity="0.5"/><circle cx="80" cy="18" r="2" fill="#fff" opacity="0.5"/><circle cx="115" cy="18" r="2" fill="#fff" opacity="0.5"/><line x1="80" y1="24" x2="80" y2="32" stroke="#6B7A8D" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/><circle cx="30" cy="80" r="3" fill="#6B7A8D" opacity="0.4"/><circle cx="30" cy="130" r="3" fill="#6B7A8D" opacity="0.4"/></svg></div>
+    <div class="app-card-body">
       <div class="pills">
-        <span class="pill dk">dormakaba ED 100</span>
-        <span class="pill dk">dormakaba ED 250</span>
+        <span class="pill dk">dormakaba ED 100/250</span>
         <span class="pill gz">GEZE Powerturn</span>
-        <span class="pill gz">Powerturn F / F-IS</span>
-        <span class="pill neutral">BEA IRS4 · FLATSCAN SW · 3D SW</span>
-        <span class="pill neutral">FST · Brandschutz · Low-Energy</span>
+        <span class="pill neutral">Record DFA 127/830</span>
+        <span class="pill neutral">Gilgen FD 20</span>
+        <span class="pill neutral">BEA Sensorik · FST · Brandschutz</span>
         <span class="pill neutral">PDF Export</span>
       </div>
     </div>
   </a>
 
-  <!-- Schiebetür -->
   <div class="section-label">↔️ Schiebetürantriebe</div>
-
   <a class="app-card" href="schiebetuer-konfigurator.html">
     <div class="app-card-header">
       <div class="app-card-icon gz">⚙️</div>
       <div>
         <div class="app-card-title">Schiebetür Konfigurator</div>
-        <div class="app-card-sub">dormakaba ES PROLINE &nbsp;·&nbsp; GEZE ECdrive / Slimdrive / Powerdrive</div>
+        <div class="app-card-sub">dormakaba ES PROLINE &nbsp;·&nbsp; GEZE ECdrive / Slimdrive / Powerdrive &nbsp;·&nbsp; Record TSA &nbsp;·&nbsp; Gilgen SL</div>
       </div>
       <div class="app-card-arrow">›</div>
     </div>
     <div class="card-divider"></div>
-    <div class="app-card-body" style="padding-top:12px"><div style="padding:14px 0;text-align:center;border-bottom:1px solid #E8EDF3;margin-bottom:12px"><svg viewBox="0 0 160 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:130px;height:auto"><defs><radialGradient id="slideWallGradient" cx="50%" cy="25%" r="85%"><stop offset="0%" style="stop-color:#D4D9E0;stop-opacity:1"/><stop offset="65%" style="stop-color:#D4D9E0;stop-opacity:0.5"/><stop offset="100%" style="stop-color:#D4D9E0;stop-opacity:0"/></radialGradient></defs><rect x="0" y="0" width="160" height="240" fill="url(#slideWallGradient)"/><rect x="20" y="28" width="120" height="12" rx="3" fill="#8BA3BA" opacity="0.4"/><rect x="20" y="170" width="120" height="12" rx="3" fill="#8BA3BA" opacity="0.4"/><g><rect x="25" y="45" width="48" height="110" rx="2" fill="#C5D9F1" opacity="0.8" stroke="#8BA3BA" stroke-width="1.5"/><rect x="29" y="49" width="40" height="102" fill="#fff" opacity="0.2" rx="1"/><circle cx="62" cy="105" r="3" fill="#6B7A8D" opacity="0.5"/><rect x="30" y="12" width="32" height="12" rx="3" fill="#005A9C" stroke="#003570" stroke-width="1"/><circle cx="38" cy="18" r="1.5" fill="#fff" opacity="0.6"/><circle cx="52" cy="18" r="1.5" fill="#fff" opacity="0.6"/></g><g><rect x="87" y="45" width="48" height="110" rx="2" fill="#C5D9F1" opacity="0.8" stroke="#8BA3BA" stroke-width="1.5"/><rect x="91" y="49" width="40" height="102" fill="#fff" opacity="0.2" rx="1"/><circle cx="98" cy="105" r="3" fill="#6B7A8D" opacity="0.5"/><rect x="98" y="12" width="32" height="12" rx="3" fill="#D95E1F" stroke="#A84815" stroke-width="1"/><circle cx="106" cy="18" r="1.5" fill="#fff" opacity="0.6"/><circle cx="120" cy="18" r="1.5" fill="#fff" opacity="0.6"/></g><g><path d="M 30 75 L 15 75 L 20 70" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M 30 75 L 15 75 L 20 80" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M 130 75 L 145 75 L 140 70" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M 130 75 L 145 75 L 140 80" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+    <div class="app-card-body">
       <div class="pills">
         <span class="pill dk">ES 250 PRO / ES 400 PRO</span>
-        <span class="pill dk">ES PROLINE FST · T</span>
-        <span class="pill gz">ECdrive T2 / T2-FR</span>
-        <span class="pill gz">Slimdrive SL / RD / RC2</span>
-        <span class="pill gz">Powerdrive PL</span>
-        <span class="pill neutral">BEA IXIO-D · IXIO-ST · IXIO-DT3</span>
-        <span class="pill neutral">Door Pilot · GEZEconnects · BACnet</span>
+        <span class="pill gz">ECdrive T2 · Slimdrive · Powerdrive</span>
+        <span class="pill neutral">Record TSA 20/21/22</span>
+        <span class="pill neutral">Gilgen SL 35 / SLX-M</span>
+        <span class="pill neutral">BEA IXIO · GEZEconnects · BACnet</span>
         <span class="pill neutral">PDF Export</span>
       </div>
     </div>
   </a>
 
-  <!-- Info -->
-  <div class="section-label">ℹ️ Hinweise</div>
-  <div class="info-box">
-    <p>
-      Alle Konfigurationen können als <strong>PDF exportiert</strong> und mit Unterschriften versehen werden.
-      Die Apps funktionieren <strong>offline</strong> nach dem ersten Laden.
-      Alle Daten bleiben lokal auf dem Gerät.
-    </p>
+  <div class="section-label">⚙️ Verwaltung</div>
+  <div class="app-card" onclick="openAdmin()" style="cursor:pointer">
+    <div class="app-card-header">
+      <div class="app-card-icon admin">🔐</div>
+      <div>
+        <div class="app-card-title">Admin</div>
+        <div class="app-card-sub">Mitarbeitercodes verwalten &nbsp;·&nbsp; Nutzungslog</div>
+      </div>
+      <div class="app-card-arrow">›</div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="app-card-body">
+      <div class="pills">
+        <span class="pill admin">Codes hinzufügen / löschen</span>
+        <span class="pill admin">Nutzungslog CSV</span>
+        <span class="pill neutral">Gilt für beide Konfiguratoren</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Fehlerbericht -->
+  <div class="section-label">ℹ️ Hinweise</div>
+  <div class="info-box">
+    <p>Alle Konfigurationen können als <strong>PDF exportiert</strong> und mit Unterschriften versehen werden.
+    Die Apps funktionieren <strong>offline</strong> nach dem ersten Laden.
+    Alle Daten bleiben lokal auf dem Gerät.</p>
+  </div>
+
   <div class="bug-btn-wrap" style="margin-top:8px">
     <a class="bug-btn" id="bug-link" href="#">🐛 Fehlerbericht an Entwickler senden</a>
   </div>
@@ -164,65 +369,354 @@
 </footer>
 
 <script>
-  // 🔒 KOPIER-SCHUTZ - AGGRESSIV
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    alert('Rechtsklick ist deaktiviert. Inhalte sind urheberrechtlich geschützt.');
-    return false;
-  }, false);
-  
-  document.addEventListener('copy', function(e) {
-    e.preventDefault();
-    alert('Kopieren ist deaktiviert. Diese Inhalte sind geschützt.');
-    return false;
-  }, false);
-  
-  document.addEventListener('dragstart', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
-  
-  document.addEventListener('cut', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
-  
-  document.addEventListener('paste', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);
-  
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && (e.keyCode === 67 || e.keyCode === 88 || e.keyCode === 86)) {
-      e.preventDefault();
-      return false;
-    }
-  }, false);
-  
-  document.addEventListener('selectstart', function(e) {
-    e.preventDefault();
-    return false;
-  }, false);  
-  // Install Banner
-  var installBanner = document.getElementById('install-banner');
-  var installClose = document.getElementById('install-close');
-  if (installClose) {
-    installClose.addEventListener('click', function() {
-      installBanner.classList.add('hidden');
-    });
-  }
-  
-  // Bug Report Button
-  var bugLink = document.getElementById('bug-link');
-  if (bugLink) {
-    bugLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      var subject = encodeURIComponent('Fehlerbericht - Türantrieb Konfigurator');
-      var body = encodeURIComponent('Fehler:\n\n' + navigator.userAgent + '\n' + new Date().toISOString());
-      window.location.href = 'mailto:gerdau1979@gmail.com?subject=' + subject + '&body=' + body;
-    });
-  }
-</script>
+var ADMIN_CODE = '78O8';
+var STORAGE_KEY = 'stober_ma_codes';
+var LOG_KEY = 'stober_ma_logs';
 
+var DEFAULT_CODES = {
+  '78080':'Marko Gerdau','78081':'Norbert Clour','78082':'Techniker',
+  '78084':'Bernd Nikolaus','78085':'Armin Bolz','78086':'Ausendienst1',
+  '78087':'Ausendienst2','78088':'Außendienst 3',
+};
+
+function getCodes(){
+  try{ var s=localStorage.getItem(STORAGE_KEY); return s?JSON.parse(s):Object.assign({},DEFAULT_CODES); }
+  catch(e){ return Object.assign({},DEFAULT_CODES); }
+}
+function getLogs(){
+  try{ return JSON.parse(localStorage.getItem(LOG_KEY))||[]; }catch(e){ return []; }
+}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.style.opacity='1';
+  setTimeout(function(){ t.style.opacity='0'; },2200);
+}
+
+// ── Admin Tabs ────────────────────────────────────────────────────────────────
+function switchTab(name){
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.admin-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('tab-'+name).classList.add('active');
+  var idx={codes:0,artikel:1,log:2}[name]||0;
+  var tabs=document.querySelectorAll('.admin-tab');
+  if(tabs[idx]) tabs[idx].classList.add('active');
+  if(name==='artikel') renderArtikel();
+  if(name==='log') renderLog();
+}
+
+// ── Artikel-Schema ────────────────────────────────────────────────────────────
+var ARTIKEL_KEY='stober_artikel';
+var ARTIKEL_SCHEMA={
+  drehtuer:{
+    label:'🚪 Drehtür',
+    hersteller:{
+      dk:{label:'dormakaba',color:'#D95E1F',felder:[
+        {key:'modell.ed100',label:'Antrieb ED 100'},
+        {key:'modell.ed250',label:'Antrieb ED 250'},
+        {key:'modell.ed250pa',label:'Antrieb ED 250 PA'},
+        {key:'betriebsart.full.ed100',label:'Upgradecard Full Energy (ED 100)'},
+        {key:'betriebsart.full.ed250',label:'Upgradecard Full Energy (ED 250)'},
+        {key:'tuerart.brandschutz.ed100',label:'Upgradecard Brandschutz (ED 100)'},
+        {key:'tuerart.brandschutz.ed250',label:'Upgradecard Brandschutz (ED 250)'},
+        {key:'tuerart.rauchschutz.ed250',label:'Upgradecard Rauchschutz (ED 250)'},
+        {key:'notfunktion.notstrom',label:'Notstrom-Backup'},
+        {key:'motioniq.ja',label:'MotionIQ (M A01 + CAN-Platine)'},
+        {key:'schliessfolge.ja',label:'Schließfolgeregelung ESR'},
+        {key:'sensorik.irs4',label:'BEA IRS4 (4SAFE)'},
+        {key:'sensorik.flatscan',label:'BEA FLATSCAN SW'},
+        {key:'sensorik.flatscan3d',label:'BEA FLATSCAN 3D SW'},
+        {key:'montage.bgs',label:'Montagebeschlag BGS'},
+        {key:'montage.bs',label:'Montagebeschlag BS'},
+        {key:'montage.gestaenge',label:'Gestänge-Set'},
+        {key:'zubehoer.radar',label:'Radar-Sensor'},
+        {key:'zubehoer.taster',label:'Aktivierungstaster'},
+        {key:'zubehoer.schluessel',label:'Schlüsselschalter'},
+      ]},
+      gz:{label:'GEZE',color:'#005A9C',felder:[
+        {key:'variante.std',label:'Powerturn Standard'},
+        {key:'variante.f',label:'Powerturn F'},
+        {key:'variante.fis',label:'Powerturn F-IS'},
+        {key:'variante.fr',label:'Powerturn F/R'},
+        {key:'notfunktion.notstrom',label:'Notstrom-Backup'},
+        {key:'sensorik.irs4',label:'BEA IRS4 (4SAFE)'},
+        {key:'sensorik.flatscan',label:'BEA FLATSCAN SW'},
+        {key:'sensorik.flatscan3d',label:'BEA FLATSCAN 3D SW'},
+      ]},
+      rc:{label:'Record',color:'#1FAE85',felder:[
+        {key:'modell.dfa127',label:'DFA 127'},
+        {key:'modell.dfa127fp',label:'DFA 127 FULL POWER'},
+        {key:'modell.dfa830',label:'DFA 830'},
+        {key:'notfunktion.notstrom',label:'Notstrom-Backup'},
+        {key:'sensorik.irs4',label:'BEA IRS4 (4SAFE)'},
+        {key:'sensorik.flatscan',label:'BEA FLATSCAN SW'},
+      ]},
+      gi:{label:'Gilgen',color:'#9B59B6',felder:[
+        {key:'modell.fd20',label:'FD 20'},
+        {key:'notfunktion.notstrom',label:'Notstrom-Backup'},
+        {key:'sensorik.irs4',label:'BEA IRS4 (4SAFE)'},
+        {key:'sensorik.flatscan',label:'BEA FLATSCAN SW'},
+      ]},
+    }
+  },
+  schiebetuer:{
+    label:'↔️ Schiebetür',
+    hersteller:{
+      dk:{label:'dormakaba',color:'#D95E1F',felder:[
+        {key:'modell.es250pro',label:'ES 250 PRO'},
+        {key:'modell.es250fst',label:'ES 250 PRO FST'},
+        {key:'modell.es400pro',label:'ES 400 PRO'},
+        {key:'modell.es400fst',label:'ES 400 PRO FST'},
+        {key:'modell.es250t',label:'ES 250 PRO T (Teleskop)'},
+        {key:'modell.es400t',label:'ES 400 PRO T'},
+        {key:'notfunktion.akku',label:'Akku-Backup'},
+        {key:'sensorik.ixiod',label:'BEA IXIO-D'},
+        {key:'sensorik.ixiost',label:'BEA IXIO-ST'},
+        {key:'sensorik.ixiodt3',label:'BEA IXIO-DT3'},
+        {key:'sensorik.ixiodp3',label:'BEA IXIO-DP3'},
+      ]},
+      gz:{label:'GEZE',color:'#005A9C',felder:[
+        {key:'modell.ecdrive',label:'ECdrive T2'},
+        {key:'modell.ecdrivefr',label:'ECdrive T2-FR'},
+        {key:'modell.slimdrive',label:'Slimdrive SL'},
+        {key:'modell.slimfr',label:'Slimdrive SL-FR'},
+        {key:'modell.slimrc2',label:'Slimdrive SL-RC2'},
+        {key:'modell.slimrd',label:'Slimdrive SL-RD'},
+        {key:'modell.slimt',label:'Slimdrive SLT (Teleskop)'},
+        {key:'modell.powerdrive',label:'Powerdrive PL'},
+        {key:'modell.powerdrfr',label:'Powerdrive PL-FR'},
+        {key:'notfunktion.akku',label:'Akku-Backup'},
+        {key:'sensorik.ixiod',label:'BEA IXIO-D'},
+        {key:'sensorik.ixiost',label:'BEA IXIO-ST'},
+        {key:'sensorik.ixiodt3',label:'BEA IXIO-DT3'},
+      ]},
+      rc:{label:'Record',color:'#1FAE85',felder:[
+        {key:'modell.tsa20',label:'TSA 20'},
+        {key:'modell.tsa21',label:'TSA 21'},
+        {key:'modell.tsa22',label:'TSA 22'},
+        {key:'modell.tsaduo',label:'DUO-Antrieb'},
+        {key:'notfunktion.akku',label:'Akku-Backup'},
+        {key:'sensorik.ixiod',label:'BEA IXIO-D'},
+      ]},
+      gi:{label:'Gilgen',color:'#9B59B6',felder:[
+        {key:'modell.sl35',label:'SL 35'},
+        {key:'modell.slxm',label:'SLX-M'},
+        {key:'notfunktion.akku',label:'Akku-Backup'},
+        {key:'sensorik.ixiod',label:'BEA IXIO-D'},
+      ]},
+    }
+  }
+};
+
+var ARTIKEL_DEFAULTS={
+  'drehtuer.dk.modell.ed100':'10513882','drehtuer.dk.modell.ed250':'10513889',
+  'drehtuer.dk.betriebsart.full.ed100':'10385422','drehtuer.dk.betriebsart.full.ed250':'10385423',
+  'drehtuer.dk.tuerart.brandschutz.ed250':'10385421','drehtuer.dk.tuerart.rauchschutz.ed250':'10385421',
+  'drehtuer.dk.notfunktion.notstrom':'Akkupack','drehtuer.dk.motioniq.ja':'DK_M_A01',
+  'drehtuer.dk.schliessfolge.ja':'10529214',
+  'drehtuer.dk.sensorik.irs4':'10282489','drehtuer.dk.sensorik.flatscan':'10805080',
+  'drehtuer.dk.sensorik.flatscan3d':'BEA Flatscan 3D',
+  'drehtuer.dk.montage.bgs':'10176432','drehtuer.dk.montage.bs':'10513893',
+  'drehtuer.dk.montage.gestaenge':'10176432',
+  'drehtuer.dk.zubehoer.radar':'BEA Eagle Artec','drehtuer.dk.zubehoer.taster':'Flächentaster AP',
+  'drehtuer.dk.zubehoer.schluessel':'Schlüsselschalter AP',
+};
+
+function getArtikelData(){
+  try{ return JSON.parse(localStorage.getItem(ARTIKEL_KEY)||'{}'); }catch(e){ return {}; }
+}
+
+function renderArtikel(){
+  var data=getArtikelData();
+  var html='';
+  Object.keys(ARTIKEL_SCHEMA).forEach(function(konfig){
+    var ks=ARTIKEL_SCHEMA[konfig];
+    html+='<div class="art-konfig">';
+    html+='<div class="art-konfig-hdr" style="background:#1A2D44">'+ks.label+'</div>';
+    Object.keys(ks.hersteller).forEach(function(hst){
+      var hs=ks.hersteller[hst];
+      var panelId='art-'+konfig+'-'+hst;
+      var hasValues=hs.felder.some(function(f){
+        var fk=konfig+'.'+hst+'.'+f.key;
+        return (data[fk]!==undefined?data[fk]:ARTIKEL_DEFAULTS[fk])||'';
+      });
+      html+='<div class="art-hersteller">';
+      html+='<div class="art-hst-hdr" onclick="toggleArtPanel(\''+panelId+'\')">'
+        +'<div class="hst-dot" style="background:'+hs.color+'"></div>'
+        +'<div class="hst-name">'+hs.label+'</div>'
+        +(hasValues?'<span style="font-size:11px;color:var(--ok);font-weight:600">✓</span>':'')
+        +'<div class="hst-arrow" id="arr-'+panelId+'">▼</div>'
+        +'</div>';
+      html+='<div class="art-hst-body" id="'+panelId+'">';
+      hs.felder.forEach(function(f){
+        var fullKey=konfig+'.'+hst+'.'+f.key;
+        var val=data[fullKey]!==undefined?data[fullKey]:(ARTIKEL_DEFAULTS[fullKey]||'');
+        html+='<div class="art-row">'
+          +'<div class="art-label">'+f.label+'</div>'
+          +'<input class="art-input'+(val?' has-val':'')+'" type="text" data-key="'+fullKey+'" value="'+esc(val)+'" placeholder="–"'
+          +' oninput="this.classList.toggle(\'has-val\',this.value.length>0)">'
+          +'</div>';
+      });
+      html+='</div></div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('artikel-panel').innerHTML=html;
+}
+
+function toggleArtPanel(id){
+  var body=document.getElementById(id);
+  var arr=document.getElementById('arr-'+id);
+  var open=body.classList.toggle('open');
+  if(arr) arr.textContent=open?'▲':'▼';
+}
+
+function saveArtikel(){
+  var inputs=document.querySelectorAll('.art-input');
+  var data={};
+  inputs.forEach(function(inp){
+    var key=inp.dataset.key;
+    var val=inp.value.trim();
+    if(key) data[key]=val;
+  });
+  localStorage.setItem(ARTIKEL_KEY,JSON.stringify(data));
+  toast('✓ Artikelnummern gespeichert');
+}
+
+// ── Admin Sheet ───────────────────────────────────────────────────────────────
+function openAdmin(){
+  document.getElementById('gate-input').value='';
+  document.getElementById('gate-msg').textContent='';
+  document.getElementById('gate-view').style.display='block';
+  document.getElementById('admin-content').classList.remove('visible');
+  document.getElementById('admin-overlay').classList.add('visible');
+  setTimeout(function(){ document.getElementById('gate-input').focus(); },300);
+}
+function closeAdmin(){
+  document.getElementById('admin-overlay').classList.remove('visible');
+}
+function overlayClick(e){
+  if(e.target===document.getElementById('admin-overlay')) closeAdmin();
+}
+
+// ── Gate ─────────────────────────────────────────────────────────────────────
+function checkGate(){
+  var val=document.getElementById('gate-input').value.trim();
+  var msg=document.getElementById('gate-msg');
+  if(val===ADMIN_CODE){
+    document.getElementById('gate-view').style.display='none';
+    document.getElementById('admin-tabs').style.display='flex';
+    document.getElementById('admin-content').style.display='flex';
+    renderCodes();
+  } else {
+    msg.textContent='✗ Ungültiger Code.';
+    document.getElementById('gate-input').value='';
+    document.getElementById('gate-input').focus();
+    setTimeout(function(){ msg.textContent=''; },2500);
+  }
+}
+
+// ── Code-Verwaltung ───────────────────────────────────────────────────────────
+function renderCodes(){
+  var codes=getCodes();
+  var keys=Object.keys(codes).sort();
+  document.getElementById('code-count').textContent='('+keys.length+')';
+  document.getElementById('code-list').innerHTML=keys.length===0
+    ?'<p class="empty-hint">Keine Codes vorhanden</p>'
+    :keys.map(function(c){
+      return '<div class="code-row">'
+        +'<div class="code-num">'+c+'</div>'
+        +'<input class="code-name-input" type="text" data-code="'+c+'" value="'+esc(codes[c])+'">'
+        +'<button class="del-btn" onclick="deleteCode(\''+c+'\')">✕</button>'
+        +'</div>';
+    }).join('');
+}
+function saveCodes(){
+  var inputs=document.querySelectorAll('.code-name-input');
+  var data={};
+  inputs.forEach(function(inp){
+    var code=inp.dataset.code, name=inp.value.trim();
+    if(code&&name) data[code]=name;
+  });
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+  renderCodes();
+  toast('✓ Codes gespeichert');
+}
+function addCode(){
+  var ci=document.getElementById('new-code'), ni=document.getElementById('new-name');
+  var code=ci.value.trim(), name=ni.value.trim();
+  if(!code||!name){ toast('⚠ Code und Name eingeben'); return; }
+  var data=getCodes();
+  if(data[code]){ toast('⚠ Code bereits vorhanden'); return; }
+  data[code]=name;
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+  ci.value=''; ni.value='';
+  renderCodes();
+  toast('✓ '+code+' hinzugefügt');
+}
+function deleteCode(code){
+  if(!confirm('Code '+code+' wirklich löschen?')) return;
+  var data=getCodes();
+  delete data[code];
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+  renderCodes();
+  toast('✓ '+code+' gelöscht');
+}
+
+// ── Log ───────────────────────────────────────────────────────────────────────
+function renderLog(){
+  var logs=getLogs();
+  document.getElementById('log-count').textContent='('+logs.length+' Einträge)';
+  if(!logs.length){
+    document.getElementById('log-list').innerHTML='<p class="empty-hint">Keine Einträge</p>';
+    return;
+  }
+  var rows=logs.slice().reverse().slice(0,50).map(function(l){
+    return '<tr><td>'+esc(l.date||'')+'</td><td>'+esc(l.time||'')+'</td>'
+      +'<td style="font-weight:700;font-family:monospace">'+esc(l.code||'')+'</td>'
+      +'<td>'+esc((l.url||'').replace(/.*\//,''))+'</td></tr>';
+  }).join('');
+  document.getElementById('log-list').innerHTML=
+    '<table class="log-table"><thead><tr><th>Datum</th><th>Zeit</th><th>Code</th><th>Seite</th></tr></thead>'
+    +'<tbody>'+rows+'</tbody>'
+    +(logs.length>50?'<caption style="caption-side:bottom;font-size:11px;color:#6B7A8D;padding-top:6px">Letzte 50 von '+logs.length+' Einträgen</caption>':'')
+    +'</table>';
+}
+function downloadLog(){
+  var logs=getLogs();
+  if(!logs.length){ toast('Keine Logs vorhanden'); return; }
+  var codes=getCodes();
+  var csv='Code,Name,Datum,Uhrzeit,Seite,UserAgent\n'+logs.map(function(l){
+    return [l.code,codes[l.code]||'',l.date,l.time,(l.url||'').replace(/.*\//,''),l.userAgent||'']
+      .map(function(v){ return '"'+(v||'').replace(/"/g,'""')+'"'; }).join(',');
+  }).join('\n');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url;
+  a.download='stober-ma-logs-'+new Date().toISOString().split('T')[0]+'.csv';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  toast('✓ CSV exportiert');
+}
+function clearLog(){
+  if(!confirm('Alle '+getLogs().length+' Log-Einträge wirklich löschen?')) return;
+  localStorage.removeItem(LOG_KEY);
+  renderLog();
+  toast('✓ Log gelöscht');
+}
+
+// ── Bug Report ────────────────────────────────────────────────────────────────
+document.getElementById('bug-link').addEventListener('click',function(e){
+  e.preventDefault();
+  var subj=encodeURIComponent('Fehlerbericht - Türantrieb Konfigurator');
+  var body=encodeURIComponent('Fehler:\n\n'+navigator.userAgent+'\n'+new Date().toISOString());
+  window.location.href='mailto:gerdau1979@gmail.com?subject='+subj+'&body='+body;
+});
+
+// ── Kopier-Schutz ─────────────────────────────────────────────────────────────
+document.addEventListener('contextmenu',function(e){ e.preventDefault(); return false; },false);
+document.addEventListener('copy',function(e){ e.preventDefault(); return false; },false);
+document.addEventListener('selectstart',function(e){ e.preventDefault(); return false; },false);
+</script>
 </body>
 </html>

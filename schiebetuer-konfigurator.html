@@ -28,14 +28,14 @@
 
   #hdr{padding-top:calc(var(--safe-top)+14px);padding-bottom:14px;padding-left:18px;padding-right:18px;
        display:flex;align-items:center;justify-content:space-between;transition:background .3s}
-  #hdr.dk{background:#1A2D44}  #hdr.gz{background:#005A9C}
+  #hdr.dk{background:#1A2D44}  #hdr.gz{background:#005A9C}  #hdr.rc{background:#0B3D33}  #hdr.gi{background:#3A1F4D}
   #hdr-bar{width:5px;height:34px;border-radius:2px;flex-shrink:0;transition:background .3s}
-  #hdr.dk #hdr-bar{background:#D95E1F}  #hdr.gz #hdr-bar{background:#FFC72C}
+  #hdr.dk #hdr-bar{background:#D95E1F}  #hdr.gz #hdr-bar{background:#FFC72C}  #hdr.rc #hdr-bar{background:#1FAE85}  #hdr.gi #hdr-bar{background:#B388D9}
   #hdr-title{color:#fff;font-weight:800;font-size:17px;letter-spacing:-.02em;margin-left:10px}
   #hdr-sub{color:rgba(255,255,255,.6);font-size:12px;margin-top:1px;margin-left:10px}
   #prog-ring{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   #prog-inner{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-  #hdr.dk #prog-inner{background:#1A2D44}  #hdr.gz #prog-inner{background:#005A9C}
+  #hdr.dk #prog-inner{background:#1A2D44}  #hdr.gz #prog-inner{background:#005A9C}  #hdr.rc #prog-inner{background:#0B3D33}  #hdr.gi #prog-inner{background:#3A1F4D}
   #prog-pct{color:#fff;font-size:11px;font-weight:700}
   #prog-bar{height:3px;background:var(--border)}
   #prog-fill{height:100%;transition:width .3s,background .3s}
@@ -44,16 +44,20 @@
   #install-close{background:rgba(255,255,255,.2);border:none;border-radius:99px;padding:4px 10px;color:#fff;font-size:13px;font-weight:600;min-height:32px}
 
   /* Product tabs */
-  #prod-sw{padding:14px 14px 0;display:flex;gap:10px}
+  #prod-sw{padding:14px 14px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .ptab{flex:1;padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:var(--panel);
         display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.15s}
   .ptab.ak-dk{border-color:#D95E1F;background:#FFF5EF}
   .ptab.ak-gz{border-color:#FFC72C;background:#FFFAEE}
+  .ptab.ak-rc{border-color:#1FAE85;background:#EAFBF5}
+  .ptab.ak-gi{border-color:#9B59B6;background:#F7EEFB}
   .ptab-icon{font-size:22px}
   .ptab-name{font-weight:700;font-size:13px;color:var(--primary)}
   .ptab-sub{font-size:11px;color:var(--muted)}
   .ptab.ak-dk .ptab-name{color:#D95E1F}
   .ptab.ak-gz .ptab-name{color:#7A5000}
+  .ptab.ak-rc .ptab-name{color:#0B3D33}
+  .ptab.ak-gi .ptab-name{color:#6C3483}
 
   #content{padding:14px 14px 0}
 
@@ -65,12 +69,12 @@
   .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
   .alert-head{font-weight:700;font-size:14px}
   .alert-head.ok{color:var(--ok)}.alert-head.warn{color:var(--warn)}
-  .alert-head.info{color:var(--primary)}.alert-head.gz{color:#7A5000}
+  .alert-head.info{color:var(--primary)}.alert-head.gz{color:#7A5000}.alert-head.rc{color:#0B3D33}.alert-head.gi{color:#6C3483}
   .alert-body{color:var(--muted);font-size:12px;margin-top:2px}
 
   .section{background:var(--panel);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(26,45,68,.08)}
   .sec-hdr{padding:13px 18px;display:flex;align-items:center;gap:10px}
-  .sec-hdr.dk{background:#1A2D44}  .sec-hdr.gz{background:#005A9C}
+  .sec-hdr.dk{background:#1A2D44}  .sec-hdr.gz{background:#005A9C}  .sec-hdr.rc{background:#0B3D33}  .sec-hdr.gi{background:#3A1F4D}
   .sec-icon{font-size:18px}
   .sec-title{color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
   .sec-body{padding:16px}
@@ -93,40 +97,52 @@
            font-weight:500;font-size:13px;display:flex;align-items:center;gap:5px;min-height:44px;transition:.12s}
   .opt-btn.sel-dk{border-color:#D95E1F;background:#FFF5EF;color:#D95E1F;font-weight:700}
   .opt-btn.sel-gz{border-color:#FFC72C;background:#FFFAEE;color:#7A5000;font-weight:700}
+  .opt-btn.sel-rc{border-color:#1FAE85;background:#EAFBF5;color:#0B3D33;font-weight:700}
+  .opt-btn.sel-gi{border-color:#9B59B6;background:#F7EEFB;color:#6C3483;font-weight:700}
   .opt-sub{font-size:11px;opacity:.75;font-weight:400}
   .chk-box{width:16px;height:16px;border-radius:4px;border:2px solid var(--border);background:transparent;
            display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:900;color:transparent;transition:.12s}
   .opt-btn.sel-dk .chk-box{background:#D95E1F;border-color:#D95E1F;color:#fff}
   .opt-btn.sel-gz .chk-box{background:#FFC72C;border-color:#FFC72C;color:#001B43}
+  .opt-btn.sel-rc .chk-box{background:#1FAE85;border-color:#1FAE85;color:#fff}
+  .opt-btn.sel-gi .chk-box{background:#9B59B6;border-color:#9B59B6;color:#fff}
 
   /* Modell cards */
   .modell-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
   .modell-card{border:2px solid var(--border);border-radius:10px;padding:12px;background:var(--panel);cursor:pointer;transition:.12s}
   .modell-card.sel-dk{border-color:#D95E1F;background:#FFF5EF}
   .modell-card.sel-gz{border-color:#FFC72C;background:#FFFAEE}
+  .modell-card.sel-rc{border-color:#1FAE85;background:#EAFBF5}
+  .modell-card.sel-gi{border-color:#9B59B6;background:#F7EEFB}
   .modell-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
   .modell-name{font-weight:800;font-size:13px;color:var(--primary)}
   .modell-card.sel-dk .modell-name{color:#D95E1F}
   .modell-card.sel-gz .modell-name{color:#7A5000}
+  .modell-card.sel-rc .modell-name{color:#0B3D33}
+  .modell-card.sel-gi .modell-name{color:#6C3483}
   .modell-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;display:inline-block;margin-bottom:5px}
   .modell-card.sel-dk .modell-badge{background:#D95E1F;color:#fff}
   .modell-card.sel-gz .modell-badge{background:#FFC72C;color:#001B43}
-  .modell-badge:not(.sel-dk):not(.sel-gz){background:var(--primary);color:#fff}
+  .modell-card.sel-rc .modell-badge{background:#1FAE85;color:#fff}
+  .modell-card.sel-gi .modell-badge{background:#9B59B6;color:#fff}
+  .modell-badge:not(.sel-dk):not(.sel-gz):not(.sel-rc):not(.sel-gi){background:var(--primary);color:#fff}
   .modell-specs{font-size:11px;color:var(--muted);line-height:1.6}
   .modell-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:900;color:transparent;transition:.12s}
   .modell-card.sel-dk .modell-check{background:#D95E1F;border-color:#D95E1F;color:#fff}
   .modell-card.sel-gz .modell-check{background:#FFC72C;border-color:#FFC72C;color:#001B43}
+  .modell-card.sel-rc .modell-check{background:#1FAE85;border-color:#1FAE85;color:#fff}
+  .modell-card.sel-gi .modell-check{background:#9B59B6;border-color:#9B59B6;color:#fff}
 
   .big-btn{width:100%;padding:16px;border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;
            min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px}
   .big-btn:disabled{background:var(--border);cursor:not-allowed}
-  .big-btn.dk{background:#D95E1F}  .big-btn.gz{background:#FFC72C;color:#001B43}  .big-btn.dark{background:#1A2D44}
+  .big-btn.dk{background:#D95E1F}  .big-btn.gz{background:#FFC72C;color:#001B43}  .big-btn.rc{background:#1FAE85}  .big-btn.gi{background:#9B59B6}  .big-btn.dark{background:#1A2D44}
 
   #summary-panel{margin-top:14px;background:var(--panel);border-radius:12px;overflow:hidden;display:none}
   #summary-panel.visible{display:block}
-  #summary-panel.dk{border:2px solid #D95E1F}  #summary-panel.gz{border:2px solid #FFC72C}
+  #summary-panel.dk{border:2px solid #D95E1F}  #summary-panel.gz{border:2px solid #FFC72C}  #summary-panel.rc{border:2px solid #1FAE85}  #summary-panel.gi{border:2px solid #9B59B6}
   .sum-hdr{padding:12px 16px;color:#fff;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
-  .sum-hdr.dk{background:#D95E1F}  .sum-hdr.gz{background:#FFC72C;color:#001B43}
+  .sum-hdr.dk{background:#D95E1F}  .sum-hdr.gz{background:#FFC72C;color:#001B43}  .sum-hdr.rc{background:#1FAE85}  .sum-hdr.gi{background:#9B59B6}
   .sum-body{padding:16px}
   .sum-table{width:100%;border-collapse:collapse;font-size:13px}
   .sum-table tr{border-bottom:1px solid var(--border)}
@@ -203,9 +219,79 @@
   }
   .bug-btn:hover { border-color: #C0392B; color: #C0392B; background: #FDECEA; }
 
+
+  /* ─── Vorlagen Modal ─────────────────────────────────────── */
+  #vorlagen-overlay{display:none;position:fixed;inset:0;background:rgba(9,22,54,.65);z-index:9998;align-items:flex-end;justify-content:center;padding:0}
+  #vorlagen-overlay.visible{display:flex}
+  #vorlagen-box{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:540px;max-height:82vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 -4px 32px rgba(0,0,0,.18)}
+  .vbox-hdr{background:#1A2D44;padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
+  .vbox-hdr h3{color:#fff;font-size:15px;font-weight:800}
+  .vbox-hdr span{color:rgba(255,255,255,.55);font-size:12px}
+  .vbox-close{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:16px;border-radius:50%;width:28px;height:28px;cursor:pointer;font-family:inherit}
+  .vbox-body{flex:1;overflow-y:auto;padding:14px 16px}
+  .vbox-save-row{padding:14px 16px;border-top:1px solid #E8EDF3;display:flex;gap:8px}
+  .vbox-save-row input{flex:1;padding:10px 12px;border:2px solid #D2DAE3;border-radius:8px;font-size:14px;font-family:inherit;outline:none}
+  .vbox-save-row input:focus{border-color:#001B43}
+  .vbox-save-btn{padding:10px 16px;border:none;border-radius:8px;background:#001B43;color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .vbox-reset-btn{padding:10px 14px;border:1.5px solid #D2DAE3;border-radius:8px;background:#fff;color:#C0392B;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit}
+
+  /* ─── Admin Panel ────────────────────────────────────────── */
+
+  /* ─── Header Buttons ─────────────────────────────────────── */
+  .hdr-icon-btn{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:13px;font-weight:600;border-radius:8px;padding:6px 10px;cursor:pointer;font-family:inherit;white-space:nowrap;min-height:34px}
+  .hdr-icon-btn:active{background:rgba(255,255,255,.28)}
+
+
+  /* ─── Mitarbeitercode-Gate ───────────────────────────────── */
+  #code-gate{display:none;position:fixed;inset:0;background:rgba(9,22,54,.65);z-index:10000;align-items:center;justify-content:center;padding:20px}
+  #code-gate.visible{display:flex}
+  #code-gate-box{background:#fff;border-radius:16px;max-width:340px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.25);padding:24px 22px;text-align:center}
+  #code-gate-box .gate-icon{font-size:34px;margin-bottom:8px}
+  #code-gate-box h2{font-size:17px;font-weight:800;color:#001B43;margin-bottom:6px}
+  #code-gate-box p{font-size:12px;color:#6B7A8D;line-height:1.5;margin-bottom:16px}
+  .gate-code-wrap{display:flex;gap:8px}
+  .gate-code-wrap input{flex:1;padding:11px 12px;border-radius:8px;border:2px solid #D2DAE3;font-size:15px;font-family:inherit;outline:none;letter-spacing:.1em;text-align:center}
+  .gate-code-wrap button{padding:11px 16px;border-radius:8px;border:none;background:#001B43;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
+  #code-gate-msg{margin-top:10px;font-size:12px;min-height:16px}
+  #code-gate-msg.ok{color:#2A7A4B;font-weight:700}
+  #code-gate-msg.err{color:#C0392B;font-weight:600}
+  #code-gate-skip{margin-top:16px;background:none;border:none;color:#6B7A8D;font-size:12px;cursor:pointer;text-decoration:underline;font-family:inherit}
 </style>
 </head>
 <body>
+
+<!-- Vorlagen Modal -->
+<div id="vorlagen-overlay">
+  <div id="vorlagen-box">
+    <div class="vbox-hdr">
+      <h3>📋 Vorlagen</h3>
+      <span id="vorlagen-count">0/10</span>
+      <button class="vbox-close" onclick="closeVorlagenModal()">✕</button>
+    </div>
+    <div class="vbox-body" id="vorlagen-list"></div>
+    <div class="vbox-save-row">
+      <input id="vorlage-name-input" type="text" placeholder="Vorlagenname eingeben …" maxlength="40">
+      <button class="vbox-save-btn" onclick="saveNewVorlage()">💾 Speichern</button>
+      <button class="vbox-reset-btn" onclick="resetKonfig()">🗑 Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mitarbeitercode-Gate -->
+<div id="code-gate">
+  <div id="code-gate-box">
+    <div class="gate-icon">🔑</div>
+    <h2>Mitarbeiter-Code</h2>
+    <p>Bitte zu Beginn eingeben&nbsp;&ndash; wird automatisch in &bdquo;Aufgenommen durch&ldquo; und beim PDF-Export übernommen.</p>
+    <div class="gate-code-wrap">
+      <input id="code-gate-input" type="text" placeholder="Mitarbeitercode" maxlength="10" autocomplete="off" inputmode="text">
+      <button onclick="checkStartCode()">✓</button>
+    </div>
+    <div id="code-gate-msg"></div>
+    <button id="code-gate-skip" onclick="skipStartCode()">Ohne Code fortfahren</button>
+  </div>
+</div>
+
 <!-- PayPal Paywall Modal -->
 <div id="paywall-overlay">
   <div id="paywall-box">
@@ -314,6 +400,17 @@ const GZ_MODELLE=[
   {value:"powerdrfr",  name:"Powerdrive PL-FR",badge:"Schwerlast+FST",  fluegel:"bis 200 kg/Flügel",breite:"bis 3000 mm", fst:true, rd:false,rc:false,tl:false},
 ];
 
+const RECORD_MODELLE=[
+  {value:"tsa20",  name:"Record TSA 20",  badge:"Allrounder",       fluegel:"siehe Typenschild", breite:"siehe Datenblatt", fst:false},
+  {value:"tsa21",  name:"Record TSA 21",  badge:"Leicht/Mittelschwer",fluegel:"siehe Typenschild", breite:"siehe Datenblatt", fst:false},
+  {value:"tsa22",  name:"Record TSA 22",  badge:"Schwerlast",       fluegel:"siehe Typenschild", breite:"siehe Datenblatt", fst:false},
+  {value:"tsaduo", name:"Record DUO-Antrieb",badge:"Verstärkt (2-Motor)",fluegel:"siehe Typenschild", breite:"siehe Datenblatt", fst:false},
+];
+const GILGEN_MODELLE=[
+  {value:"sl35",  name:"Gilgen SL 35",  badge:"Standard",           fluegel:"siehe Typenschild", breite:"siehe Datenblatt", fst:false},
+  {value:"slxm",  name:"Gilgen SLX-M",  badge:"Modulare Antriebseinheit",fluegel:"siehe Typenschild", breite:"siehe Datenblatt", fst:false},
+];
+
 const LM_DK={
   fluegelanzahl:{"1":"1-flügelig","2":"2-flügelig","4":"4-flügelig (Teleskop)"},
   tuertyp:{standard:"Standardschiebetür",fst:"Flucht- und Rettungsweg (FST)",green:"Energiespar (Green/GCprofile Therm)"},
@@ -336,6 +433,35 @@ const LM_GZ={
   notfunktion:{akku:"Integrierter Akku (Notöffnung/-schließung)",nein:"Keine"},
 };
 
+const LM_RC={
+  fluegelanzahl:{"1":"1-flügelig","2":"2-flügelig","4":"4-flügelig (Teleskop)"},
+  tuertyp:{standard:"Standardschiebetür",fst:"Flucht- und Rettungsweg (FR)",rd:"Rauchschutztür (RD)",rc2:"Einbruchschutz RC2"},
+  betriebsmodus:{auto:"Vollautomatik",low:"Low-Energy",nacht:"Nacht (verriegelt)",perm:"Permanentöffnung",teil:"Teilöffnung"},
+  montageart:{wand:"Wandmontage",sturz:"Sturzmontage",pfosten:"Pfosten-Riegel-Montage",glas:"Glaswand / ISO-Glasbeschlag",boden:"Bodenschloss-Montage"},
+  verriegelung:{keine:"Keine",stangen:"Stangenverriegelung (RC2)",motor:"Motorschloss",elektro:"Elektroschloss"},
+  profil:{fein:"Feingerahmtes Profilsystem",therm:"Therm-Profil (Energiespar)",esg:"ESG-Klemmprofil",rahmen:"Bauseitiger Rahmenflügel",holz:"Holzflügel (bauseitig)"},
+  farbgebung:{silber:"Silber (Eloxal)",weiss:"Weiß RAL 9016",bronze:"Bronze/Braun",schwarz:"Schwarz RAL 9005",individuell:"RAL individuell"},
+  notfunktion:{akku:"Akku-Backup (Notöffnung/-schließung)",nein:"Keine"},
+};
+const LM_GI={
+  fluegelanzahl:{"1":"1-flügelig","2":"2-flügelig","4":"4-flügelig (Teleskop)"},
+  tuertyp:{standard:"Standardschiebetür",fst:"Flucht- und Rettungsweg (FR)",rd:"Rauchschutztür (RD)",rc2:"Einbruchschutz RC2"},
+  betriebsmodus:{auto:"Vollautomatik",low:"Low-Energy",nacht:"Nacht (verriegelt)",perm:"Permanentöffnung",teil:"Teilöffnung"},
+  montageart:{wand:"Wandmontage",sturz:"Sturzmontage",pfosten:"Pfosten-Riegel-Montage",glas:"Glaswand / ISO-Glasbeschlag",boden:"Bodenschloss-Montage"},
+  verriegelung:{keine:"Keine",stangen:"Stangenverriegelung (RC2)",motor:"Motorschloss",elektro:"Elektroschloss"},
+  profil:{fein:"Feingerahmtes Profilsystem",therm:"Therm-Profil (Energiespar)",esg:"ESG-Klemmprofil",rahmen:"Bauseitiger Rahmenflügel",holz:"Holzflügel (bauseitig)"},
+  farbgebung:{silber:"Silber (Eloxal)",weiss:"Weiß RAL 9016",bronze:"Bronze/Braun",schwarz:"Schwarz RAL 9005",individuell:"RAL individuell"},
+  notfunktion:{akku:"Akku-Backup (Notöffnung/-schließung)",nein:"Keine"},
+};
+
+const ZL_RC={
+  bus:"BUS-Anbindung",funk:"Funk-Empfangsplatine",rauch:"Rauchschalter-Anbindung",bma:"BMA-Anbindung",
+  nebenkante:"Nebenkantenabsicherung",schleuse:"Schleusen-/Koppelbetrieb",teiloeff:"Teilöffnungsmodul",
+};
+const ZL_GI={
+  bus:"BUS-Anbindung",funk:"Funk-Empfangsplatine",rauch:"Rauchschalter-Anbindung",bma:"BMA-Anbindung",
+  nebenkante:"Nebenkantenabsicherung",schleuse:"Schleusen-/Koppelbetrieb",teiloeff:"Teilöffnungsmodul",
+};
 const ZL_DK={
   dpi:"Door Pilot Interface (App-Steuerung)",sensorverk:"Sensorverkleidung (integriert)",
   rauchschalter:"Rauchschalter-Anbindung",bma:"BMA-Anbindung",nebenkante:"Nebenkantenabsicherung",
@@ -357,6 +483,14 @@ const SENSORIK_LM={
 const SENSOR_MONTAGE_LM={hauptschliess:"Hauptschließkante",nebenschliess:"Nebenschließkante",beidseitig:"Beidseitig (Haupt + Neben)"};
 const PFLICHT_DK=["modell","fluegelanzahl","tuertyp","betriebsmodus","montageart"];
 const PFLICHT_GZ=["gz_modell","gz_fluegelanzahl","gz_tuertyp","gz_betriebsmodus","gz_montageart"];
+const PFLICHT_RC=["rc_modell","rc_fluegelanzahl","rc_tuertyp","rc_betriebsmodus","rc_montageart"];
+const PFLICHT_GI=["gi_modell","gi_fluegelanzahl","gi_tuertyp","gi_betriebsmodus","gi_montageart"];
+function PFLICHT_AKTUELL(){
+  if(isDK()) return PFLICHT_DK;
+  if(isRC()) return PFLICHT_RC;
+  if(isGI()) return PFLICHT_GI;
+  return PFLICHT_GZ;
+}
 
 // ─── State ────────────────────────────────────────────────────────────────────
 let S={
@@ -369,6 +503,14 @@ let S={
   gz_modell:"",gz_fluegelanzahl:"",gz_tuertyp:"",gz_betriebsmodus:"",gz_montageart:"",
   gz_oeffnungsbreite:"",gz_fluegelgewicht:"",gz_verriegelung:"",gz_profil:"",gz_farbgebung:"",
   gz_notfunktion:"",gz_optionen:[],gz_aktivierung:"",
+  // record
+  rc_modell:"",rc_fluegelanzahl:"",rc_tuertyp:"",rc_betriebsmodus:"",rc_montageart:"",
+  rc_oeffnungsbreite:"",rc_fluegelgewicht:"",rc_verriegelung:"",rc_profil:"",rc_farbgebung:"",
+  rc_notfunktion:"",rc_optionen:[],rc_aktivierung:"",
+  // gilgen
+  gi_modell:"",gi_fluegelanzahl:"",gi_tuertyp:"",gi_betriebsmodus:"",gi_montageart:"",
+  gi_oeffnungsbreite:"",gi_fluegelgewicht:"",gi_verriegelung:"",gi_profil:"",gi_farbgebung:"",
+  gi_notfunktion:"",gi_optionen:[],gi_aktivierung:"",
   // shared sensorik
   sensorik:"",sensorMontage:[],
   // projekt
@@ -376,17 +518,23 @@ let S={
   bs_strasse:"",bs_plzort:"",bs_objekt:"",bs_bauteil:"",
   gpsLoading:false,gpsError:"",
   showSummary:false,
+  notizen:"",tueranzahl:"1",
 };
 function set(k,v){S=Object.assign({},S,{[k]:v});render();}
-function toggleArr(k,v){var a=S[k]||[];S=Object.assign({},S,{[k]:a.includes(v)?a.filter(function(x){return x!==v}):[...a,v]});render();}
+function toggleArr(k,v){var a=S[k]||[];S=Object.assign({},S,{[k]:a.includes(v)?a.filter(function(x){return x!==v}):[...a,v]});autosave();render();}
 function isDK(){return S.produkt==="dk";}
-function sc(){return isDK()?"sel-dk":"sel-gz";}
-function ac(){return isDK()?"#D95E1F":"#FFC72C";}
+function isRC(){return S.produkt==="rc";}
+function isGI(){return S.produkt==="gi";}
+function prodCls(){return isDK()?"dk":isRC()?"rc":isGI()?"gi":"gz";}
+function sc(){return "sel-"+prodCls();}
+function ac(){return isDK()?"#D95E1F":isRC()?"#1FAE85":isGI()?"#9B59B6":"#FFC72C";}
 
 // ─── Derived ──────────────────────────────────────────────────────────────────
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function getDKModell(){return DK_MODELLE.find(function(m){return m.value===S.modell;});}
 function getGZModell(){return GZ_MODELLE.find(function(m){return m.value===S.gz_modell;});}
+function getRCModell(){return RECORD_MODELLE.find(function(m){return m.value===S.rc_modell;});}
+function getGIModell(){return GILGEN_MODELLE.find(function(m){return m.value===S.gi_modell;});}
 
 function getEmp(){
   if(isDK()){
@@ -396,6 +544,8 @@ function getEmp(){
     var maxB=3000;
     if(g>maxG||b>maxB) return {warn:true,reason:"Werte überschreiten Modell-Maximum ("+maxG+" kg / "+maxB+" mm)"};
     if(g&&b) return {warn:false,reason:"Werte im zulässigen Bereich für "+m.name};
+  } else if(isRC()||isGI()){
+    return null;
   } else {
     var bg=parseInt(S.gz_fluegelgewicht);
     var mg=getGZModell(); if(!mg||!bg) return null;
@@ -456,6 +606,11 @@ function buildProjectData(){
     '</div>'+
     '<div style="padding:16px">'+
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0">'+
+    '<div class="field"><div class="field-label">Aufgenommen durch</div>'+
+    '<div style="display:flex;gap:8px;align-items:center">'+
+    '<input type="text" class="txt-input ma-lookup-input" inputmode="text" maxlength="10" placeholder="Mitarbeitercode" value="'+esc(S.aufgenommenCode||'')+'" style="width:140px">'+
+    (S.aufgenommenDurch?'<span style="font-weight:700;font-size:14px;color:#2A7A4B">✓ '+esc(S.aufgenommenDurch)+'</span>':'<span style="font-size:12px;color:#6B7A8D">→ Name wird automatisch eingetragen</span>')+
+    '</div></div>'+
     txtInput('Firma / Auftraggeber','ag_firma','z. B. Musterbau GmbH')+
     txtInput('Ansprechpartner','ag_ansprechpartner','z. B. Max Mustermann')+
     '</div>'+
@@ -477,10 +632,15 @@ function buildProjectData(){
     txtInput('Objekt- / Projektnummer','bs_objekt','z. B. P-2025-047')+
     '</div>'+
     txtInput('Türbezeichnung / Bauteil','bs_bauteil','z. B. EG-Eingang Süd, Tür 1.01')+
+    '<div style="display:grid;grid-template-columns:80px 1fr;gap:0">'+
+    '<div class="field"><div class="field-label">Anzahl</div><div class="num-row"><input type="number" class="num-input" data-field="tueranzahl" value="'+esc(S.tueranzahl||'1')+'" placeholder="1" inputmode="numeric" style="width:70px"><span class="num-unit">Tür(en)</span></div></div>'+
+    '</div>'+
+    '<div class="field"><div class="field-label">📝 Notizen</div>'+
+    '<textarea class="txt-input notizen-input" data-field="notizen" placeholder="Besonderheiten, Sondermaße, Kundenwünsche …" rows="3" style="resize:vertical;min-height:72px">'+esc(S.notizen||'')+'</textarea></div>'+
     '</div></div></div>';
 }
 function sec(title,icon,body){
-  var cls=isDK()?"dk":"gz";
+  var cls=prodCls();
   return '<div class="section"><div class="sec-hdr '+cls+'"><span class="sec-icon">'+icon+'</span>'+
     '<span class="sec-title">'+title+'</span></div><div class="sec-body">'+body+'</div></div>';
 }
@@ -714,9 +874,145 @@ function buildGZ(){
   return html;
 }
 
+// ─── Record Sections ──────────────────────────────────────────────────────────
+function buildRC(){
+  var emp=getEmp(),m=getRCModell();
+  var html='';
+  html+=alertBox('rc','⚙️','Record Schiebetürantriebe','TSA 20 &middot; TSA 21 &middot; TSA 22 &middot; DUO-Antrieb &middot; Teil der ASSA ABLOY Gruppe &middot; DIN 18650 / EN 16005');
+  if(emp) html+=alertBox(emp.warn?'warn':'ok',emp.warn?'⚠️':'✅',emp.warn?'Grenzwert überschritten':'Werte OK',emp.reason);
+
+  html+=sec('Antriebsmodell &amp; Türspezifikation','🚪',
+    modellCards(RECORD_MODELLE,'rc_modell')+
+    '<div class="two-col">'+numInput('Öffnungsbreite','Lichte Durchgangsbreite','rc_oeffnungsbreite','mm','z. B. 1200')+numInput('Flügelgewicht','Gewicht pro Flügel','rc_fluegelgewicht','kg','z. B. 80')+'</div>'+
+    radio('Flügelanzahl',null,'rc_fluegelanzahl',[
+      {value:'1',label:'1-flügelig'},{value:'2',label:'2-flügelig'},{value:'4',label:'4-flügelig',sub:'Teleskop'},
+    ],true)+
+    radio('Türtyp','Bestimmt Normanforderungen und Zulassung','rc_tuertyp',[
+      {value:'standard',label:'Standardschiebetür',icon:'🏢'},
+      {value:'fst',label:'Flucht/Rettungsweg',icon:'🚨',sub:'FR'},
+      {value:'rd',label:'Rauchschutz',sub:'RD'},
+      {value:'rc2',label:'Einbruchschutz',sub:'RC2'},
+    ],true)
+  );
+  html+=sec('Betrieb &amp; Funktion','⚡',
+    radio('Betriebsmodus',null,'rc_betriebsmodus',[
+      {value:'auto',label:'Vollautomatik',icon:'🤖'},{value:'low',label:'Low-Energy',sub:'EN 1154'},
+      {value:'nacht',label:'Nacht (verriegelt)'},{value:'perm',label:'Permanentöffnung'},{value:'teil',label:'Teilöffnung',sub:'einstellbar'},
+    ],true)+
+    radio('Aktivierungssensor','Sensor zur Türauslösung','rc_aktivierung',[
+      {value:'radar',label:'Radar (Mikrowelle)',icon:'📡'},{value:'dual',label:'Dual-Technologie',sub:'Radar + IR'},
+      {value:'ir',label:'Aktiv-Infrarot'},{value:'taster',label:'Aktivierungstaster',icon:'🔘'},{value:'zugang',label:'Zutrittskontrolle',icon:'🏷'},
+    ])+
+    chkbox('Sonderfunktionen','Mehrfachauswahl möglich','rc_optionen',[
+      {value:'bus',label:'BUS-Anbindung',icon:'🌐'},{value:'funk',label:'Funk-Empfangsplatine',icon:'📶'},
+      {value:'rauch',label:'Rauchschalter-Anbindung'},{value:'bma',label:'BMA-Anbindung',icon:'🔴'},
+    ])
+  );
+  html+=sec('Montage &amp; Mechanik','🔧',
+    radio('Montageart',null,'rc_montageart',[
+      {value:'wand',label:'Wandmontage'},{value:'sturz',label:'Sturzmontage'},
+      {value:'pfosten',label:'Pfosten-Riegel'},{value:'glas',label:'ISO-Glasbeschlag'},{value:'boden',label:'Bodenschloss'},
+    ],true)+
+    radio('Profilsystem',null,'rc_profil',[
+      {value:'fein',label:'Feingerahmt'},{value:'therm',label:'Therm-Profil',sub:'Energiespar'},
+      {value:'esg',label:'ESG-Klemmprofil'},{value:'rahmen',label:'Rahmenflügel',sub:'bauseitig'},{value:'holz',label:'Holzflügel'},
+    ])+
+    radio('Farbgebung',null,'rc_farbgebung',[
+      {value:'silber',label:'Silber'},{value:'weiss',label:'Weiß',sub:'RAL 9016'},
+      {value:'bronze',label:'Bronze'},{value:'schwarz',label:'Schwarz',sub:'RAL 9005'},{value:'individuell',label:'RAL indiv.'},
+    ])
+  );
+  html+=sec('Verriegelung &amp; Sicherheit','🔒',
+    radio('Verriegelung',null,'rc_verriegelung',[
+      {value:'keine',label:'Keine'},{value:'stangen',label:'Stangenverriegelung',sub:'RC2'},
+      {value:'motor',label:'Motorschloss'},{value:'elektro',label:'Elektroschloss'},
+    ])+
+    radio('Notstrom',null,'rc_notfunktion',[{value:'akku',label:'Akku-Backup',sub:'Batterie'},{value:'nein',label:'Keine'}])
+  );
+  html+=sec('Absicherungssensorik (BEA)','🛡️',
+    '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+sensorExtra()
+  );
+  html+=sec('Optionen &amp; Zubehör','🔌',
+    chkbox('Erweiterungen','Mehrfachauswahl möglich','zubehoer',[
+      {value:'bus',label:'BUS-Anbindung',icon:'🌐'},{value:'rauch',label:'Rauchschalter-Anbindung'},
+      {value:'bma',label:'BMA-Anbindung',icon:'🔴'},{value:'nebenkante',label:'Nebenkantenabsicherung'},
+      {value:'schleuse',label:'Schleusen-/Koppelbetrieb'},{value:'teiloeff',label:'Teilöffnungsmodul'},
+    ])
+  );
+  return html;
+}
+
+// ─── Gilgen Sections ──────────────────────────────────────────────────────────
+function buildGI(){
+  var emp=getEmp(),m=getGIModell();
+  var html='';
+  html+=alertBox('gi','⚙️','Gilgen Schiebetürantriebe','SL 35 &middot; SLX-M Antriebseinheit &middot; Gilgen Door Systems (Schweiz) &middot; DIN 18650 / EN 16005');
+  if(emp) html+=alertBox(emp.warn?'warn':'ok',emp.warn?'⚠️':'✅',emp.warn?'Grenzwert überschritten':'Werte OK',emp.reason);
+
+  html+=sec('Antriebsmodell &amp; Türspezifikation','🚪',
+    modellCards(GILGEN_MODELLE,'gi_modell')+
+    '<div class="two-col">'+numInput('Öffnungsbreite','Lichte Durchgangsbreite','gi_oeffnungsbreite','mm','z. B. 1200')+numInput('Flügelgewicht','Gewicht pro Flügel','gi_fluegelgewicht','kg','z. B. 80')+'</div>'+
+    radio('Flügelanzahl',null,'gi_fluegelanzahl',[
+      {value:'1',label:'1-flügelig'},{value:'2',label:'2-flügelig'},{value:'4',label:'4-flügelig',sub:'Teleskop'},
+    ],true)+
+    radio('Türtyp','Bestimmt Normanforderungen und Zulassung','gi_tuertyp',[
+      {value:'standard',label:'Standardschiebetür',icon:'🏢'},
+      {value:'fst',label:'Flucht/Rettungsweg',icon:'🚨',sub:'FR'},
+      {value:'rd',label:'Rauchschutz',sub:'RD'},
+      {value:'rc2',label:'Einbruchschutz',sub:'RC2'},
+    ],true)
+  );
+  html+=sec('Betrieb &amp; Funktion','⚡',
+    radio('Betriebsmodus',null,'gi_betriebsmodus',[
+      {value:'auto',label:'Vollautomatik',icon:'🤖'},{value:'low',label:'Low-Energy',sub:'EN 1154'},
+      {value:'nacht',label:'Nacht (verriegelt)'},{value:'perm',label:'Permanentöffnung'},{value:'teil',label:'Teilöffnung',sub:'einstellbar'},
+    ],true)+
+    radio('Aktivierungssensor','Sensor zur Türauslösung','gi_aktivierung',[
+      {value:'radar',label:'Radar (Mikrowelle)',icon:'📡'},{value:'dual',label:'Dual-Technologie',sub:'Radar + IR'},
+      {value:'ir',label:'Aktiv-Infrarot'},{value:'taster',label:'Aktivierungstaster',icon:'🔘'},{value:'zugang',label:'Zutrittskontrolle',icon:'🏷'},
+    ])+
+    chkbox('Sonderfunktionen','Mehrfachauswahl möglich','gi_optionen',[
+      {value:'bus',label:'BUS-Anbindung',icon:'🌐'},{value:'funk',label:'Funk-Empfangsplatine',icon:'📶'},
+      {value:'rauch',label:'Rauchschalter-Anbindung'},{value:'bma',label:'BMA-Anbindung',icon:'🔴'},
+    ])
+  );
+  html+=sec('Montage &amp; Mechanik','🔧',
+    radio('Montageart',null,'gi_montageart',[
+      {value:'wand',label:'Wandmontage'},{value:'sturz',label:'Sturzmontage'},
+      {value:'pfosten',label:'Pfosten-Riegel'},{value:'glas',label:'ISO-Glasbeschlag'},{value:'boden',label:'Bodenschloss'},
+    ],true)+
+    radio('Profilsystem',null,'gi_profil',[
+      {value:'fein',label:'Feingerahmt'},{value:'therm',label:'Therm-Profil',sub:'Energiespar'},
+      {value:'esg',label:'ESG-Klemmprofil'},{value:'rahmen',label:'Rahmenflügel',sub:'bauseitig'},{value:'holz',label:'Holzflügel'},
+    ])+
+    radio('Farbgebung',null,'gi_farbgebung',[
+      {value:'silber',label:'Silber'},{value:'weiss',label:'Weiß',sub:'RAL 9016'},
+      {value:'bronze',label:'Bronze'},{value:'schwarz',label:'Schwarz',sub:'RAL 9005'},{value:'individuell',label:'RAL indiv.'},
+    ])
+  );
+  html+=sec('Verriegelung &amp; Sicherheit','🔒',
+    radio('Verriegelung',null,'gi_verriegelung',[
+      {value:'keine',label:'Keine'},{value:'stangen',label:'Stangenverriegelung',sub:'RC2'},
+      {value:'motor',label:'Motorschloss'},{value:'elektro',label:'Elektroschloss'},
+    ])+
+    radio('Notstrom',null,'gi_notfunktion',[{value:'akku',label:'Akku-Backup',sub:'Batterie'},{value:'nein',label:'Keine'}])
+  );
+  html+=sec('Absicherungssensorik (BEA)','🛡️',
+    '<p class="field-hint" style="margin-bottom:12px">Sensor-Modell auswählen</p>'+sensorCards()+sensorExtra()
+  );
+  html+=sec('Optionen &amp; Zubehör','🔌',
+    chkbox('Erweiterungen','Mehrfachauswahl möglich','zubehoer',[
+      {value:'bus',label:'BUS-Anbindung',icon:'🌐'},{value:'rauch',label:'Rauchschalter-Anbindung'},
+      {value:'bma',label:'BMA-Anbindung',icon:'🔴'},{value:'nebenkante',label:'Nebenkantenabsicherung'},
+      {value:'schleuse',label:'Schleusen-/Koppelbetrieb'},{value:'teiloeff',label:'Teilöffnungsmodul'},
+    ])
+  );
+  return html;
+}
+
 // ─── Summary ──────────────────────────────────────────────────────────────────
 function buildSummary(){
-  var cls=isDK()?"dk":"gz",rows=[],normen=[],fst=false;
+  var cls=prodCls(),rows=[],normen=[],fst=false;
   var projRows=[
     ["Auftraggeber / Firma", S.ag_firma||"–"],
     ["Ansprechpartner",      S.ag_ansprechpartner||"–"],
@@ -726,6 +1022,8 @@ function buildSummary(){
     ["PLZ &amp; Ort",        S.bs_plzort||"–"],
     ["Projektnummer",        S.bs_objekt||"–"],
     ["Türbezeichnung",       S.bs_bauteil||"–"],
+    ["Anzahl Türen",         (S.tueranzahl||"1")+" Stück"],
+    ["Notizen",              S.notizen||"–"],
   ];
   if(isDK()){
     var m=getDKModell(); fst=m&&m.fst;
@@ -742,6 +1040,32 @@ function buildSummary(){
       ["Zubehör",S.zubehoer.length?S.zubehoer.map(function(z){return ZL_DK[z]||z;}).join(", "):"Keines"],
     ];
     normen=["DIN 18650","EN 16005","AutSchR","230V AC","1,5 Mio. Lastwechsel"];
+  } else if(isRC()){
+    var rm=getRCModell(); fst=rm&&rm.fst;
+    rows=[
+      ["Antriebsmodell",rm?rm.name:"–"],["Flügelanzahl",LM_RC.fluegelanzahl[S.rc_fluegelanzahl]||"–"],
+      ["Öffnungsbreite",S.rc_oeffnungsbreite?S.rc_oeffnungsbreite+" mm":"–"],["Flügelgewicht",S.rc_fluegelgewicht?S.rc_fluegelgewicht+" kg":"–"],
+      ["Türtyp",LM_RC.tuertyp[S.rc_tuertyp]||"–"],["Betriebsmodus",LM_RC.betriebsmodus[S.rc_betriebsmodus]||"–"],
+      ["Aktivierungssensor",S.rc_aktivierung||"–"],["Montageart",LM_RC.montageart[S.rc_montageart]||"–"],
+      ["Profilsystem",S.rc_profil?LM_RC.profil[S.rc_profil]:"–"],["Farbgebung",S.rc_farbgebung?LM_RC.farbgebung[S.rc_farbgebung]:"–"],
+      ["Verriegelung",S.rc_verriegelung?LM_RC.verriegelung[S.rc_verriegelung]:"–"],
+      ["Notstrom",S.rc_notfunktion?LM_RC.notfunktion[S.rc_notfunktion]:"–"],
+      ["Optionen/Zubehör",(S.rc_optionen||[]).length?(S.rc_optionen||[]).map(function(z){return ZL_RC[z]||z;}).join(", "):"Keines"],
+    ];
+    normen=["DIN 18650","EN 16005","230V AC"];
+  } else if(isGI()){
+    var gim=getGIModell(); fst=gim&&gim.fst;
+    rows=[
+      ["Antriebsmodell",gim?gim.name:"–"],["Flügelanzahl",LM_GI.fluegelanzahl[S.gi_fluegelanzahl]||"–"],
+      ["Öffnungsbreite",S.gi_oeffnungsbreite?S.gi_oeffnungsbreite+" mm":"–"],["Flügelgewicht",S.gi_fluegelgewicht?S.gi_fluegelgewicht+" kg":"–"],
+      ["Türtyp",LM_GI.tuertyp[S.gi_tuertyp]||"–"],["Betriebsmodus",LM_GI.betriebsmodus[S.gi_betriebsmodus]||"–"],
+      ["Aktivierungssensor",S.gi_aktivierung||"–"],["Montageart",LM_GI.montageart[S.gi_montageart]||"–"],
+      ["Profilsystem",S.gi_profil?LM_GI.profil[S.gi_profil]:"–"],["Farbgebung",S.gi_farbgebung?LM_GI.farbgebung[S.gi_farbgebung]:"–"],
+      ["Verriegelung",S.gi_verriegelung?LM_GI.verriegelung[S.gi_verriegelung]:"–"],
+      ["Notstrom",S.gi_notfunktion?LM_GI.notfunktion[S.gi_notfunktion]:"–"],
+      ["Optionen/Zubehör",(S.gi_optionen||[]).length?(S.gi_optionen||[]).map(function(z){return ZL_GI[z]||z;}).join(", "):"Keines"],
+    ];
+    normen=["DIN 18650","EN 16005","230V AC"];
   } else {
     var gm=getGZModell(); fst=gm&&gm.fst;
     rows=[
@@ -781,54 +1105,160 @@ function buildSummary(){
 }
 
 
-// ─── Paywall ──────────────────────────────────────────────────────────────────
-window._paywallConfirmed = false;
-var MA_CODES = ['7808', '7890'];
-function logMaCode(code) {
-  try {
-    var logs = JSON.parse(localStorage.getItem('stober_ma_logs')) || [];
-    var now = new Date();
-    logs.push({
-      code: code,
-      timestamp: now.toISOString(),
-      date: now.toLocaleDateString('de-DE'),
-      time: now.toLocaleTimeString('de-DE'),
-      url: window.location.pathname,
-      userAgent: navigator.userAgent.substring(0, 80)
-    });
-    localStorage.setItem('stober_ma_logs', JSON.stringify(logs));
-    console.log('MA Code logged:', code, logs.length, 'total');
-  } catch(e) {  }
+
+// ─── Artikelnummern aus localStorage (Admin pflegbar) ──────────────────────────
+var ARTIKEL_STORAGE_KEY='stober_artikel';
+function getArtNr(key){
+  try{
+    var all=JSON.parse(localStorage.getItem(ARTIKEL_STORAGE_KEY)||'{}');
+    var fullKey='schiebetuer.'+key;
+    if(all[fullKey]!==undefined&&all[fullKey]!=='') return all[fullKey];
+  }catch(e){}
+  return '';  // Schiebetür hat keine hardcodierten Defaults
 }
 
+// ─── Paywall & MA-Code System ──────────────────────────────────────────────────
+window._paywallConfirmed = false;
+window._maCodeUsed = false;
+window._maCodeName = "";
+
+var MA_CODES = [];
+var MA_CODE_NAMES = {};
+var MA_CODES_DEFAULT = {
+  '78080':'Marko Gerdau',
+  '78081':'Norbert Clour',
+  '78082':'Techniker',
+  '78084':'Bernd Nikolaus',
+  '78085':'Armin Bolz',
+  '78086':'Ausendienst1',
+  '78087':'Ausendienst2',
+  '78088':'Außendienst 3',
+};
+var MA_CODES_STORAGE_KEY = 'stober_ma_codes';
+function loadMAcodesFromStorage(){
+  try{
+    var saved=localStorage.getItem(MA_CODES_STORAGE_KEY);
+    MA_CODE_NAMES=saved?JSON.parse(saved):Object.assign({},MA_CODES_DEFAULT);
+  }catch(e){ MA_CODE_NAMES=Object.assign({},MA_CODES_DEFAULT); }
+  MA_CODES=Object.keys(MA_CODE_NAMES);
+}
+loadMAcodesFromStorage();
+function logMaCode(code){
+  try{
+    var logs=JSON.parse(localStorage.getItem('stober_ma_logs'))||[];
+    var now=new Date();
+    logs.push({code:code,timestamp:now.toISOString(),date:now.toLocaleDateString('de-DE'),
+               time:now.toLocaleTimeString('de-DE'),url:window.location.pathname,
+               userAgent:navigator.userAgent.substring(0,80)});
+    localStorage.setItem('stober_ma_logs',JSON.stringify(logs));
+  }catch(e){}
+}
+function handleAufgenommenCode(code){
+  code=code.trim();
+  var name=MA_CODE_NAMES[code]||"";
+  S=Object.assign({},S,{aufgenommenCode:code,aufgenommenDurch:name});
+  render();
+  return !!name;
+}
 function checkMaCode(){
-  var input = document.getElementById('ma-code-input');
-  var errEl = document.getElementById('ma-code-error');
-  var code = input.value.trim();
-  if(MA_CODES.indexOf(code) > -1){
+  var input=document.getElementById('ma-code-input');
+  var errEl=document.getElementById('ma-code-error');
+  var code=input.value.trim();
+  if(MA_CODES.indexOf(code)>-1){
     logMaCode(code);
-    window._paywallConfirmed = true;
+    window._paywallConfirmed=true;
+    window._maCodeUsed=true;
+    window._maCodeName=MA_CODE_NAMES[code]||"";
     document.getElementById('paywall-overlay').classList.remove('visible');
-    input.value = '';
+    input.value='';
     exportPDF();
   } else {
-    errEl.style.display = 'block';
-    input.value = '';
-    input.focus();
-    setTimeout(function(){ errEl.style.display='none'; }, 3000);
+    errEl.style.display='block';
+    input.value=''; input.focus();
+    setTimeout(function(){ errEl.style.display='none'; },3000);
   }
 }
-function showPaywall() {
-  window._paywallConfirmed = false;
-  document.getElementById('btn-paid').style.display = 'none';
-  document.getElementById('btn-paypal').style.opacity = '1';
+function startExport(){
+  if(S.aufgenommenCode && MA_CODES.indexOf(S.aufgenommenCode)>-1){
+    logMaCode(S.aufgenommenCode);
+    window._paywallConfirmed=true;
+    window._maCodeUsed=true;
+    window._maCodeName=S.aufgenommenDurch||MA_CODE_NAMES[S.aufgenommenCode]||"";
+    exportPDF();
+  } else {
+    showPaywall();
+  }
+}
+function showPaywall(){
+  window._paywallConfirmed=false;
+  window._maCodeUsed=false;
+  window._maCodeName="";
+  document.getElementById('btn-paid').style.display='none';
+  document.getElementById('btn-paypal').style.opacity='1';
   document.getElementById('paywall-overlay').classList.add('visible');
 }
+// ─── Mitarbeitercode-Gate ──────────────────────────────────────────────────────
+function checkStartCode(){
+  var inp=document.getElementById('code-gate-input');
+  var msg=document.getElementById('code-gate-msg');
+  var val=inp.value.trim();
+  if(val==='78O8'){
+    document.getElementById('code-gate').classList.remove('visible');
+    sessionStorage.setItem('stober_admin_referer','schiebetuer-konfigurator.html'); window.location.href='admin.html';
+    return;
+  }
+  if(handleAufgenommenCode(val)){
+    msg.textContent='✓ Code akzeptiert – '+S.aufgenommenDurch;
+    msg.className='ok';
+    autoload();
+    setTimeout(function(){ document.getElementById('code-gate').classList.remove('visible'); },700);
+  } else {
+    msg.textContent='✗ Ungültiger Code.';
+    msg.className='err';
+    inp.value=''; inp.focus();
+  }
+}
+function skipStartCode(){
+  autoload();
+  document.getElementById('code-gate').classList.remove('visible');
+}
 
+function buildArtikelliste(){
+  var rows=[];
+  function add(bez,nr,menge){ if(nr) rows.push([bez,nr,menge||1]); }
+  if(isDK()){
+    var m=getDKModell();
+    if(m) add(m.name, getArtNr('dk.modell.'+S.modell), 1);
+    if(S.notfunktion&&S.notfunktion!=='nein') add('Notstrom / Backup', getArtNr('dk.notfunktion.'+S.notfunktion), 1);
+    if(S.sensorik&&S.sensorik!=='keine') add(SENSORIK_LM[S.sensorik], getArtNr('dk.sensorik.'+S.sensorik), 1);
+    (S.zubehoer||[]).forEach(function(z){
+      var nr=getArtNr('dk.zubehoer.'+z); if(nr) add(ZL_DK[z]||z, nr, 1);
+    });
+  } else if(isRC()){
+    var rm=getRCModell();
+    if(rm) add(rm.name, getArtNr('rc.modell.'+S.rc_modell), 1);
+    if(S.rc_notfunktion&&S.rc_notfunktion!=='nein') add('Notstrom / Backup', getArtNr('rc.notfunktion.'+S.rc_notfunktion), 1);
+    if(S.sensorik&&S.sensorik!=='keine') add(SENSORIK_LM[S.sensorik], getArtNr('rc.sensorik.'+S.sensorik), 1);
+  } else if(isGI()){
+    var gim=getGIModell();
+    if(gim) add(gim.name, getArtNr('gi.modell.'+S.gi_modell), 1);
+    if(S.gi_notfunktion&&S.gi_notfunktion!=='nein') add('Notstrom / Backup', getArtNr('gi.notfunktion.'+S.gi_notfunktion), 1);
+    if(S.sensorik&&S.sensorik!=='keine') add(SENSORIK_LM[S.sensorik], getArtNr('gi.sensorik.'+S.sensorik), 1);
+  } else {
+    var gm=getGZModell();
+    if(gm) add(gm.name, getArtNr('gz.modell.'+S.gz_modell), 1);
+    if(S.gz_notfunktion&&S.gz_notfunktion!=='nein') add('Notstrom / Backup', getArtNr('gz.notfunktion.'+S.gz_notfunktion), 1);
+    if(S.sensorik&&S.sensorik!=='keine') add(SENSORIK_LM[S.sensorik], getArtNr('gz.sensorik.'+S.sensorik), 1);
+    (S.zubehoer||[]).forEach(function(z){
+      var nr=getArtNr('gz.zubehoer.'+z); if(nr) add(ZL_GZ[z]||z, nr, 1);
+    });
+  }
+  return rows;
+}
 // ─── PDF Export ───────────────────────────────────────────────────────────────
 function exportPDF(){
   // Validierung: Alle Pflichtfelder prüfen
-  var pflicht = PFLICHT_DK;
+  var pflicht = PFLICHT_AKTUELL();
   var missing = [];
   for(var i=0; i<pflicht.length; i++){
     if(!S[pflicht[i]]){
@@ -843,8 +1273,9 @@ function exportPDF(){
   var now=new Date();
   var datum=now.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
   var uhrzeit=now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  var hs=isDK()?'dormakaba':'GEZE',prod=isDK()?'ES PROLINE':'Schiebetürantrieb';
-  var ac2=isDK()?'#D95E1F':'#005A9C';
+  var hs=isDK()?'dormakaba':isRC()?'Record':isGI()?'Gilgen':'GEZE';
+  var prod=isDK()?'ES PROLINE':isRC()?'TSA / DUO':isGI()?'SL / SLX-M':'Schiebetürantrieb';
+  var ac2=isDK()?'#D95E1F':isRC()?'#1FAE85':isGI()?'#9B59B6':'#005A9C';
   var projBlock='<div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #D2DAE3;border-radius:4px;overflow:hidden">'+
     [['Auftraggeber / Firma',S.ag_firma||'–'],['Ansprechpartner',S.ag_ansprechpartner||'–'],
      ['Telefon',S.ag_telefon||'–'],['E-Mail',S.ag_email||'–']].map(function(r,i){
@@ -854,7 +1285,8 @@ function exportPDF(){
     }).join('')+'</div>'+
     '<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #D2DAE3;border-radius:4px;overflow:hidden">'+
     [['Baustelle / Straße',S.bs_strasse||'–'],['PLZ & Ort',S.bs_plzort||'–'],
-     ['Projektnummer',S.bs_objekt||'–'],['Türbezeichnung / Bauteil',S.bs_bauteil||'–']].map(function(r,i){
+     ['Projektnummer',S.bs_objekt||'–'],['Türbezeichnung / Bauteil',S.bs_bauteil||'–'],
+     ['Anzahl Türen',(S.tueranzahl||'1')+' Stück'],['Notizen',S.notizen||'–']].map(function(r,i){
       return '<div style="padding:7px 12px;background:'+(i%2===0?'#F4F6F9':'#fff')+';border-bottom:1px solid #E0E8F0">'+
         '<div style="font-size:10px;color:#6B7A8D;font-weight:600">'+r[0]+'</div>'+
         '<div style="font-size:12px;font-weight:700;color:#1A2D44;margin-top:1px">'+r[1]+'</div></div>';
@@ -871,6 +1303,28 @@ function exportPDF(){
       ['Profil',S.profil?LM_DK.profil[S.profil]:'–'],['Farbgebung',S.farbgebung?LM_DK.farbgebung[S.farbgebung]:'–'],
       ['Notstrom',S.notfunktion?LM_DK.notfunktion[S.notfunktion]:'–'],
       ['Zubehör',S.zubehoer.length?S.zubehoer.map(function(z){return ZL_DK[z]||z;}).join(', '):'Keines'],
+    ];
+  } else if(isRC()){
+    var rm=getRCModell();
+    rows=[
+      ['Antriebsmodell',rm?rm.name:'–'],['Flügelanzahl',LM_RC.fluegelanzahl[S.rc_fluegelanzahl]||'–'],
+      ['Öffnungsbreite',S.rc_oeffnungsbreite?S.rc_oeffnungsbreite+' mm':'–'],['Flügelgewicht',S.rc_fluegelgewicht?S.rc_fluegelgewicht+' kg':'–'],
+      ['Türtyp',LM_RC.tuertyp[S.rc_tuertyp]||'–'],['Betriebsmodus',LM_RC.betriebsmodus[S.rc_betriebsmodus]||'–'],
+      ['Montageart',LM_RC.montageart[S.rc_montageart]||'–'],['Verriegelung',S.rc_verriegelung?LM_RC.verriegelung[S.rc_verriegelung]:'–'],
+      ['Profilsystem',S.rc_profil?LM_RC.profil[S.rc_profil]:'–'],['Farbgebung',S.rc_farbgebung?LM_RC.farbgebung[S.rc_farbgebung]:'–'],
+      ['Notstrom',S.rc_notfunktion?LM_RC.notfunktion[S.rc_notfunktion]:'–'],
+      ['Optionen/Zubehör',(S.rc_optionen||[]).length?(S.rc_optionen||[]).map(function(z){return ZL_RC[z]||z;}).join(', '):'Keines'],
+    ];
+  } else if(isGI()){
+    var gim=getGIModell();
+    rows=[
+      ['Antriebsmodell',gim?gim.name:'–'],['Flügelanzahl',LM_GI.fluegelanzahl[S.gi_fluegelanzahl]||'–'],
+      ['Öffnungsbreite',S.gi_oeffnungsbreite?S.gi_oeffnungsbreite+' mm':'–'],['Flügelgewicht',S.gi_fluegelgewicht?S.gi_fluegelgewicht+' kg':'–'],
+      ['Türtyp',LM_GI.tuertyp[S.gi_tuertyp]||'–'],['Betriebsmodus',LM_GI.betriebsmodus[S.gi_betriebsmodus]||'–'],
+      ['Montageart',LM_GI.montageart[S.gi_montageart]||'–'],['Verriegelung',S.gi_verriegelung?LM_GI.verriegelung[S.gi_verriegelung]:'–'],
+      ['Profilsystem',S.gi_profil?LM_GI.profil[S.gi_profil]:'–'],['Farbgebung',S.gi_farbgebung?LM_GI.farbgebung[S.gi_farbgebung]:'–'],
+      ['Notstrom',S.gi_notfunktion?LM_GI.notfunktion[S.gi_notfunktion]:'–'],
+      ['Optionen/Zubehör',(S.gi_optionen||[]).length?(S.gi_optionen||[]).map(function(z){return ZL_GI[z]||z;}).join(', '):'Keines'],
     ];
   } else {
     var gm=getGZModell();
@@ -889,12 +1343,12 @@ function exportPDF(){
     ['Absicherungsbereich',S.sensorMontage.length?S.sensorMontage.map(function(s){return SENSOR_MONTAGE_LM[s];}).join(', '):'–'],
   );
   var tr=rows.map(function(r,i){return '<tr style="background:'+(i%2===0?'#F4F6F9':'#fff')+'"><td style="padding:8px 12px;font-weight:600;color:#6B7A8D;font-size:12px;border-bottom:1px solid #E0E8F0;width:38%">'+r[0]+'</td><td style="padding:8px 12px;font-weight:600;color:#1A2D44;font-size:12px;border-bottom:1px solid #E0E8F0">'+r[1]+'</td></tr>';}).join('');
-  var normen=isDK()?['DIN 18650','EN 16005','AutSchR','230V AC','1,5 Mio. Lastwechsel']:['DIN 18650','EN 16005','DIN EN ISO 13849 PL D','230V AC'];
+  var normen=isDK()?['DIN 18650','EN 16005','AutSchR','230V AC','1,5 Mio. Lastwechsel']:isRC()?['DIN 18650','EN 16005','230V AC']:isGI()?['DIN 18650','EN 16005','230V AC']:['DIN 18650','EN 16005','DIN EN ISO 13849 PL D','230V AC'];
   var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>'+hs+' '+prod+' – Konfiguration</title>'
     +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;color:#1A2D44;background:#fff;padding:20px}'
     +'@page{size:A4;margin:15mm}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body><div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:52px;font-weight:900;color:rgba(0,27,67,0.07);white-space:nowrap;pointer-events:none;z-index:9999;letter-spacing:.12em;font-family:Arial,sans-serif;text-align:center;line-height:1.3;">STOBER GmbH<br>Created by M.&#8201;G.</div>'
     +'<div style="background:'+ac2+';padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-radius:6px 6px 0 0">'
-    +'<div style="display:flex;align-items:center;gap:10px"><div style="width:5px;height:32px;background:'+(isDK()?'#fff':'#FFC72C')+';border-radius:2px"></div>'
+    +'<div style="display:flex;align-items:center;gap:10px"><div style="width:5px;height:32px;background:'+(isDK()?'#fff':isRC()?'#fff':isGI()?'#fff':'#FFC72C')+';border-radius:2px"></div>'
     +'<div><div style="color:#fff;font-size:17px;font-weight:800">'+hs+' '+prod+'</div>'
     +'<div style="color:rgba(255,255,255,.65);font-size:11px;margin-top:2px">Schiebetürantrieb &middot; Konfigurationsdokument</div></div></div>'
     +'<div style="text-align:right"><div style="color:rgba(255,255,255,.65);font-size:10px">Erstellt</div>'
@@ -903,6 +1357,20 @@ function exportPDF(){
     +projBlock
     +'<div style="margin-top:14px"><div style="background:#1A2D44;padding:8px 12px;border-radius:3px 3px 0 0"><span style="color:#fff;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Antriebskonfiguration</span></div>'
     +'<table style="width:100%;border-collapse:collapse;border:1px solid #D2DAE3;border-top:none">'+tr+'</table></div>'
+    +(function(){
+      var ar=window._maCodeUsed?buildArtikelliste():[];
+      if(!ar.length) return '';
+      return '<div style="margin-top:14px"><div style="background:#1A2D44;padding:8px 12px;border-radius:3px 3px 0 0"><span style="color:#fff;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em">📦 Artikelliste</span></div>'
+        +'<table style="width:100%;border-collapse:collapse;border:1px solid #D2DAE3;border-top:none">'
+        +'<tr style="background:#E8EDF3"><td style="padding:6px 12px;font-weight:700;color:#1A2D44;font-size:11px;border-bottom:1px solid #D2DAE3">Bezeichnung</td>'
+        +'<td style="padding:6px 12px;font-weight:700;color:#1A2D44;font-size:11px;border-bottom:1px solid #D2DAE3;width:30%">Art.-Nr.</td>'
+        +'<td style="padding:6px 12px;font-weight:700;color:#1A2D44;font-size:11px;border-bottom:1px solid #D2DAE3;width:18%">Menge</td></tr>'
+        +ar.map(function(r,i){return '<tr style="background:'+(i%2===0?'#F4F6F9':'#fff')+'">'
+          +'<td style="padding:7px 12px;font-size:12px;color:#1A2D44;border-bottom:1px solid #E0E8F0">'+r[0]+'</td>'
+          +'<td style="padding:7px 12px;font-size:12px;font-weight:700;color:#1A2D44;border-bottom:1px solid #E0E8F0">'+r[1]+'</td>'
+          +'<td style="padding:7px 12px;font-size:12px;color:#1A2D44;border-bottom:1px solid #E0E8F0">'+r[2]+'</td></tr>';}).join('')
+        +'</table></div>';
+    })()
     +'<div style="margin-top:14px;padding:12px;background:#F4F6F9;border:1px solid #D2DAE3;border-radius:4px">'
     +'<div style="font-weight:700;font-size:11px;color:#1A2D44;margin-bottom:6px;text-transform:uppercase">Normen &amp; Zertifikate</div>'
     +'<div style="display:flex;flex-wrap:wrap;gap:6px">'+normen.map(function(n){return '<span style="padding:2px 8px;background:#1A2D44;color:#fff;border-radius:99px;font-size:10px;font-weight:600">'+n+'</span>';}).join('')+'</div></div>'
@@ -937,14 +1405,14 @@ function exportPDF(){
 
 // ─── Render ───────────────────────────────────────────────────────────────────
 function render(){
-  var pflicht=isDK()?PFLICHT_DK:PFLICHT_GZ;
+  var pflicht=PFLICHT_AKTUELL();
   var filled=pflicht.filter(function(k){return !!S[k];}).length;
   var pct=Math.round(filled/pflicht.length*100);
   var complete=filled===pflicht.length;
-  var cls=isDK()?'dk':'gz';
+  var cls=prodCls();
 
   document.getElementById('hdr').className=cls;
-  document.getElementById('hdr-title').textContent=isDK()?'dormakaba ES PROLINE':'GEZE Schiebetür';
+  document.getElementById('hdr-title').textContent=isDK()?'dormakaba ES PROLINE':isRC()?'Record TSA / DUO':isGI()?'Gilgen SL / SLX-M':'GEZE Schiebetür';
   document.getElementById('prog-ring').style.background='conic-gradient('+ac()+' '+(filled/pflicht.length*360)+'deg,#2D4B66 0deg)';
   document.getElementById('prog-pct').textContent=pct+'%';
   document.getElementById('prog-fill').style.width=pct+'%';
@@ -955,10 +1423,14 @@ function render(){
   document.getElementById('prod-sw').innerHTML=
     '<div class="ptab'+(isDK()?' ak-dk':'')+'" data-action="prod" data-value="dk">'+
     '<span class="ptab-icon">🏗️</span><span class="ptab-name">dormakaba</span><span class="ptab-sub">ES PROLINE</span></div>'+
-    '<div class="ptab'+(isDK()?'':' ak-gz')+'" data-action="prod" data-value="gz">'+
+    '<div class="ptab'+(isRC()?' ak-rc':'')+'" data-action="prod" data-value="rc">'+
+    '<span class="ptab-icon">⚙️</span><span class="ptab-name">Record</span><span class="ptab-sub">TSA / DUO</span></div>'+
+    '<div class="ptab'+(isGI()?' ak-gi':'')+'" data-action="prod" data-value="gi">'+
+    '<span class="ptab-icon">⚙️</span><span class="ptab-name">Gilgen</span><span class="ptab-sub">SL / SLX-M</span></div>'+
+    '<div class="ptab'+(!isDK()&&!isRC()&&!isGI()?' ak-gz':'')+'" data-action="prod" data-value="gz">'+
     '<span class="ptab-icon">⚙️</span><span class="ptab-name">GEZE</span><span class="ptab-sub">ECdrive / Slimdrive / Powerdrive</span></div>';
 
-  var html=isDK()?buildDK():buildGZ();
+  var html=isDK()?buildDK():isRC()?buildRC():isGI()?buildGI():buildGZ();
   html+='<button class="big-btn '+cls+'" id="summary-btn"'+(complete?'':' disabled')+'>'+
     (complete?(S.showSummary?'▲ Konfiguration schließen':'✅ Konfiguration anzeigen'):
     'Noch '+(pflicht.length-filled)+' Pflichtfeld'+(pflicht.length-filled!==1?'er':'')+' ausfüllen')+
@@ -977,6 +1449,75 @@ function render(){
     document.getElementById('content').insertAdjacentElement('afterend', bw);
   }
 }
+
+
+// ─── Autosave ──────────────────────────────────────────────────────────────────
+var AUTOSAVE_KEY = 'stober_schiebetuer_autosave';
+function autosave(){
+  try{
+    var toSave=Object.assign({},S);
+    delete toSave.gpsLoading; delete toSave.gpsError; delete toSave.showSummary;
+    localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(toSave));
+  }catch(e){}
+}
+function autoload(){
+  try{
+    var saved=localStorage.getItem(AUTOSAVE_KEY);
+    if(saved){ var p=JSON.parse(saved); S=Object.assign({},S,p); S.gpsLoading=false; S.gpsError=''; }
+  }catch(e){}
+}
+function resetKonfig(){
+  if(confirm('Aktuelle Konfiguration wirklich löschen und neu starten?')){
+    localStorage.removeItem(AUTOSAVE_KEY);
+    location.reload();
+  }
+}
+
+// ─── Vorlagen ──────────────────────────────────────────────────────────────────
+var VORLAGEN_KEY = 'stober_schiebetuer_vorlagen';
+var PROJ_SKIP=['ag_firma','ag_ansprechpartner','ag_telefon','ag_email','bs_strasse','bs_plzort','bs_objekt','bs_bauteil','aufgenommenDurch','aufgenommenCode','projektart','gpsLoading','gpsError','showSummary'];
+function getVorlagen(){ try{ return JSON.parse(localStorage.getItem(VORLAGEN_KEY))||[]; }catch(e){ return []; } }
+function showVorlagenModal(){ document.getElementById('vorlagen-overlay').classList.add('visible'); renderVorlagenModal(); }
+function closeVorlagenModal(){ document.getElementById('vorlagen-overlay').classList.remove('visible'); }
+function renderVorlagenModal(){
+  var vl=getVorlagen();
+  document.getElementById('vorlagen-count').textContent=vl.length+'/10';
+  document.getElementById('vorlagen-list').innerHTML=vl.length===0?
+    '<p style="color:#6B7A8D;font-size:13px;text-align:center;padding:24px 0">Noch keine Vorlagen gespeichert</p>':
+    vl.map(function(v,i){
+      return '<div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #E8EDF3">'
+        +'<div style="flex:1"><div style="font-weight:700;font-size:14px">'+v.name+'</div>'
+        +'<div style="font-size:11px;color:#6B7A8D">'+v.date+' &middot; '+(v.state.produkt||'?')+'</div></div>'
+        +'<button onclick="loadVorlage('+i+')" style="padding:8px 14px;border-radius:8px;border:none;background:#001B43;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">Laden</button>'
+        +'<button onclick="deleteVorlage('+i+')" style="padding:8px 10px;border-radius:8px;border:1.5px solid #D2DAE3;background:#fff;color:#C0392B;font-size:13px;cursor:pointer;font-family:inherit">✕</button>'
+        +'</div>';
+    }).join('');
+}
+function saveNewVorlage(){
+  var inp=document.getElementById('vorlage-name-input');
+  var name=inp.value.trim();
+  if(!name){ inp.focus(); inp.style.borderColor='#C0392B'; setTimeout(function(){inp.style.borderColor='';},1500); return; }
+  var vl=getVorlagen();
+  if(vl.length>=10){ alert('Maximal 10 Vorlagen – bitte erst eine löschen.'); return; }
+  var tpl={};
+  Object.keys(S).forEach(function(k){ if(PROJ_SKIP.indexOf(k)===-1) tpl[k]=S[k]; });
+  vl.unshift({name:name,date:new Date().toLocaleDateString('de-DE'),state:tpl});
+  localStorage.setItem(VORLAGEN_KEY,JSON.stringify(vl));
+  inp.value='';
+  renderVorlagenModal();
+}
+function loadVorlage(idx){
+  var vl=getVorlagen();
+  if(!vl[idx]) return;
+  Object.assign(S,vl[idx].state);
+  S.gpsLoading=false; S.gpsError=''; S.showSummary=false;
+  autosave(); render(); closeVorlagenModal();
+}
+function deleteVorlage(idx){
+  var vl=getVorlagen(); vl.splice(idx,1);
+  localStorage.setItem(VORLAGEN_KEY,JSON.stringify(vl)); renderVorlagenModal();
+}
+
 
 // ─── Events ───────────────────────────────────────────────────────────────────
 function handleClick(ev){
@@ -1033,6 +1574,10 @@ document.getElementById('content').addEventListener('change',function(ev){
   if(ev.target.classList.contains('num-input')) set(ev.target.dataset.field,ev.target.value);
 });
 document.getElementById('proj-data').addEventListener('change',function(ev){
+  if(ev.target.classList.contains('ma-lookup-input')){
+    handleAufgenommenCode(ev.target.value);
+    return;
+  }
   if(ev.target.classList.contains('txt-input')||ev.target.classList.contains('num-input')){
     set(ev.target.dataset.field,ev.target.value);
   }
@@ -1060,16 +1605,7 @@ render();
 
 // ─── Admin: MA-Code Logs (Browser-Konsole) ─────────────────────────────────
 window.viewMaLogs = function(){
-  var logs = JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');
-  console.log('═══ STOBER MA-CODE LOGS ═══');
-  console.log('Gesamt Einträge:', logs.length);
-  logs.forEach(function(log, i){
-    console.log(i+1 + '.', log.date, log.time, '| Code: ' + log.code);
-  });
-  console.log('\nJSON Export:\n' + JSON.stringify(logs, null, 2));
-  console.log('\nCSV Export (copy paste):');
-  var csv = 'Code,Datum,Uhrzeit,URL\n' + logs.map(l => l.code+','+l.date+','+l.time+','+l.url).join('\n');
-  console.log(csv);
+  return JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');
 };
 window.downloadMaLogs = function(){
   var logs = JSON.parse(localStorage.getItem('stober_ma_logs') || '[]');
@@ -1088,16 +1624,9 @@ window.downloadMaLogs = function(){
 window.clearMaLogs = function(){
   if(confirm('Alle MA-Code Logs wirklich löschen?')){
     localStorage.removeItem('stober_ma_logs');
-    console.log('✓ Logs gelöscht');
   }
 };
-if(!window._adminConsoleReady){
-  console.log('%c🔑 STOBER Admin-Befehle:', 'color:#001B43;font-weight:bold;font-size:13px');
-  console.log('viewMaLogs() - Alle MA-Code Logs in Konsole anzeigen');
-  console.log('downloadMaLogs() - Logs als CSV-Datei exportieren');
-  console.log('clearMaLogs() - Alle Logs löschen');
-  window._adminConsoleReady = true;
-}
+window._adminConsoleReady = true;
 
 
   // ═══════════════════════════════════════════════════════════════════
@@ -1180,6 +1709,13 @@ if(!window._adminConsoleReady){
     e.preventDefault();
     return false;
   }, false);
+
+// ─── MA-Code Gate beim Laden anzeigen ─────────────────────────────────────────
+(function(){
+  var gateInp=document.getElementById('code-gate-input');
+  if(gateInp) gateInp.addEventListener('keydown',function(e){ if(e.key==='Enter') checkStartCode(); });
+  document.getElementById('code-gate').classList.add('visible');
+})();
 
 </script>
 </body>
